@@ -1,0 +1,14 @@
+{% load i18n %}
+{% trans "Company" %}: {{ milestone.project.company.short_name }}
+{% trans "Project" %}: {{ milestone.project.name }}
+--------------------------------------------------
+
+{% blocktrans %}Milestone "{{ old_milestone_title }}" has been updated:{% endblocktrans %} 
+
+{% trans "Title" %}: {{milestone.title}}
+{% trans "Due date" %}: {{milestone.due_date}}
+
+--
+{% trans "DO NOT REPLY TO THIS EMAIL" %}
+{% trans "To view this milestone, please go to" %} {{ link_url }}.
+

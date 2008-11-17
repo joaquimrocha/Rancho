@@ -1,0 +1,43 @@
+{% load i18n %}
+
+{% if field.errors %}
+<tr>
+    <td colspan="2" >
+        <div class="red_msg">
+            {% for error in field.errors %}
+                <p>{{error}}</p>
+            {% endfor %}
+        </div>
+    </td>
+</tr>
+{% endif%}
+
+{% ifequal placement "left" %}
+<tr>
+    <td valign="top" nowrap="nowrap" >{{field.label_tag}}</td>
+    <td width="100%">{{field}}</td>
+</tr>
+{% endifequal %}
+
+{% ifequal placement "top" %}
+<tr>
+    <td colspan="2">{{field.label_tag}}</td>
+</tr>
+<tr>
+    <td colspan="2">{{ field }}</td>
+</tr>
+{% endifequal %}
+
+{% ifequal placement "none" %}
+<tr>
+	<td colspan="2">{{ field }}</td>
+</tr>
+{% endifequal %}
+
+{% ifequal placement "right" %}
+<tr>
+	<td>{{field}}</td>
+    <td>{{field.label_tag}}</td>
+</tr>
+{% endifequal %}
+   

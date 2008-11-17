@@ -1,0 +1,13 @@
+{% extends "registration/login.html" %}
+{% load i18n %}
+{% block pagetitle %} {{ company.short_name }} | {% trans "Logged out" %} {% endblock %}
+
+{% block main_content %}
+    <div id="warn" class="green_msg">
+       <p>
+        {% blocktrans with company.short_name as short_name %}You have been logged out of <b>{{ short_name }}</b>'s Rancho!{% endblocktrans %}
+        </p>
+    </div>
+    <br/>
+    <p><a href="../">{% trans 'Log in again' %}</a></p>
+{% endblock %}

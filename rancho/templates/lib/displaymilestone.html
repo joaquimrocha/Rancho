@@ -1,0 +1,52 @@
+{% load usernamegen i18n modalconfirm permissions_tags formatdate %}
+
+<div class="item_list">
+	<div class="{{status}}_item">
+		<div class="item_title">
+			{% ifhasperm "PERMISSIONS_MILESTONE_EDITDELETE" user project milestone %}
+				<a class="{{status}}" href="{% url milestone.views.edit p_id=project.id,milestone_id=milestone.id %}">{{milestone.title}}</a>
+			{% else %}
+				<span class="{{status}}">{{milestone.title}}</span>
+			{% endifhasperm %}
+		</div>
+		<div class="item_controls">
+			{% ifhasperm "PERMISSIONS_MILESTONE_EDITDELETE" user project milestone %}
+				<a class="edit" href="{% url milestone.views.edit p_id=project.id,milestone_id=milestone.id %}">Edit</a> | <a id="delete_milestone{{milestone.id}}" class="delete" href="">Delete</a>
+				{% modalconfirm "delete_milestone{{milestone.id}}" _("Are you sure you want to delete this milestone?") "delete_milestone(milestone.id)" %}
+			{% endifhasperm %}
+		</div>
+	</div>
+	<div class="item_bottom">
+		<div class="responsible_and_date">
+			<p>
+			{% if milestone.completion_date %}
+				{% trans "Completed by" %}
+				{% usernamegen milestone.responsible %} {% trans "on" %} 
+				{% ifequal status "late" %}
+					<span class="red">{{ milestone.completion_date }}</span>
+				{% else %}
+					{{ milestone.completion_date }}
+				{% endifequal %}
+			{% else %}
+				{% trans "To be done until " %} <span class="{{status}}"><strong>{% formatdate user milestone.due_date %}</strong></span> {% trans "by" %} 
+				{% if milestone.responsible %}
+					{% usernamegen milestone.responsible %}
+				{% else %}
+					{% trans "Anyone" %}
+				{% endif %}
+			{% endif %}
+			</p>
+		</div>
+        {% ifnotequal project.status "F" %} {# only can do this if active project #}
+			<div class="complete_incomplete">
+				{% ifequal status "green" %}
+					<p><a class="complete" id="incomplete_milestone{{milestone.id}}" href="{% url milestone.views.incomplete p_id=project.id,milestone_id=milestone.id %}">{% trans "Set as incomplete" %}</a></p>
+					{% modalconfirm "incomplete_milestone{{milestone.id}}" _("Are you sure you want set this milestone as incomplete?") "incomplete_milestone(milestone.id)" %}
+				{% else %}
+					<p><a id="complete_milestone{{milestone.id}}" href="{% url milestone.views.complete p_id=project.id,milestone_id=milestone.id %}">{% trans "Set as complete" %}</a></p>
+					{% modalconfirm "complete_milestone{{milestone.id}}" _("Are you sure you want set this milestone as complete?") "complete_milestone(milestone.id)" %}
+				{% endifequal %}
+			</div>
+		{% endifnotequal %}
+	</div>
+</div>

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% load i18n displayevent %}
+
+{% block pagetitle %} {{ company.short_name }} | {% trans "Dashboard" %} {% endblock %}
+	
+{% block area_name %}
+	<p>{% trans "Project Overview & Activity" %}</p>
+{% endblock %}
+
+{% block outter_main_content %}
+	{% if not general_overview %}
+	    <p>{% trans "There is no activity yet." %}</p>
+	{% endif %}
+	{% for project, overview in general_overview %}
+	  {% if overview %}
+		<p><a href="{% url project.views.overview project.id %}" class="smallcaps_title blue_bg white">{{ project.name }}</a></p>
+		<div style="margin: 0 20px 0 20px;">
+			{% for event in overview %}
+				{% with event.creation_date.date as event_date %}
+					{% ifchanged %}
+						<p style="margin:20px 0 10px 0;"><span class="smallcaps_title gray_bg">{{ event_date|date:"l, d N Y" }}</span></p>
+					{% endifchanged %}
+					{% displayevent event %}
+				{% endwith %}
+			{% endfor %}
+		</div>
+	  {% endif %}
+	{% endfor %}
+{% endblock %}
+    
+	
+{% block right_content %}	
+    {% if user.is_superuser %}
+	<div class="add_button">
+		<a href="{% url project.views.new_project %}">{% trans "Add New Project" %}</a>
+	</div>
+	<div class="add_button_right"></div>
+	<br/>
+	{% endif %}
+	{% include "project/boxes/myprojects.html" %}	
+{% endblock %}

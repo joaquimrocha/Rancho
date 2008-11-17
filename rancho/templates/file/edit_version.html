@@ -1,0 +1,32 @@
+{% extends "project/basicproject.html" %}
+
+{% load i18n usernamegen genmenu form_tags%}
+
+{% block pagetitle %} {{ project.name }} | {% trans "Edit file version" %} {% endblock %}
+        
+{% block area_name %}
+    <p>{% trans "Edit file version" %}</p>
+{% endblock %}
+
+{% block menu %}
+	{% genmenu "inproject" "files" project.id %}
+{% endblock %}
+        
+{% block right_content %}
+{% endblock %}
+
+{% block main_content %}
+    <form action="{% url file.views.edit p_id=project.id,v_id=file_version.id %}" method="post" enctype="multipart/form-data">
+        <h1>{{ title }}</h1>
+		
+		{% beginrequestbox "required" _("File upload") ""  %}
+          {% printfield  form.description "left" %}
+       {% endrequestbox %}           
+
+       {% beginrequestbox "notrequired" _("File Tags") _("Apply optional tags to your message, split multime tags with comma.")  %}
+            {% printfield  form.tags "left" %}
+       {% endrequestbox %}
+
+       {% printformfooter _("Update File") _("Cancel") "rancho.file.views.list project.id" %}
+    </form>
+{% endblock %}

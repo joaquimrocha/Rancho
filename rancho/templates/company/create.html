@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% load i18n usernamegen modalconfirm form_tags displaynotification genmenu sidewidget %}
+
+{% block pagetitle %} {{ company.short_name }} | Dashboard {% endblock %}
+
+{% block menu %}
+    {% genmenu "root" "" %}
+{% endblock %}
+    
+{% block area_name %}
+    <p>{% trans "New Company" %}</p>
+{% endblock %}
+    
+{% block right_content %}
+	{% sidewidget _("Information") "information" %}
+	<p>{% blocktrans %}You can add companies to better identify who accesses your projects, for example, a client of yours.{% endblocktrans %}</p>
+	<p>{% blocktrans %}After you add a company you can add people to it.{% endblocktrans %}</p>
+{% endblock %}
+
+{% block main_content %}
+    
+	{% displaynotification messages %}
+    
+    <form action="{% url company.views.create_company  %}" method="post" enctype="multipart/form-data">	
+	{% beginrequestbox "required" _("Company Info") ""  %}
+          {% printfield  form.short_name "left" %}
+          {% printfield  form.long_name "left" %}
+    {% endrequestbox %} 
+	
+	{% printformfooter _("Create Company") _("Cancel") "rancho.user.views.all_people" %}
+</form>
+{% endblock %}

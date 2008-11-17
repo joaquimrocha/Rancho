@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% load i18n genmenu %}
+
+{% block pagetitle %}{% endblock %}
+
+{% block top_left_actions %}
+<div id="left"></div>
+<div id="action">
+	<div id="dashboard"><a href="{% url user.views.dashboard %}">{% trans "Dashboard" %}</a></div>
+	 {% if user.is_superuser %}
+	<div id="company_settings"><a href="{% url project.views.settings project.id %}">{% trans "Project Settings" %}</a></div>
+	 {% endif %}
+</div>
+<div id="right"></div>
+{% endblock %}
+
+{% block menu %}{% endblock %}
+
+{% block menus_right %}
+	{% if user.is_superuser %}
+		<img src="/media/basepage/images/icons/users.png" border="0" alt="" class="textbottom"/>&nbsp;<a href="{% url project.views.show_people_project project.id %}" title="{% trans "Manage people in project" %}">{% trans "People in Project" %}</a>
+	{% endif %}
+		<img src="/media/basepage/images/icons/calendar.png" border="0" alt="" class="textbottom"/>&nbsp;<a href="/calendar" title="{% trans "Go to general calendar" %}">{% trans "Calendar" %}</a>
+{% endblock %}
+
+{% block project_name %}
+	<p style="margin-top: 5px; font-size: 14px;"><span style="font-weight: bold;">{% trans "Project" %}:</span> <span style="font-style: italic;">{{project.name}}</span> </p>
+{% endblock %}
+
+{% block static_menu%}
+<div id="top_menu">
+    <form id="search" enctype="multipart/form-data" action="{% url search_search_project p_id=project.id %}" method="post">
+    	{{generalsearchform.query}}
+		<input type="image" src="/media/basepage/images/search.png" />
+    </form>
+</div>
+{% endblock %}
+	
+{% block project_logo %}
+	<div style="margin-bottom: 15px;">
+	{% if project.logo %}
+			<img src="/media/{{ project.logo }}" alt="{{project.name}} Logo" />
+	{% endif %}
+	</div>
+{% endblock %}
+
+{% block jquerypluginloader %}{% endblock %}
+	
+{% block area_name %}{% endblock %}
+
+{% block right_content %}{% endblock %}
+
+{% block main_content %}{% endblock %}

@@ -1,0 +1,188 @@
+{% load i18n genmenu displaycompanylogo usernamegen%}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>{% block pagetitle %} Rancho {% endblock %}</title>
+        {% block scripts %}
+        {% endblock %}
+        <meta name="author" content="CITI/UE" />
+        <meta name="description" content="{% trans "Group management made simple." %}" />
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="Content-Style-Type" content="text/css" />
+        
+        <link rel="alternate" type="application/atom+xml" title="{{ company.short_name }}'s User Notification" href="/notification/feed/" />
+
+        <link rel="stylesheet" type="text/css" href="/media/basepage/style.css" />
+        <link rel="shortcut icon" href="/media/basepage/images/favicon.ico">
+        
+        <script type="text/javascript" src="/media/js/jquery/jquery.js"></script>
+        {% block jquerypluginloader %}
+        {% endblock %}
+        <script type="text/javascript">
+             $(document).ready(function() {
+                $("#id_query").click(function () { 
+                    $(this).val('');                     
+                });
+            });  
+
+        
+            {% block jquerycode %}
+            {% endblock %}
+        </script>       
+    </head>
+    <body>
+    
+        <div id="top">
+            <div id="change_place_comand">
+                
+                {% block top_left_actions %}
+                    {% if user.get_profile.is_account_owner %}              
+                    <div id="left"></div>
+                    <div id="action">
+                        <div id="company_settings"><a href="{% url company.views.company_settings %}">{% trans "Company Settings" %}</a></div>
+                    </div>
+                    <div id="right"></div>
+                    {% endif %}                                     
+                    
+                {% endblock %}
+                
+            </div>
+        <div id="session_settings_command">
+        
+            <script type="text/javascript">
+                $(document).ready(function(){                    
+                    $("#langselect").change(function (){  
+                        $("#formlang").submit();
+                    });                    
+                });
+                
+            </script>       
+
+            <form action="{% url user.views.change_language %}" method="post" id="formlang">
+                <p>
+                    <img class="textcenter" src="/media/basepage/images/rancho_star.png" alt=''/>&nbsp;<a class="user" href="{% url user.views.edituser user.id %}" title="{% trans "Edit your settings" %}">{% usernamegen user "fullname" %}</a> |
+                    <img class="textcenter" src="/media/basepage/images/exit.png" alt=''/>&nbsp;<a href="{% url django.contrib.auth.views.logout %}">{% trans "Log-out" %}</a> |
+                    <select name="language" id="langselect">
+                    {% for lang in LANGUAGES %}
+                    <option value="{{ lang.0 }}" {% ifequal LANGUAGE_CODE lang.0 %} selected="selected" {% endifequal %}>{{ lang.1 }}</option>
+                    {% endfor %}
+                    </select>
+                </p>
+            </form>
+        </div>
+        </div>
+        <div id="header">
+            
+            {% ifequal company.display_logo_name "0" %}
+            <div id="logo">
+            {% else %}
+            <div id="logo" style="background: #FFF;">
+            {% endifequal %}
+                {% ifequal company.display_logo_name "0" %}
+                    <p>{{ company.short_name }}</p>
+                {% else %}
+                    {% displaycompanylogo company %}
+                {% endifequal %}
+
+                
+            </div>
+
+            <div id="menus">
+                {% block menu %}
+                    {% genmenu "root" "dashboard" %}
+                {% endblock %}
+		
+		<div id="menus_nav_right">
+                    {% block menus_right %}
+                        {% if user.is_superuser %}
+                            <img class="textcenter" src="/media/basepage/images/icons/users.png" border="0" alt=""/>&nbsp;<a href="{% url user.views.all_people %}" title="{% trans "Manage people and companies" %}">{% trans "People and Companies" %}</a>&nbsp;
+                        {% endif %}
+                            <img class="textcenter" src="/media/basepage/images/icons/calendar.png" border="0" alt=""/>&nbsp;<a href="/calendar" title="{% trans "Go to general calendar" %}">{% trans "Calendar" %}</a>
+		    {% endblock %}
+            </div>
+            </div>            
+
+
+            
+        </div>
+        <div id="main_fix">
+            <div id="main">
+            
+                <div id="main_top">
+                    
+                    <div id="left_top">
+                    
+                        <div id="left">
+                            
+                            {% block area_name %}
+                                <p>  </p>
+                            {% endblock %}
+                        </div>
+                        
+                        <div id="right">
+                            {% block mini_menu %}
+                                
+                            {% endblock %}
+                        </div>
+                        
+                    </div>
+                    
+                    <div id="right_top">
+                    
+                                                    
+                        {% block static_menu%}
+                        <div id="top_menu">
+                            <form id="search" enctype="multipart/form-data" action="{% url search_search_general %}" method="post">
+                                {{generalsearchform.query}}
+                                <input type="image" src="/media/basepage/images/search.png" />
+                            </form>
+                        </div>
+                        {% endblock %}
+                        
+                        
+                        {% block project_name %}
+                        
+                        {% endblock %}
+                    </div>
+                    
+                </div>
+                <div id="main_center_right">
+                    
+                    {% block project_logo %}
+                    
+                    {% endblock %}
+                    
+                    {% block right_content %}
+                    
+                    {% endblock %}
+                </div>
+                <div id="main_center">
+                    {% block outter_main_content %}
+                        <div style="margin: 0 20px 0 20px;">
+                            {% block main_content %}
+                                
+                            {% endblock %}
+                        </div>
+                    {% endblock %}
+                </div>
+                <div id="main_center_footer"><div id="innerleft"></div></div>       
+            
+            </div>
+        </div>
+        <div id="main_footer">
+            <div id="inside">
+                <div id="left"></div>
+                <div id="right"></div>
+            </div>
+	    <div style="float: left;">
+	        <a href="http://www.getrancho.com" target="_blank"><img src="/media/basepage/images/powered.png" border="0"/></a>
+	    </div>
+	    <div style="float: right; padding-right: 15px;">
+	      <a href="{% url legal_notice %}" class="gray" >{% trans "Rancho Legal Notices" %}</a>
+	    </div>
+        </div>
+
+    
+    </body>
+</html>

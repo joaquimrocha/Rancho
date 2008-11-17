@@ -1,0 +1,54 @@
+{% extends "project/basicproject.html" %}
+
+{% load i18n usernamegen sidewidget formatdate genmenu displayevent %}
+
+{% block pagetitle %} {{ project.name }} | {% trans "Overview" %} {% endblock %}
+	
+{% block area_name %}
+	<p>{% trans "Project Overview & Activity" %}</p>
+{% endblock %}
+
+{% block menu %}
+	{% genmenu "inproject" "overview" project.id %}
+{% endblock %}
+
+{% block right_content %}
+
+{% if project.description %}
+<div class="widget">
+	<p><img class="textcenter" src="/media/basepage/images/icons/information.png" alt="" /> {% trans "About the project" %}</p>
+</div>
+<p>
+{{ project.description }}
+</p>
+{% endif %}
+
+{% sidewidget _("People Involved") %}
+{% for userip in users_in_project %}
+	<p class="person">{% usernamegen userip %}</p>
+	{% ifnotequal userip.id user.id %}
+		<p class="login">{% trans "Last login " %} {% formatdate userip userip.last_login "False" %}</p>
+	{% else %}
+		<p class="login">{% trans "You are logged in" %}</p>
+	{% endifnotequal %}
+{% endfor %}
+
+{% endblock %}
+
+
+{% block main_content %}
+	{% if not events %}
+		<p>{% trans "There is no activity in this project yet." %}</p>
+	{% endif %}
+	{% for event in events %}
+		{% with event.overview_date as event_date %}
+			{% ifchanged %}
+				<p style="margin:20px 0 10px 0;"><span class="smallcaps_title gray_bg">{{ event_date|date:"l, d N Y" }}</span></p>
+			{% endifchanged %}
+			{% displayevent event %}
+		{% endwith %}
+	{% endfor %}
+{% endblock %}
+
+
+

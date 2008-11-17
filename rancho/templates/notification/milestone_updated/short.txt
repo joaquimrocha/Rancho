@@ -1,0 +1,1 @@
+{% load i18n %}{% blocktrans %}A milestone has been updated{% endblocktrans %}

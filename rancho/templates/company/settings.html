@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% load i18n usernamegen modalconfirm form_tags displaynotification genmenu sidewidget %}
+ 
+{% block pagetitle %} {{ company.short_name }} | Dashboard {% endblock %}
+
+{% block jquerypluginloader %}
+<script type="text/javascript" src="/media/js/jquery/simplemodal.js"></script>
+<script type="text/javascript" src="/media/js/jquery/taconite.js"></script>
+{% endblock %}
+    
+{% block jquerycode %}
+function delete_logo(){            
+    $.get("{% url company.views.delete_logo %}");
+	$("#company_logo").fadeOut();            
+    return false;
+}    
+{% endblock %}
+
+{% block menu %}
+    {% genmenu "root" "" %}
+{% endblock %}
+    
+{% block area_name %}
+    <p>{% trans "Company Settings" %}</p>
+{% endblock %}
+    
+{% block right_content %}
+	{% sidewidget _("Information") "information"%}
+	<p>{% blocktrans %}Here you can edit the company's settings.{% endblocktrans %}</p>
+	<p>{% blocktrans %}The company logo will be placed in the top left of every page. You can set the logo to be visible or not, in which case, the company's small name will appear instead.{% endblocktrans %}</p>
+{% endblock %}
+
+{% block main_content %}
+    <form action="{% url company_settings_main %}" method="post" enctype="multipart/form-data">
+    
+	{% displaynotification messages %}
+	
+	{% beginrequestbox "required" _("Company Info") ""  %}
+          {% printfield  editCompanySettingsForm.short_name "left" %}
+          {% printfield  editCompanySettingsForm.long_name "left" %}
+    {% endrequestbox %} 
+	
+    {% beginrequestbox "notrequired" _("Company optional info") _("You can add additional information about this company.")  %}
+      {% printfield  editCompanySettingsForm.mailing_address "top" %}   
+      {% printfield  editCompanySettingsForm.phone "left" %}
+      {% printfield  editCompanySettingsForm.webpage "left" %}
+    {% endrequestbox %}  
+	
+	{% if is_main_company %}
+		{% beginrequestbox "notrequired" _("Company Description") _("You can add an optional description that will take place on the dashboard page of the company.")  %}
+	      {% printfield  editCompanySettingsForm.description "none" %}   
+	    {% endrequestbox %}
+	{% endif %}
+	
+	{% beginrequestbox "notrequired" _("Company Logo") _("Upload a new logo or delete the existing one.")  %}
+	  
+	  {% if edit_company.logo %}
+            <tr id="company_logo">
+                <td colspan="2">
+                <div align="center" style="margin-bottom: 15px;">
+                    <img src="/media/{{ edit_company.logo }}" alt="{{edit_company.short_name}} Logo" />
+                    <p>{{editCompanySettingsForm.display_logo_name.label_tag}} {{editCompanySettingsForm.display_logo_name}} | <a href="" id="delete_company_logo" class="red">{% trans "Delete" %}</a></p>
+                    {% modalconfirm "delete_company_logo" _("Are you sure you want to delete this company logo?") "delete_logo" %}
+                </div>
+                </td>
+            </tr>
+      {% endif %}
+	  
+	  {% printfield  editCompanySettingsForm.logo "left" %}
+   
+    {% endrequestbox %}
+
+	{% printformfooter _("Update Company") _("Cancel") "rancho.user.views.dashboard" %}
+</form>
+{% endblock %}

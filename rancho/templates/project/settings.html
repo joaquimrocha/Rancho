@@ -1,0 +1,75 @@
+{% extends "project/basicproject.html" %}
+
+{% load i18n usernamegen modalconfirm genmenu form_tags displaynotification sidewidget %}
+
+{% block pagetitle %} {{ project.name }} | {% trans "Settings" %} {% endblock %}
+
+{% block menu %}
+	{% genmenu "inproject" "overview" project.id %}
+{% endblock %}
+
+{% block jquerypluginloader %}
+<script type="text/javascript" src="/media/js/jquery/simplemodal.js"></script>
+<script type="text/javascript" src="/media/js/jquery/taconite.js"></script>
+{% endblock %}
+	
+{% block jquerycode %}	
+function delete_logo(){			
+    $.get("{% url project.views.delete_logo project.id %}");			
+	$("#project_logo").fadeOut();
+	return false;
+}
+{% endblock %}
+
+{% block area_name %}
+    <p>{% trans "Project Settings" %}</p>
+{% endblock %}
+
+{% block right_content %}
+{% sidewidget _("Info") "information" %}
+<p>{% blocktrans %}Here you can set the project basic settings.{% endblocktrans %}</p>
+<p>{% blocktrans %}A project can be either:{% endblocktrans %}</p>
+<ul style="margin-left: 10px;">
+	<li style="margin-bottom: 10px;"><strong>{% trans "Active" %}</strong> - {% trans "The project is open and running" %}</li>
+	<li style="margin-bottom: 10px;"><strong>{% trans "Frozen" %}</strong> - {% trans "The project is in a pause state and its entities such as messages and milestones will not show up on the dashboard." %}</li>
+	<li style="margin-bottom: 10px;"><strong>{% trans "Finished" %}</strong> - {% trans "The project is finished and cannot be edited by its users." %}</li>
+</ul>
+{% endblock %}
+
+
+{% block main_content %}
+
+
+{% displaynotification messages %}
+    	
+<form enctype="multipart/form-data" action="{% url project.views.settings project.id %}" method="post">
+	{% beginrequestbox "required" _("Project Info") ""  %}
+		{% printfield edit_project.project_name "left" %}
+		{% printfield edit_project.status "none" %}
+	{% endrequestbox %}
+	{% beginrequestbox "notrequired" _("Project Description") _("You can add an optional description that will take place on the overview page of the project.")  %}
+		{% printfield  edit_project.description "none" %}
+	{% endrequestbox %}
+	
+	{% beginrequestbox "notrequired" _("Project Logo") _("Upload a new logo or delete the existing one.")  %}
+      
+      {% if project.logo %}
+            <tr id="project_logo">
+                <td colspan="2">
+                <div align="center" style="margin-bottom: 15px;">
+                    <img src="/media/{{ project.logo }}" alt="{{project.name}} Logo" />
+                    <p> <a href="" id="delete_project_logo" class="red">{% trans "Delete" %}</a></p>
+                    {% modalconfirm "delete_project_logo" _("Are you sure you want to delete this project logo?") "delete_logo" %}
+                </div>
+                </td>
+            </tr>
+      {% endif %}
+      
+      {% printfield  edit_project.project_logo "left" %}
+   
+    {% endrequestbox %}
+		
+	{% printformfooter _("Update Project") _("Cancel") "rancho.project.views.overview project.id" %}
+	
+</form>
+{% endblock %}

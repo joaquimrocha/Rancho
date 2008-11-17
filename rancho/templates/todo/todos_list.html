@@ -1,0 +1,117 @@
+{% extends "project/basicproject.html" %}
+
+{% load i18n usernamegen displaytodo genmenu displaynotification permissions_tags sidewidget %}
+
+{% block pagetitle %} {{ company.short_name }} | {% trans "View ToDos" %} {% endblock %}
+
+{% block jquerypluginloader %}
+<script type="text/javascript" src="/media/js/jquery/taconite.js"></script>
+<script type="text/javascript" src="/media/js/jquery/simplemodal.js"></script>
+{% endblock %}
+
+{% block jquerycode %}	
+
+	function delete_todo(todo_id){
+		$("#edit_todo" + todo_id).fadeOut('slow', function(){
+			$.get("{% url todo.views.delete_todo p_id=project.id %}", {todo: todo_id});
+		});
+		return false;
+	}
+	
+	function delete_todo_list(todo_list_id){
+		window.location = "{% url todo.views.delete_todo_list p_id=project.id %}?todo_list=" + todo_list_id;
+		return false;
+	}
+
+    {% ifnotequal project.status "F" %} {# only can do this if active project #}
+		$(document).ready(function() {
+			{% for todo_list, todos in todo_lists %}
+						
+				$("#add_an_item{{todo_list.id}}").click(
+					function(){
+						$("#add_an_item{{todo_list.id}}").hide();
+						$("#add_item_form{{todo_list.id}}").show('fast');
+						return false;
+					}
+				);
+				
+				$("#submit_todo{{todo_list.id}}").click(
+					function(){
+						$("#cancel{{todo_list.id}}").text("{% trans "Done!" %}");
+						$.get("{% url todo.views.add_todo p_id=project.id,todo_list=todo_list.id %}", {todo_desc: $("#todo_desc{{todo_list.id}}").val(), todo_responsible:$("#todo_responsible{{todo_list.id}}").val()});
+					}
+				);
+				
+				$("#cancel{{todo_list.id}}").click(
+					function(){
+						$("#add_item_form{{todo_list.id}}").hide('fast');
+						$("#empty_todo_error{{todo_list.id}}").hide();
+						$("#add_an_item{{todo_list.id}}").show();
+						return false;
+					}
+				);
+				
+				{% for todo in todos%}
+					$("#check{{todo.id}}_link").click(
+						function(){
+							$.get("{% url todo.views.switch_todo_status project.id %}", {todo: {{todo.id}} });
+							$("img#check{{todo.id}}").attr({
+								src: "/media/basepage/images/check.png"
+								});
+							return false;
+						}
+					);
+				{% endfor%}
+			
+			{% endfor %}
+			
+		}
+		);
+	{% endifnotequal %}
+{% endblock %}
+
+
+{% block area_name %}
+	{% if view_alone %}
+		<p>{% trans "ToDo List" %}</p>
+	{% else %}
+	    <p>{% trans "ToDo Lists" %}</p>
+	{% endif %}
+{% endblock %}
+
+{% block menu %}
+	{% genmenu "inproject" "todos" project.id %}
+{% endblock %}
+
+{% block mini_menu %}
+	{% if view_alone %}
+		<br/>
+		<a href="{% url todo.views.list project.id %}">{% trans "Back to ToDos lists" %}</a>
+	{% endif %}
+{% endblock %}
+    
+{% block right_content %}
+	{% ifhasperm "PERMISSIONS_TODO_CREATE" user project  %}
+	    <div class="add_button">
+			<a href="{% url todo.views.create p_id=project.id %}">{% trans "New ToDo List" %}</a>
+		</div>
+		<div class="add_button_right"></div>
+		<br/><br/>
+	{% endifhasperm %}
+	
+	{% sidewidget _("About ToDos") "information"%}
+	<p>{% blocktrans %}ToDos are simple checklists, they can be assigned by anyone but may have information about who is supposed to check them.{% endblocktrans %}</p>
+{% endblock %}
+
+{% block main_content %}
+	{% displaynotification messages %}
+	<div style="margin: 0 15px 0 15px;">
+        {% if not todo_lists %}
+              <p>{% trans "There are no ToDo lists in this project yet." %}</p>
+        {% endif %}
+
+	{% for todo_list, todos in todo_lists%}
+	      {% include "todo/display_todo_list.html" %}
+	{% endfor %}
+	</div>	
+{% endblock %}

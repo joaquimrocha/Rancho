@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% load i18n form_tags genmenu sidewidget %}
+
+{% block pagetitle %} {{ company.short_name }} | {% trans "Add User" %} {% endblock %}
+
+{% block menu %}
+    {% genmenu "root" "" %}
+{% endblock %}
+
+	
+{% block area_name %}
+    <p>{% trans "Create User" %}</p>
+{% endblock %}
+
+{% block right_content %}
+	{% sidewidget _("Information") "information"%}
+    <p>{% blocktrans %}Here you can add a new person.{% endblocktrans %}</p>
+	<p>{% blocktrans %}Click the "Show More" link to fill aditional information about the new person.{% endblocktrans %}</p>
+	<p>{% blocktrans %}<strong>Important:</strong> If the person is set as admin, he or she will have the higher level of permission prior to the account owner's one.{% endblocktrans %}</p>
+	<p>{% blocktrans %}The new person will be able to edit the "personal info" settings after logging in.{% endblocktrans %}</p>
+{% endblock %}
+
+{% block main_content %}		
+	<form action="{% url user.views.newuser %}" method="post">		
+	  {% beginrequestbox "required" _("Login Info") _("Choose a username with which this person can log in later.")  %}
+          {% printfield  newUserForm.username "left" %}
+          {% printfield  newUserForm.email "left" %}		  
+      {% endrequestbox %}    
+	  <p>&nbsp;</p>
+	  {% beginrequestbox "required" _("Member Settings") ""  %}
+    	  {% printfield  newUserForm.company "left" %}
+          {% printfield  newUserForm.language "left" %}
+		  {% printfield  newUserForm.timezone "left" %}
+		  {% printfield  newUserForm.role "left" %}
+	  {% endrequestbox %}
+	  
+	  {% beginrequestbox "notrequired" _("Personal Info") _("All fields in this section are optional. You can fill them now or the person can fill or change them later.")  %}
+          {% printfield  newUserForm.first_name "left" %}
+          {% printfield  newUserForm.last_name "left" %}
+		  
+		  {% beginoptionalgroup "company_user_info" "false" "You can fill more information about this person" %}
+		     {% printfield  newUserForm.title "left" %}
+			 {% printfield  newUserForm.office "left" %}
+			 {% printfield  newUserForm.office_phone "left" %}
+			 {% printfield  newUserForm.office_phone_ext "left" %}
+			 {% printfield  newUserForm.mobile_phone "left" %}
+			 {% printfield  newUserForm.home_phone "left" %}
+			 {% printfield  newUserForm.im_name "left" %}
+			 {% printfield  newUserForm.im_service "left" %}
+			 {% printfield  newUserForm.mailing_address "top" %}
+			 {% printfield  newUserForm.webpage "left" %}
+		  {% endoptionalgroup %}
+		  
+      {% endrequestbox  %}
+	  
+	  {% beginrequestbox "notrequired" _("Personal Note") _("You can send a personal note to the person you are adding in addiction to the email notification. This note is optional.")  %}
+	     {% printfield  newUserForm.personal_note "top" %}
+	  {% endrequestbox  %}        
+     
+	  {% printformfooter _("Create user") _("Cancel") "rancho.user.views.all_people" %}		
+	</form>	
+{% endblock %}

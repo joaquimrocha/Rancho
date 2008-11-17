@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% load i18n form_tags sidewidget %}
+
+{% block area_name %}
+ <p>{% trans "Your Notification Settings" %}</p>
+{% endblock %}
+
+{% block right_content %}
+	{% sidewidget _("Information") "information" %}
+	<p>{% blocktrans %}Here you can decide whether to receive a notification email whenever an event occurs.{% endblocktrans %}</p>
+	<p>{% blocktrans %}Events are described in the "Notification" column.{% endblocktrans %}</p>
+{% endblock %}
+
+{% block main_content %}    
+                
+<form method="POST" action="">
+    {% beginrequestbox "required" _("Notification Settings") _("Here you can update your notification settings.")  %}
+        <tr>
+            <th>{% trans "Notification" %}</th>
+            {% for header in notice_settings.column_headers %}
+                <th>{{ header }}</th>
+            {% endfor %}
+        </tr>
+        {% for row in notice_settings.rows %}
+            <tr>
+                <td>{% trans row.notice_type.display %}<br/>
+                    <span class="notice_type_description">{% trans row.notice_type.description %}</span>
+                </td>
+                {% for cell in row.cells %}
+                    <td align="center">
+                        <input type="checkbox" name="{{ cell.0 }}" {% if cell.1 %}checked="yes"{% endif %}/>
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    {% endrequestbox %}
+	{% printformfooter _("Update Nofication Settings") _("Cancel") "rancho.user.views.edituser user.id" %}
+</form>
+
+{% endblock %}

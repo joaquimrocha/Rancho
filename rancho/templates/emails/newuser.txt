@@ -1,0 +1,16 @@
+{% load i18n %}{% trans "Hello" %} {{ fullname }},
+
+{% trans "You have been registered on" %} {{site_name}}.
+
+{% trans "User name" %}: {{ username }}
+{% trans "Password" %}: {{ password }}
+
+{% trans "You can access your dashboard at" %}:
+{{ link_login }}
+
+{% if personal_note %}{% trans "Here's a note from the person who added you" %}:
+
+{{ personal_note }}
+{% endif %}
+{% trans "To modify your password and other personal information, go to:" %}{{ link_pass }}
+

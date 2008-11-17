@@ -1,0 +1,44 @@
+{% extends "project/basicproject.html" %}
+
+{% load i18n usernamegen genmenu form_tags %}
+
+{% block pagetitle %} {{ project.name }} | Overview {% endblock %}
+        
+{% block area_name %}
+    <p>{% trans "Edit Message" %}</p>
+{% endblock %}
+
+{% block menu %}
+	{% genmenu "inproject" "message" project.id %}
+{% endblock %}
+        
+{% block right_content %}
+    <div class="widget">
+    <p>{% trans "People Involved" %}</p>
+</div>
+{% for user in users_in_project %}
+    <p class="person">{% usernamegen user %}</p>    
+    <p class="login">Last login some... days ago.</p>
+{% endfor %}
+{% endblock %}
+
+{% block main_content %}
+	
+    <form action="{% url message.views.edit p_id=project.id,m_id=message.id %}" method="post">
+    	{% beginrequestbox "required" _("Message") ""  %}
+		  {% if form.title %}
+             {% printfield  form.title "left" %}
+	      {% endif %}
+          {% printfield  form.message "top" %}
+      {% endrequestbox %}
+	  
+	  {%if edit_initial %}
+	       {% beginrequestbox "notrequired" _("Message Tags") _("Apply optional tags to your message, split multime tags with comma.")  %}
+                {% printfield  form.tags "left" %}
+            {% endrequestbox %}
+	  {% endif %}
+
+      {% printformfooter _("Update Message") _("Cancel") "rancho.message.views.list project.id" %}
+	  		
+	</form>
+{% endblock %}

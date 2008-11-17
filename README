@@ -1,0 +1,104 @@
+==================================================
+Rancho: Open Source Group/Project Management Tool
+==================================================
+
+:Author: The Rancho Team
+:Contact: info@getrancho.com
+:Date: $Date: 2008-11-18 18:45:30 +0200 (Mon, 18 Dec 2008) $
+:Web site: http://www.getrancho.com
+:License: Rancho is published under the GNU AGPL v3 license.
+
+.. contents::
+
+Introduction
+=============
+
+Rancho is an Open Source web based tool developed with Django to manage groups of people and projects.
+
+This document gives a brief explanation on how to install Django. Please note that deploying or optimizing Rancho is not the purpose of this document, thus, such subjects are not covered.
+
+The installation of Rancho on a Debian based system using the PostgreSQL database is also included in order to provide an example.
+
+System Requirements
+====================
+
+Here are the system requirements to run Rancho.
+
+  * Linux/UNIX operating system;
+  * Django (http://www.djangoproject.com);
+  * MySQL (http://www.mysql.com) OR PostgreSQL (http://www.postgresql.com);
+  * Python MySQLDB (http://mysql-python.sourceforge.net/) in case of using the MySQL database;
+  * PsycoPG (http://www.initd.org) in case of using the PostgreSQL database;
+  * pytz (http://pytz.sourceforge.net/);
+  * PIL - Python Image Library - (http://www.pythonware.com/products/pil/);
+
+Getting the Code
+=================
+
+Rancho's latest release can be downloaded from:
+
+    http://www.getrancho.com/download
+
+The SVN version of Rancho can be checked out using the following command:
+
+    $ svn co http://svn.getrancho.com/trunk ranchoproject
+
+Configuration
+==============
+
+Once the system requirements are met and the code is downloaded, the first thing to do is to edit the settings_customize.py file found on the project's root folder. This file already contains several strings that give hints on how to configure it.
+
+Installation on Debian
+=======================
+
+This section covers the installation of Django on a Debian system (or Debian based like Ubuntu). The database used for this example is PostgreSQL which is assumed to be already installed locally as well as Rancho. For this example, the database user is assumed be 'jsmith' with the password 'qwerty'.
+
+Run the following command as superuser to install the other requirements:
+
+    # apt-get install python-psycopg python-tz python-imaging
+
+Once the packages finish being installed, create a database to be used by Rancho:
+
+    $ createdb ranchodb
+
+After this, Rancho needs to be configured. Edit the settings_customize.py file as follows:
+
+SEARCH_ENGINE = 'postgresql'
+
+DATABASE_ENGINE = 'postresql'
+
+DATABASE_NAME = 'ranchodb'
+
+DATABASE_USER = 'jsmith'
+
+DATABASE_PASSWORD = 'qwerty'
+
+DATABASE_HOST = ''
+
+DATABASE_PORT = ''
+
+
+After the database settings, the email settings need to be configured in order for notifications to be sent. The values given to the settings bellow are also fictional in order to better examplify the configuration.
+
+DEFAULT_FROM_EMAIL = 'no-reply@example.com'
+
+EMAIL_HOST = 'smtp.example.com'
+
+EMAIL_HOST_USER = 'jsmith@example.com'
+
+EMAIL_HOST_PASSWORD = 'qwerty'
+
+
+After this, rename the file as settings.py and that's it with Rancho configuration. The next step is to create the database tables and Rancho's initial information like the account owner and the default company:
+
+    $ python manage.py syncdb
+
+Answer yes to the question to create a superuser and then supply the rest of the information asked.
+
+Once the previous command is finished, it's time to run Rancho. For this, the Django test server is used:
+
+    $ python manage.py runserver
+
+If everything went okay, you can now visit http://localhost:8000 in your web browser to access Rancho. Log in with the information you supplied previously and that's it! Rancho is installed!
+
+**Important**: Note that it is not advisable to use this server for production. Visit the Django web site to learn how to deploy Rancho in a production environment.

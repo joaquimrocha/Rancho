@@ -1,0 +1,116 @@
+{% extends "project/basicproject.html" %}
+
+{% load i18n usernamegen formatdate genmenu permissions_tags modalconfirm form_tags displaynotification displayuserphoto%}
+
+{% block pagetitle %} {{ project.name }} | {% trans "Overview" %} {% endblock %}
+        
+{% block area_name %}
+    <p>{% trans "Reading message: " %}{{original_message.title}}</p>
+{% endblock %}
+
+{% block scripts%}
+<!-- Because IE sucks big time-->
+    <!--[if lt IE 7]>
+    <style type='text/css'>
+      
+      #modalContainer {
+        top: expression((document.documentElement.scrollTop
+            || document.body.scrollTop) + Math.round(15 *
+            (document.documentElement.offsetHeight
+            || document.body.clientHeight) / 100) + 'px');
+      }
+    </style>
+    <![endif]-->
+{% endblock %}
+
+{% block jquerypluginloader %}
+<script type="text/javascript" src="/media/js/jquery/simplemodal.js"></script>
+<script type="text/javascript" src="/media/js/jquery/taconite.js"></script>
+{% endblock %}
+        
+{% block jquerycode %}
+    function delete_message(message_id) {
+       window.location = "/project/{{project.id}}/message/delete/"+ message_id+"/?page=msg";
+       return false;                      
+    }
+{% endblock %}
+
+
+{% block menu %}
+	{% genmenu "inproject" "message" project.id %}
+{% endblock %}
+
+{% block mini_menu %}
+	<br/>
+	<a href="{% url message.views.list project.id %}">{% trans "Back to messages list" %}</a>
+{% endblock %}
+        
+{% block right_content %}
+    <div class="widget">
+    <p>People Involved</p>
+</div>
+{% for user in users_in_project %}
+    <p class="person">{% usernamegen user %}</p>    
+    <p class="login">Last login some... days ago.</p>
+{% endfor %}
+{% endblock %}
+
+{% block main_content %}
+	<div style="overflow: hidden; border-bottom: 1px #afafaf solid;">
+		<div style="float: left;">
+			{% displayuserphoto original_message.creator %}
+		</div>
+		<div style="float: left; margin: 0 0 10px 15px;">
+			<h4>{{ original_message.title }}</h4>
+			<p><span class="gray">{% trans "From" %}:</span> {% usernamegen original_message.creator %}</p>
+			<p><span class="gray">{% trans "Date" %}:</span> {% formatdate user message.creation_date %}</p>
+		</div>
+	</div>
+	<p style="margin: 5px 0 5px 5px;">{{ original_message.body }}</p>
+	</p>
+    {% displaynotification messages %}
+	<div class="blue_section" style="margin: 15px 0 5px 0;">
+		<p><b>
+	{% if allmessages %}
+		{% blocktrans count allmessages|length as counter %}{{ counter }} comment.{% plural %}{{ counter }} comments.{% endblocktrans %}
+	{% else %}
+		{% trans "No comments yet." %}
+	{% endif %}
+		</b></p>
+	</div>
+    {% for message in allmessages %}
+			<div style="overflow: hidden;">
+				<div style="float: left; width: 64px;">
+					{% displayuserphoto message.creator %}
+				</div>
+				<div style="float: left; width: 500px;">
+					<div class="blue_item">
+						<div class="item_title">
+							<p>{% usernamegen message.creator %} {% trans "says:" %}</p>
+						</div>
+						<div class="item_controls">
+							{% ifhasperm "PERMISSIONS_MESSAGE_EDITDELETE" user project message %} 
+				               <a class="edit" href="{% url message.views.edit p_id=project.id,m_id=message.id %}">Edit</a> | <a href="" id="delete_message{{message.id}}" class="delete">Delete</a>
+				               {% modalconfirm "delete_message{{message.id}}" _("Are you sure you want to delete this message?") "delete_message(message.id)" %}
+				            {% endifhasperm %}
+						</div>
+					</div>
+		            <p style="margin: 5px 0 5px 5px;">{{ message.body }}</p>
+		            <p style="margin-bottom: 20px;" class="gray">{% formatdate user message.creation_date %}</p>
+				</div>
+			</div>
+        
+    {% endfor %}
+
+    {% ifhasperm "PERMISSIONS_MESSAGE_CREATE" user project message %}
+        <form action="{% url message.views.read_add_comment p_id=project.id,m_id=message.id %}" method="post">
+        	
+		{% beginrequestbox "required" _("Post a new comment") ""  %}
+		  {% printfield  form.message "none" %}
+        {% endrequestbox %}           
+        
+        {% printformfooter _("Submit Comment") _("Cancel") "rancho.message.views.list project.id" %}
+
+        </form>
+	{% endifhasperm %}
+{% endblock %}

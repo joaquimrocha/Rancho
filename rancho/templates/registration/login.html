@@ -1,0 +1,71 @@
+{% load i18n form_tags displaycompanylogo %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>{% block pagetitle %} {{ company.short_name }} | {% trans "Login" %} {% endblock %}</title>
+		<meta name="author" content="CITI/UE" />
+		<meta name="description" content="{% trans "Group management made simple." %}" />
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="Content-Style-Type" content="text/css" />
+
+		<link rel="stylesheet" type="text/css" href="/media/basepage/login.css" />
+		<link rel="shortcut icon" href="/media/basepage/images/favicon.ico">
+	</head>
+	<body>
+	
+		<div id="top"></div>
+		
+		<div id="center">
+		<div id="logo" align="center">{% displaycompanylogo company %}</div>
+		
+		{% block main_content %}
+		      {% if form.non_field_errors %}
+			<div id="warn" class="red_msg">       
+	            <p>{{form.non_field_errors}}</p>      
+	        </div>
+			{% else %}
+			<div id="warn" class="green_msg">
+	            <p>{% blocktrans with company.short_name as short_name %}Welcome to <strong>{{ short_name }}</strong>'s Rancho! Please log in.{% endblocktrans %}</p> 
+	        </div>
+			{% endif%}
+		
+			<div id="inputs">
+			
+			 {% if next %}
+	           <form action="{% url django.contrib.auth.views.login %}?next={{next}}" method="post" style="margin: 0;">
+	         {% else %}
+	           <form action="{% url django.contrib.auth.views.login %}" method="post" style="margin: 0;">
+	         {% endif %}
+	
+				
+					<table>
+						{% printfield form.username "left" %}
+						{% printfield form.password "left" %}				    
+					    <tr>
+					    	<td>
+					        	&nbsp;
+					        </td>
+					        <td>
+					        	<a href="{% url django.contrib.auth.views.password_reset %}">{% trans "(I forgot my password...)" %}</a>
+					        </td>
+					    </tr>
+					    <tr>
+					    	<td>
+					        	&nbsp;
+					        </td>
+					        <td>
+					        	<input class="submit" type="submit" value="{% trans "Sign in" %}" />
+					        </td>
+					    </tr>
+					</table>
+				</form>
+			</div>
+		
+		{% endblock %}
+		
+		</div>
+		<div id="footer"></div>
+		<div id="powered"><a href="http://www.getrancho.com" target="_blank"><img src="/media/basepage/images/powered.png" border="0"/></a></div>
+		
+	</body>
+</html>

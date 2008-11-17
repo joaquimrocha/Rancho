@@ -1,0 +1,34 @@
+{% extends "project/basicproject.html" %}
+
+{% load i18n usernamegen genmenu form_tags %}
+
+{% block pagetitle %} {{ project.name }} | Upload a new file version of {{file.title}}{% endblock %}
+        
+{% block area_name %}
+    <p>{% trans "New File Version" %}</p>
+{% endblock %}
+
+{% block menu %}
+	{% genmenu "inproject" "files" project.id %}
+{% endblock %}
+    
+{% block right_content %}
+{% endblock %}
+
+{% block main_content %}
+    <form action="{% url file.views.new_upload p_id=project.id,f_id=file.id %}" method="post" enctype="multipart/form-data">
+        <h1>{{ title }}</h1>
+        
+		{% beginrequestbox "required" _("New file upload") ""  %}
+          {% printfield  form.description "left" %}
+		   {% printfield  form.file "left" %}
+        {% endrequestbox %}           
+
+        {% beginrequestbox "notrequired" _("File Tags") _("Apply optional tags to your message, split multime tags with comma.")  %}
+            {% printfield  form.tags "left" %}
+        {% endrequestbox %}
+	   
+	    {% printformfooter _("Submit File") _("Cancel") "rancho.file.views.list project.id" %}    
+
+    </form>
+{% endblock %}

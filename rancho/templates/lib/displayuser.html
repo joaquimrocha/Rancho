@@ -1,0 +1,8 @@
+{% load displayuserphoto usernamegen %}
+<div style="float: left;">
+	{% displayuserphoto user %}
+</div>
+<div style="float: left; margin-left: 3px;">
+	{% usernamegen user "top" %}
+	<p>{{user.email}}</p>
+</div>

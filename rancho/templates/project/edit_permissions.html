@@ -1,0 +1,61 @@
+{% extends "project/basicproject.html" %}
+
+{% load i18n modalconfirm genmenu displayuserphoto usernamegen form_tags %}
+
+{% block pagetitle %} {{ company.short_name }} | {% trans "View User" %} {% endblock %}
+
+{% block menu %}
+    {% genmenu "inproject" "overview" project.id %}
+{% endblock %}
+
+{% block scripts %}
+<!-- Because IE sucks big time-->
+    <!--[if lt IE 7]>
+    <style type='text/css'>
+      
+      #modalContainer {
+        top: expression((document.documentElement.scrollTop
+            || document.body.scrollTop) + Math.round(15 *
+            (document.documentElement.offsetHeight
+            || document.body.clientHeight) / 100) + 'px');
+      }
+    </style>
+    <![endif]-->
+{% endblock %}
+
+{% block jquerypluginloader %}
+	<script type="text/javascript" src="/media/js/jquery/simplemodal.js"></script>
+{% endblock %}
+	
+
+{% block mini_menu %}    
+    
+{% endblock %}
+
+{% block area_name %}
+	<p>{% trans "Edit permissions for" %} {{project.name}}</p>
+{% endblock %}
+
+{% block main_content %}
+	<div class="blue_section" style="overflow: hidden; padding: 10px;">
+	<div style="float: left;">
+		{% displayuserphoto edit_user "small" %}
+	</div>
+	<div style="float: left; margin-left: 10px;">		
+		<p><strong>{{ edit_user.get_profile.title }} {{ edit_user.get_full_name }}</strong></p>		
+		<p><a href="mailto:{{ edit_user.email }}" title="{% trans "Send email to this user" %}">{{ edit_user.email }}</a></p>
+		<p>{{ edit_user.get_profile.company.short_name }}</p>
+	</div>
+	</div>
+	
+	<form action="{% url project.views.edit_permissions p_id=project.id,user_id=edit_user.id %}" method="post">       
+
+    {% beginrequestbox "notrequired" _("Permissions for user in project") _("Please update user's permissions in project")  %}
+       {% printfield  form.permissions "none" %}        
+    {% endrequestbox %}
+	      
+    {% printformfooter _("Update Permissions") _("Cancel") "rancho.project.views.show_people_project project.id" %}    
+    </form>
+	
+		
+{% endblock %}

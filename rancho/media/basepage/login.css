@@ -1,0 +1,137 @@
+
+p{
+	margin: 0 10px 0 10px;
+}
+
+div#logo {
+
+	font-size: 30px;
+	color: #4D4D4D;
+}
+
+div#top {
+
+	background: url('login/top.png') no-repeat;
+	width: 398px;
+	height: 13px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10%;
+}
+
+
+div#center {
+
+	background: #f3f3f3 url('login/bg_repeat.png') repeat-x;
+	width: 396px;
+	margin-left: auto;
+	margin-right: auto;
+	border-right: 1px solid #ababab;
+	border-left: 1px solid #ababab;
+	min-height: 300px;
+}
+
+div#inputs {
+
+	width: 375px;
+	padding: 15px 10px 0 10px;
+	
+}
+
+div.green_msg {
+	font-size: 12px;
+	width: 330px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+	padding-left: 40px;
+	min-height: 30px;
+	font-family: Verdana, Arial, sans-serif;
+	
+	background: #E1EBFF url('images/id.png') no-repeat 5px center;
+	border: 1px solid #5790FF;
+}
+
+div.red_msg {
+	
+	font-size: 12px;
+	width: 330px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+	padding-left: 40px;
+	min-height: 30px;
+	font-family: Verdana, Arial, sans-serif;
+	
+	background: #FFF5F4 url('images/stop.png') no-repeat 5px center;
+	border: 1px solid #FF5339;
+	color: #B21800;
+	font-weight: bold;
+	font-size: 12px;
+}
+
+div#warn{
+
+	font-size: 12px;
+	width: 330px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+	padding-left: 40px;
+	min-height: 30px;
+	font-family: Verdana, Arial, sans-serif;
+}
+
+div#warn p{
+
+	margin: 0;
+	padding-top: 5px;
+}
+
+
+div#footer {
+
+	background: url('login/footer.png') no-repeat;
+	width: 398px;
+	height: 13px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+input.submit {
+
+	font-style: italic;
+	cursor: pointer;
+}
+
+label {
+
+	font-size: 14px;
+	color: #2D2D2D;
+	font-family: Verdana, Arial, sans-serif;
+}
+
+a {
+
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 12px;
+	margin: 0;
+	color: #006cc8;
+}
+
+a:hover {
+
+	color: #006cc8;
+	text-decoration: none;
+}
+
+
+div#powered{
+
+	background: url('images/powered.png') left no-repeat;
+	width: 340px;
+	height: 22px;
+	margin-left: auto;
+	margin-right: auto;
+	
+}

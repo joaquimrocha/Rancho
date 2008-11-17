@@ -1,0 +1,47 @@
+{% extends "project/basicproject.html" %}
+
+{% load i18n usernamegen modalconfirm genmenu form_tags displaynotification %}
+
+{% block pagetitle %} {{ project.name }} | Edit {{ milestone.title }} {% endblock %}
+     
+{% block jquerypluginloader %}
+<script type="text/javascript" src="/media/js/jquery/simplemodal.js"></script>       
+<script src="/media/js/jquery/ui.datepicker.js" type="text/javascript" charset="utf-8"></script>   
+<link rel="stylesheet" href="/media/js/jquery/ui.datepicker.css" type="text/css" media="screen" title="core css file" charset="utf-8" />  
+{% endblock %}
+
+{% block jquerycode %}    
+    $(document).ready(function(){        
+        $('#id_due_date').attachDatepicker({showOn: 'both', buttonImage: '/media/basepage/images/icons/date_add.png', buttonImageOnly: true ,buttonText: 'Calendar',yearRange: '2008:2020',dateFormat: 'yy-mm-dd'});
+    });
+{% endblock %}
+
+{% block area_name %}
+    <p>{% trans "Edit milestone" %}</p>
+{% endblock %}
+
+{% block menu %}
+	{% genmenu "inproject" "milestones" project.id %}
+{% endblock %}
+
+{% block right_content %}
+{% endblock %}
+       
+{% block main_content %}
+	
+	{% displaynotification messages %}
+	
+    <form action="{% url milestone.views.edit p_id=project.id,milestone_id=milestone.id %}" method="post">
+    	{% beginrequestbox "required" _("Milestone") _("All these fields are required")  %}
+			{% printfield  newMilestone.title "left" %}
+			{% printfield  newMilestone.responsible "left" %}
+			{% printfield  newMilestone.due_date "left" %}	 			
+	    {% endrequestbox %}  
+		
+		{% beginrequestbox "notrequired" _("Other Info") _("All fields in this section are optional.")  %}
+			{% printfield  newMilestone.send_notification_email "right" %}
+	    {% endrequestbox %}
+		
+		{% printformfooter _("Update Milestone") _("Cancel") "rancho.milestone.views.list project.id" %}
+    </form>
+{% endblock %}

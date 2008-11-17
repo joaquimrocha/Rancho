@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+
+{% load i18n modalconfirm genmenu displayuserphoto usernamegen form_tags displaynotification %}
+
+{% block pagetitle %} {{ company.short_name }} | {% trans "Edit User" %} {% endblock %}
+
+{% block menu %}
+    {% genmenu "root" "" %}
+{% endblock %}
+
+{% block scripts %}
+<!-- Because IE sucks big time-->
+    <!--[if lt IE 7]>
+    <style type='text/css'>
+      
+      #modalContainer {
+        top: expression((document.documentElement.scrollTop
+            || document.body.scrollTop) + Math.round(15 *
+            (document.documentElement.offsetHeight
+            || document.body.clientHeight) / 100) + 'px');
+      }
+    </style>
+    <![endif]-->
+{% endblock %}
+
+{% block jquerypluginloader %}
+<script type="text/javascript" src="/media/js/jquery/simplemodal.js"></script>
+{% endblock %}
+	
+{% block jquerycode %}
+function delete_smallphoto() {
+    {% if edit_user %}
+        $.get("/people/{{ edit_user.id }}/delete_small_photo");
+    {% else %}
+        $.get("/people/{{ user.id }}/delete_small_photo");
+    {% endif %}    
+    $("#small_photo").fadeOut();    
+    return false;
+}
+
+function delete_largephoto() {
+    {% if edit_user %}
+        $.get("/people/{{ edit_user.id }}/delete_large_photo");
+    {% else %}
+        $.get("/people/{{ user.id }}/delete_large_photo");
+    {% endif %}    
+    $("#large_photo").fadeOut();
+    return false;
+}
+
+{% endblock %}
+
+{% block mini_menu %}    
+    {% ifequal edit_user user %}
+        <br/>
+        <p><a href="{% url user.views.view_user edit_user.id %}">{% trans "View" %}</a></p>
+	{% else %}
+		<br/>
+        <p><a href="{% url user.views.view_user edit_user.id %}">{% trans "View user" %}</a></p>
+    {% endifequal %}    
+{% endblock %}
+
+{% block area_name %}
+	{% if edit_user %}
+		<p>{% trans "Settings for User" %}: <span>{% usernamegen edit_user %}</span></p>
+	{% else %}
+		<p>{% trans "Your Settings" %}</p>
+	{% endif %}
+{% endblock %}
+
+{% block right_content %}
+	<div class="settings_button">
+        <a href="{% url notification.views.notices %}">{% trans "Notification Settings" %}</a>
+    </div>
+    <div class="add_button_right"></div>
+{% endblock %}
+
+{% block main_content %}	
+				
+	{% displaynotification messages %}
+
+
+	<form enctype="multipart/form-data" action="{% url user.views.edituser edit_user.id %}" method="post">
+	
+	  
+    {% beginrequestbox "required" "Login Info" headermsg  %}
+	  {% printfield  editUserForm.email "left" %}
+    {% endrequestbox %}
+	
+	<p>&nbsp;</p>
+    {% beginrequestbox "required" _("Member Settings") ""  %}
+          {% printfield  editUserForm.company "left" %}
+          {% printfield  editUserForm.language "left" %}
+		  {% printfield  editUserForm.timezone "left" %}
+		  {% ifnotequal edit_user user %}
+		      {% printfield  editUserForm.role "left" %}
+	      {% endifnotequal %}
+    {% endrequestbox %}
+	
+	{% beginrequestbox "notrequired" _("Change Password") _("If you want to change the password, fill the following fields.")  %}
+	  {% printfield  editUserForm.new_password1 "left" %}
+      {% printfield  editUserForm.new_password2 "left" %}
+    {% endrequestbox %}
+	
+	  
+	
+	{% beginrequestbox "notrequired" _("Other Info") _("All fields in this section are optional.")  %}
+	  {% printfield  editUserForm.first_name "left" %}	 
+	  {% printfield  editUserForm.last_name "left" %}
+      {% printfield  editUserForm.title "left" %}
+      {% printfield  editUserForm.office "left" %}
+      {% printfield  editUserForm.office_phone "left" %}
+      {% printfield  editUserForm.office_phone_ext "left" %}
+      {% printfield  editUserForm.mobile_phone "left" %}
+      {% printfield  editUserForm.home_phone "left" %}
+      {% printfield  editUserForm.im_name "left" %}
+      {% printfield  editUserForm.im_service "left" %}
+      {% printfield  editUserForm.mailing_address "top" %}
+      {% printfield  editUserForm.webpage "left" %}
+    {% endrequestbox %}          
+		
+		<div class="blue_section">
+			<table width="520px;">
+				<tr>
+					<td colspan="2">
+						<p style="font-weight: bold;">{% trans "Photos"%}</p>
+						{% ifequal edit_user user %}
+							<p style="color: #7F7F7F;">{% trans "You can optionally edit your photos."%}</p>
+						{% else %}
+							<p style="color: #7F7F7F;">{% trans "You can optionally edit this person's photos."%}</p>
+						{% endifequal %}
+							<p style="color: #7F7F7F;">{% trans "The images must be in PNG, GIF or JPEG format." %}</p>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<table style="border: 2px solid #FFF;">
+							<tr>
+								<td colspan="2">
+									{% ifequal edit_user user %}
+										<p style="color: #7F7F7F;">{% trans "This photo will appear in your comments and in other areas. It is mainly for quick identification."%}</p>
+									{% else %}
+										<p style="color: #7F7F7F;">{% trans "This photo will appear in this person's comments and in other areas. It is mainly for quick identification." %}</p>
+									{% endifequal %}
+								</td>
+							</tr>
+							{% if edit_user_profile.small_photo %}
+								<tr id="small_photo">
+									<td colspan="2">
+										<div align="center" width="100%">
+											{% displayuserphoto edit_user %}
+											<p><a href="" id="delete_small_photo{{edit_user.id}}" class="delete">Delete</a></p>
+											{% modalconfirm "delete_small_photo{{edit_user.id}}" _("Are you sure you want to delete this user's small photo?") "delete_smallphoto" %}
+										</div>
+									</td>
+								</tr>
+							{% endif %}
+							{% if editUserForm.small_photo.errors %}
+								<tr>
+									<td colspan="2">
+										<div class="red_msg">
+											{% for error in editUserForm.small_photo.errors %}
+												<p>{{error}}</p>
+											{% endfor %}
+										</div>
+									</td>
+								</tr>
+							{% endif %}
+							<tr>
+								<td colspan="2">
+									<br/><p style="color: #7F7F7F;">{% trans "The image will then be resized to at most 64x64 pixels." %}</p>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									{{editUserForm.small_photo.label_tag}}
+									{{editUserForm.small_photo}}
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<table style="border: 2px solid #FFF;">
+							<tr>
+								<td colspan="2">
+										{% ifequal edit_user user %}
+											<p style="color: #7F7F7F;">{% trans "This photo will appear in your area. People will see this when they are viewing your details." %}</p>
+										{% else %}
+											<p style="color: #7F7F7F;">{% trans "This photo will appear in this person's area. People will see this when they are viewing this person's details." %}</p>
+										{% endifequal %}
+											<br/>
+								</td>
+							</tr>
+							{% if edit_user_profile.large_photo %}
+									<tr id="large_photo">
+										<td colspan="2">
+											<div align="center" width="100%">
+												{% displayuserphoto edit_user "large" %}
+												<p><a href="" id="delete_large_photo" class="delete">Delete</a></p>
+												{% modalconfirm "delete_large_photo" _("Are you sure you want to delete this user's large photo?") "delete_largephoto" %}</p>
+											</div>
+										</td>
+									</tr>
+								{% endif %}
+							<tr>
+								<td colspan="2">
+									<br/><p style="color: #7F7F7F;">{% trans "The uploaded image will be resized to at most 450x500 pixel." %}</p>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									{{editUserForm.large_photo.label_tag}}
+									{{editUserForm.large_photo}}
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div>	
+ 	 {% printformfooter _("Update Profile") _("Cancel") "rancho.user.views.all_people" %}
+	</form>
+{% endblock %}

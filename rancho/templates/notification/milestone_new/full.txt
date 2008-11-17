@@ -1,0 +1,14 @@
+{% load i18n %}
+{% trans "Company" %}: {{ milestone.project.company.short_name }}
+{% trans "Project" %}: {{ milestone.project.name }}
+--------------------------------------------------
+
+{% if milestone.responsible %}{% trans "You've been assign a new milestone." %}{% else %}{% trans "A new milestone has been created." %}{% endif %}
+
+{% trans "Milestone" %}: {{ milestone.title }}
+{% trans "Due date" %}: {{ milestone.due_date }}
+
+--
+{% trans "DO NOT REPLY TO THIS EMAIL" %}
+{% trans "To view this milestone, please go to" %} {{ link_url }}.
+

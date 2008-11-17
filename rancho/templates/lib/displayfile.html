@@ -1,0 +1,54 @@
+{% load formatdate usernamegen i18n modalconfirm permissions_tags %}
+
+<div class="item_list">
+	<div class="blue_item">
+		<div class="item_title">
+			<a class="blue" href="{% url file.views.view_file p_id=project.id,file_id=file.id%}">{{ file.title }}</a>
+		</div>
+		<div class="item_controls">
+			{% ifhasperm "PERMISSIONS_FILE_EDITDELETE" user project file %}
+				<a class="edit" href="{% url file.views.edit p_id=project.id,v_id=last_version.id %}">Edit</a> | <a id="delete_file{{last_version.id}}" class="delete" href="">Delete</a>
+				{% modalconfirm "delete_file{{last_version.id}}" _("Are you sure you want to delete this file?") "delete_file(last_version.id)" %}
+			{% endifhasperm %}			
+		</div>
+	</div>
+	<div class="item_bottom" style="overflow: hidden; margin-top: 2px;">
+		<div class="responsible_and_date">
+			<div style="float: left;">
+				<a href="{% url file.views.send_file p_id=project.id,v_id=last_version.id%}" title="{{ last_version_name }}"><img src=
+				{% if is_image %}
+					"{% url file.views.send_file p_id=project.id,v_id=last_version.id%}" width="80px"
+				{% else %}
+					"/media/icons/32/{{ last_version_icon }}"
+				{% endif %}
+				 alt="{{ last_version_name }}" border="0"/></a>
+			</div>
+			<div style="float: left;">
+				<p>{{last_version.description}}</p>
+			</div>
+		</div>
+		{% ifhasperm "PERMISSIONS_FILE_CREATE" user project file %}
+		<div class="complete_incomplete">
+			<a class="blue" href="{% url file.views.new_upload p_id=project.id,f_id=file.id %}">{% trans "Upload New Version" %}</a>
+		</div>
+		{% endifhasperm %}
+	</div>
+	<p><strong>#{{ last_version_number }}: <a class="blue" href="{% url file.views.send_file p_id=project.id,v_id=last_version.id%}">{{ last_version_name }}</a> ({{ last_version.file_size|filesizeformat }})</strong> - {% formatdate user last_version.creation_date %}</p>
+	<p>{% trans "By" %} {% usernamegen file.creator %}</p>
+	<div style="margin-left: 10px;">
+		{% for number, name, version, icon in versions %}
+			<div style="float: left; width: 75%;">
+				<p>#{{ number }}: <img class="textcenter" src="/media/icons/16/{{ icon }}" alt=""/><a class="blue" href="{% url file.views.send_file p_id=project.id,v_id=version.id%}">{{ name }}</a> ({{ version.file_size|filesizeformat }}) - {% formatdate user last_version.creation_date %}</p>
+				<p style="margin-left: 30px;">{% trans "By" %} {% usernamegen version.creator %}</p>
+			</div>
+			{% ifhasperm "PERMISSIONS_FILE_EDITDELETE" user project version %}
+				<div style="float: right;">
+					<a class="edit" href="{% url file.views.edit p_id=project.id,v_id=version.id %}">Edit</a> 
+					| 
+					<a id="delete_file{{ version.id }}" class="delete" href="">Delete</a>
+				</div>
+				{% modalconfirm "delete_file{{version.id}}" _("Are you sure you want to delete this revision?") "delete_file(version.id)" %}
+			{% endifhasperm %}
+		{% endfor %}
+	</div>
+</div>

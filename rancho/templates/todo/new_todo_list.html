@@ -1,0 +1,52 @@
+{% extends "project/basicproject.html" %}
+
+{% load i18n usernamegen genmenu form_tags %}
+
+{% block pagetitle %} {{ company.short_name }} | {% trans "Add ToDo List" %} {% endblock %}
+	
+{% block jquerycode %}
+	$(document).ready(function() {
+			
+		$("#hideDescription").toggle(		
+			function(){				
+				$("#description").slideUp('fast');
+				$("#hideDescription").text("(Show)");
+				return false;
+			}
+			,
+			function(){				
+				$("#description").slideDown('fast');
+				$("#hideDescription").text("(Hide)");
+				return false;
+			}
+		);
+	}
+	);	
+{% endblock %}
+
+{% block area_name %}
+    <p>{% trans "Create ToDo List" %}</p>
+{% endblock %}
+
+{% block menu %}
+	{% genmenu "inproject" "todos" project.id %}
+{% endblock %}
+
+{% block right_content %}
+
+{% endblock %}
+
+{% block main_content %}	
+	<div style="margin-left: 20px;">
+	<form action="{% url todo.views.create p_id=project.id %}" method="post">
+		{% beginrequestbox "required" _("Choose the name of the list") _("(for example &quot;Things for the meeting&quot;)")  %}
+			{% printfield  newTDLform.todolist_name "none" %}
+	  	{% endrequestbox %}
+		{% beginrequestbox "notrequired" _("Description") _("You can also set an optional description for this list.")  %}
+			{% printfield  newTDLform.todolist_description "none" %}
+		{% endrequestbox %}
+		
+		{% printformfooter _("Submit List") _("Cancel") "rancho.todo.views.list project.id" %}
+	</form>
+	</div>
+{% endblock %}

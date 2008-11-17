@@ -1,0 +1,21 @@
+{% load i18n genmenu %}
+<html>
+	<head>
+		
+	</head>
+	<body>
+<h1>List Available Sites</h1>
+
+<ul>
+{% for s in sites %}
+    <li>{{s}} | <a href="/delete/{{s.id}}/">Delete</a></li>  
+{% endfor %}
+</ul>
+<hr>
+<h1>Create New Company</h1>
+<form action="" method="post">
+{{form.as_p}}
+<input class="submit" type="submit" value="Create" />
+</form>
+</body>
+</html>

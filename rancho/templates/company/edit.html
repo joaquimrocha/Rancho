@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% load i18n usernamegen modalconfirm form_tags displaynotification genmenu %}
+
+{% block pagetitle %} {{ company.short_name }} | Dashboard {% endblock %}
+
+{% block menu %}
+    {% genmenu "root" "" %}
+{% endblock %}
+
+    
+{% block area_name %}
+    <p>{% trans "Update Company Information" %}</p>
+{% endblock %}
+    
+{% block right_content %}
+  
+{% endblock %}
+
+{% block main_content %}
+    
+	{% displaynotification messages %}
+	
+    <form action="{% url company.views.edit_company editcompany.id  %}" method="post" enctype="multipart/form-data">	
+	{% beginrequestbox "required" _("Company Info") ""  %}
+          {% printfield  form.short_name "left" %}
+          {% printfield  form.long_name "left" %}
+    {% endrequestbox %} 
+	
+	{% printformfooter _("Update Company") _("Cancel") "rancho.user.views.all_people" %}
+</form>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% ifequal type "required" %}
+<div class="blue_section_obl">
+{% else %}	
+<div class="blue_section">
+{% endifequal %}	
+<table width="535px">
+{% if title %}
+<tr>
+    <td colspan="2"><p><b>{{title}}</b></p></td>
+</tr>
+{% endif %}
+{% if description %}
+<tr>
+<td colspan="2"><p class=" gray">{{description}}</p></td>
+</tr>
+{% endif %}

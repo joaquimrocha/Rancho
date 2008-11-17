@@ -1,0 +1,31 @@
+{% load i18n %}
+</table>
+
+<script type="text/javascript"> 
+    $(document).ready(function() {
+		{% ifequal visible "false" %}
+        $("#{{jsid}}").hide();
+		{% else %}
+		  $("a#{{jsid}}_more_info").text("(Hide)");
+		{% endifequal %}
+        
+        $("a#{{jsid}}_more_info").toggle(function() {
+                $("#{{jsid}}").show('fast');
+                $("a#{{jsid}}_more_info").text("(Hide)");
+            },
+            function() {
+                $("#{{jsid}}").hide('fast');
+                $("a#{{jsid}}_more_info").text("(Show More)");
+            }
+        );
+    });
+</script>
+
+<table style="margin-top: 10px;" >
+<tr>
+    <td>
+        <p><a id="{{jsid}}_more_info" href="#">({% trans "Show More" %})</a> <span style="color: #7F7F7F; font-weight: normal;">({{title}})</span></p>
+    </td>
+</tr>
+</table>
+<table id="{{jsid}}"  width="500px;">

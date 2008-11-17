@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% load i18n displayevent displaymilestone genmenu sidewidget %}
+
+{% block pagetitle %} {{ company.short_name }} | {% trans "Milestones" %} {% endblock %}
+
+{% block menu %}
+	{% genmenu "root" "milestones" %}
+{% endblock %}
+
+{% block area_name %}
+	<p>{% trans "Milestones for all your projects" %}</p>
+{% endblock %}
+
+{% block outter_main_content %}
+	
+	{% regroup projects by project as project_list %}
+	{% if not project_list %}
+		<p>No milestone in your projects yet!</p>
+	{% endif %}
+	{% for project in project_list %}
+		<p><a href="{% url milestone.views.list project.grouper.id %}" class="smallcaps_title blue_bg white">{{ project.grouper.name }}</a></p>
+		{% for item in project.list %}
+			{% for milestone in item.late_milestones %}
+				{% displaymilestone milestone "red" user %}
+			{% endfor %}
+			{% for milestone in item.upcoming_milestones %}
+				{% displaymilestone milestone "blue" user %}
+			{% endfor %}
+		{% endfor %}
+	{% endfor %}
+{% endblock %}
+	
+{% block right_content %}	
+    {% sidewidget _("Information") "information" %}
+	<p>{% blocktrans %}In here you have a general view of all milestones in all your projects.{% endblocktrans %}</p>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% load i18n usernamegen %}
+{% trans "Company" %}: {{ file.project.company.short_name }}
+{% trans "Project" %}: {{ file.project.name }}
+--------------------------------------------------
+
+{% trans "New file version uploaded by" %} {% usernamegen file.creator %} <{{ file.creator.email }}>
+
+{% trans "File" %}: {{ file.title }} ({{ file_name }}, {{ file.last_file_version.file_size|filesizeformat }})
+{% if file.last_file_version.description %}{% trans "New version:" %} {{ file.last_file_version.description }}{% endif %}
+
+--
+{% trans "DO NOT REPLY TO THIS EMAIL" %}
+{% trans "To view this file, please go to" %} {{ link_url }}.
+

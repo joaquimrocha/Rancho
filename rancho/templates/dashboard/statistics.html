@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% load i18n displayevent displaymilestone genmenu sidewidget permissions_tags displaystatistic %}
+
+{% block pagetitle %} {{ company.short_name }} | {% trans "Statistics" %} {% endblock %}
+
+{% block menu %}
+	{% genmenu "root" "statistics" %}
+{% endblock %}
+
+{% block area_name %}
+	<p>{% trans "Statistics for all your projects" %}</p>
+{% endblock %}
+
+{% block outter_main_content %}
+	
+	{% if not projects %}
+		<p>No Projects available!</p>
+	{% endif %}
+	{% for project in projects %}
+		<p><a href="{% url project.views.overview project.project.id %}" class="smallcaps_title blue_bg white">{{ project.project.name }}</a></p>
+		
+		{% ifnotequal project.messages -1 %}
+			{% displaystatistic "message" _("Messages") project.messages %}
+		{% endifnotequal %}
+		
+		{% ifnotequal project.todos -1 %}      
+            {% displaystatistic "todo" _("ToDo Lists") project.todos %}
+        {% endifnotequal %}
+		
+		{% ifnotequal project.milestones -1 %}
+            {% displaystatistic "milestone" _("Milestones") project.milestones %}
+		{% endifnotequal %}
+		{% ifnotequal project.wikiboards -1 %}
+            {% displaystatistic "wikiboard" _("Wikiboards") project.wikiboards %}
+		{% endifnotequal %}
+		{% ifnotequal project.files -1 %}
+            {% displaystatistic "file" _("Files") project.files %}
+    	{% endifnotequal %}
+		
+	{% endfor %}
+{% endblock %}
+	
+{% block right_content %}	
+    {% sidewidget _("Information") "information" %}
+	<p>{% blocktrans %}In here you have a general view of all projects you are in and some statistics.{% endblocktrans %}</p>
+{% endblock %}

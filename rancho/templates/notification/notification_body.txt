@@ -1,0 +1,7 @@
+{% load i18n %}You have received the following notice from Rancho:
+
+{{ message }}
+
+To change how you receive notifications, please go to {{ notices_url }}
+
+If you have any issues, please don't hesitate to contact {{ contact_email }}

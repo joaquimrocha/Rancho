@@ -1,0 +1,33 @@
+{% extends "project/basicproject.html" %}
+
+{% load i18n usernamegen genmenu form_tags displaynotification %}
+
+{% block pagetitle %} {{ company.short_name }} | {% trans "Add ToDo Item" %} {% endblock %}
+
+{% block area_name %}
+    <p>{% trans "Edit ToDo item" %}</p>
+{% endblock %}
+
+{% block menu %}
+	{% genmenu "inproject" "todos" project.id %}
+{% endblock %}
+
+{% block right_content %}
+
+{% endblock %}
+
+{% block main_content %}
+	
+	{% displaynotification messages %}
+
+	<form action="{% url todo.views.edit_todo p_id=project.id,todo_id=todo.id %}" method="post">
+		
+		{% beginrequestbox "required" _("ToDo") ""  %}
+			{% printfield edit_todo_form.title "left" %}
+			{% printfield edit_todo_form.responsible "left" %}
+		{% endrequestbox %}
+
+		{% printformfooter _("Update ToDo item") _("Cancel") "rancho.todo.views.view_todo_list p_id=project.id,todo_list_id=todo_list.id" %}
+
+	</form>
+{% endblock %}

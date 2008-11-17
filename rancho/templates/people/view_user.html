@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+
+{% load i18n modalconfirm genmenu displayuserphoto usernamegen form_tags %}
+
+{% block pagetitle %} {{ company.short_name }} | {% trans "View User" %} {% endblock %}
+
+{% block menu %}
+	{% genmenu "root" "" %}
+{% endblock %}
+
+{% block scripts %}
+<!-- Because IE sucks big time-->
+    <!--[if lt IE 7]>
+    <style type='text/css'>
+      
+      #modalContainer {
+        top: expression((document.documentElement.scrollTop
+            || document.body.scrollTop) + Math.round(15 *
+            (document.documentElement.offsetHeight
+            || document.body.clientHeight) / 100) + 'px');
+      }
+    </style>
+    <![endif]-->
+{% endblock %}
+
+{% block jquerypluginloader %}
+	<script type="text/javascript" src="/media/js/jquery/simplemodal.js"></script>
+{% endblock %}
+	
+{% block jquerycode %}
+
+{% endblock %}
+
+{% block right_content %}
+	<div class="edit_button">
+        <a href="{% url user.views.edituser view_user.id %}">{% trans "Edit This User" %}</a>
+    </div>
+    <div class="add_button_right"></div>
+    <br/><br/>
+
+	<div class="widget">
+	<p>{% trans "User's projects" %}</p>
+	<div id="projects">
+		<ul>
+			{% for project in projects %}
+				<li><a href="{% url project.views.overview project.id %}">{{ project.name }}</a></li>
+			{% endfor %}
+		</ul>
+	</div>
+	</div>
+{% endblock %}
+
+{% block mini_menu %}    
+    
+{% endblock %}
+
+{% block area_name %}
+	<p>{% trans "User" %}: <span>{% usernamegen view_user %}</span></p>
+{% endblock %}
+
+{% block main_content %}
+	<div class="blue_section" style="overflow: hidden; padding: 10px;">
+	<div style="float: left;">
+		{% displayuserphoto view_user "small" %}
+	</div>
+	<div style="float: left; margin-left: 10px;">		
+		<p><strong>{{ view_user.get_full_name }}</strong></p>
+		{% if view_user.get_profile.title %}
+			<p>{{ view_user.get_profile.title }}</p>
+		{% endif %}
+		<p><a href="mailto:{{ view_user.email }}" title="{% trans "Send email to this user" %}">{{ view_user.email }}</a></p>
+		<p>{{ view_user.get_profile.company.short_name }}</p>
+	</div>
+	</div>
+	<table>
+		{% if view_user.get_profile.office %}
+		<tr>
+			<td>
+				<p><strong>{% trans "Office" %}:</strong></p>
+			</td>
+			<td>
+				 <p>{{ view_user.get_profile.office }}</p>
+			</td>
+		</tr>
+		{% endif %}
+		{% if view_user.get_profile.office_phone %}
+		<tr>
+			<td>
+				<p><strong>{% trans "Office Phone" %}:</strong></p>
+			</td>
+			<td>
+				 <p>{{ view_user.get_profile.office_phone }} <strong>{% trans "Extension" %}:</strong> {{ view_user.get_profile.office_phone_ext }}</p>
+			</td>
+		</tr>
+		{% endif %}
+		{% if view_user.get_profile.mobile_phone %}
+		<tr>
+			<td>
+				<p><strong>{% trans "Mobile Phone" %}:</strong></p>
+			</td>
+			<td>
+				 <p>{{ view_user.get_profile.mobile_phone }}</p>
+			</td>
+		</tr>
+		{% endif %}
+		{% if view_user.get_profile.home_phone %}
+		<tr>
+			<td>
+				<p><strong>{% trans "Home Phone" %}:</strong></p>
+			</td>
+			<td>
+				 <p>{{ view_user.get_profile.home_phone }}</p>
+			</td>
+		</tr>
+		{% endif %}
+		{% if view_user.get_profile.im_name %}
+		<tr>
+			<td>
+				<p><strong>{{ view_user.get_profile.im_service }} {% trans "IM" %}:</strong></p>
+			</td>
+			<td>
+				 <p>{{ view_user.get_profile.im_name }}</p>
+			</td>
+		</tr>
+		{% endif %}
+		{% if view_user.get_profile.webpage %}
+		<tr>
+			<td>
+				<p><strong>{% trans "Web Page" %}:</strong></p>
+			</td>
+			<td>
+				 <p><a href="http://{{ view_user.get_profile.webpage }}">{{ view_user.get_profile.webpage }}</a></p>
+			</td>
+		</tr>
+		{% endif %}
+		{% if view_user.get_profile.mailing_address%}
+		<tr>
+			<td>
+				<p><strong>{% trans "Mailing Address" %}:</strong></p>
+			</td>
+			<td>
+				 <p>{{ view_user.get_profile.mailing_address }}</p>
+			</td>
+		</tr>
+		{% endif %}
+		{% if view_user.get_profile.large_photo %}
+		<tr>
+		        <td colspan="2">
+			         <p><strong>{% trans "Large Photo" %}:</strong></p>
+			</td>
+		</tr>
+		<tr>
+		        <td colspan="2">
+	                         {% displayuserphoto view_user "large" %}
+			</td>
+		</tr>
+		{% endif %}
+	</table>
+	<hr/>
+	
+	<div class="right_button">
+        <a href="{% url user.views.all_people %}" class="red">{% trans "Back" %}</a>
+    </div>
+{% endblock %}

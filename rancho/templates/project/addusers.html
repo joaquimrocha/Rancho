@@ -1,0 +1,39 @@
+{% extends "project/basicproject.html" %}
+
+{% load i18n usernamegen genmenu form_tags %}
+
+{% block pagetitle %} {{ project.name }} | {% trans "People & Permissions" %} {% endblock %}
+
+{% block menu %}
+    {% genmenu "inproject" "overview" project.id %}
+{% endblock %}
+	
+{% block jquerypluginloader %}
+<script type="text/javascript" src="/media/js/jquery/taconite.js"></script>
+<script type="text/javascript" src="/media/js/ajaxform/ajaxForm.js"></script>
+{% endblock %}
+
+{% block area_name %}
+    <p>{% trans "People & Permissions" %}</p>
+{% endblock %}
+
+{% block main_content %}	
+	<div style="padding: 0 15px 0 15px;">
+	
+	<form id="add_people_to_project_form" method="post" action="{% url project.views.add_people_to_project p_id=project.id %}">
+	
+    {% beginrequestbox "notrequired" _("Permissions for the selected users") ""  %}
+	   {% printfield  form.permissions "none" %}        
+    {% endrequestbox %}
+	
+	{% beginrequestbox "notrequired" _("People not in this project") _("Select the people you want to add to the project from the companies list below.")  %}
+	{% endrequestbox %}
+  
+    {% printfield  form.user_not_in_project "none" %}
+	
+	{% printformfooter _("Add People to Project") _("Cancel") "rancho.project.views.show_people_project project.id" %}
+	
+	</form>
+	
+	</div>	
+{% endblock %}

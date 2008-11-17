@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% load i18n genmenu monthcal %}
+
+{% block jquerypluginloader %}
+<script type="text/javascript" src="/media/js/jquery/taconite.js"></script>
+{% endblock %}
+
+{% block jquerycode %}
+    function get_events(year, month, day) {                
+        $.get("/calendar/get_events/" + year + "/" + month + "/" + day);
+        return false;
+    }
+{% endblock %}
+
+{% block pagetitle %} {{ company.short_name }} | {% trans "Calendar" %} {% endblock %}
+    
+{% block area_name %}
+    <p>{% trans "My Calendar" %}</p>
+{% endblock %}
+
+{% block menu %}
+    {% genmenu "root" "calendar" %}
+{% endblock %}
+ 
+{% block main_content %}
+	{% if year and month %}
+		{% monthcal user "large" year month %}
+	{% else %}
+		{% monthcal user "large" %}
+	{% endif %}
+{% endblock %}

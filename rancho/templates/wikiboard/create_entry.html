@@ -1,0 +1,39 @@
+{% extends "project/basicproject.html" %}
+
+{% load i18n usernamegen genmenu form_tags %}
+
+{% block pagetitle %} {{ project.name }} | {% trans "Create Entry" %} {% endblock %}
+        
+{% block area_name %}
+    <p>{% trans "Create Entry" %}</p>
+{% endblock %}
+
+{% block menu %}
+	{% genmenu "inproject" "wikiboards" project.id %}
+{% endblock %}
+
+{% block jquerypluginloader %}
+<script type="text/javascript" src="/media/js/tiny_mce/tiny_mce.js"></script>
+{% endblock %}
+
+    
+{% block right_content %}
+{% endblock %}
+
+    
+{% block main_content %}                
+    <form action="{% url wikiboard.views.create p_id=project.id %}" method="post">
+    	
+	  {% beginrequestbox "required" _("Wikiboard") _("Choose the name for the entry.")  %}
+          {% printfield  form.wiki_name "none" %}
+      {% endrequestbox %}   
+      <p>&nbsp;</p>	  
+	  {% beginrequestbox "required" _("Content") _("Please enter wiki content")  %}
+          {% printfield  form.content "none" %}
+      {% endrequestbox %}
+        
+	  {% printformfooter _("Submit Wikiboard") _("Cancel") "rancho.wikiboard.views.list project.id" %}
+	  
+	  
+    </form>    
+{% endblock %}

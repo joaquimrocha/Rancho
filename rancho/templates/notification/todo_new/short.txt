@@ -1,0 +1,1 @@
+{% load i18n %}{% if todo.responsible %}{% trans "New todo item assigned to you" %}{% else %}{% trans "New todo item" %}{% endif %}

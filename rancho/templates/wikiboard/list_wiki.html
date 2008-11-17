@@ -1,0 +1,70 @@
+{% extends "project/basicproject.html" %}
+
+{% load i18n usernamegen modalconfirm genmenu permissions_tags pagination_tags displaywikiboard displaynotification %}
+
+{% block pagetitle %} {{ project.name }} | {% trans "View Wikiboards" %} {% endblock %}
+
+{% block scripts%}
+<!-- Because IE sucks big time-->
+    <!--[if lt IE 7]>
+    <style type='text/css'>
+      
+      #modalContainer {
+        top: expression((document.documentElement.scrollTop
+            || document.body.scrollTop) + Math.round(15 *
+            (document.documentElement.offsetHeight
+            || document.body.clientHeight) / 100) + 'px');
+      }
+    </style>
+    <![endif]-->
+{% endblock %}
+
+{% block jquerypluginloader %}
+<script type="text/javascript" src="/media/js/jquery/simplemodal.js"></script>
+{% endblock %}
+    
+{% block jquerycode %}
+   function delete_wiki(wiki_id) {                  
+       window.location = "/project/{{project.id}}/wikiboards/delete/"+ wiki_id+"/";
+       return false;                      
+    }
+{% endblock %}
+
+{% block area_name %}
+    <p>{% trans "Wikiboards" %}</p>
+{% endblock %}
+
+{% block menu %}
+	{% genmenu "inproject" "wikiboards" project.id %}
+{% endblock %}
+    
+{% block right_content %}
+{% ifhasperm "PERMISSIONS_WIKIBOARD_CREATE" user project %}
+    <div class="add_button">
+    <a href="{% url wikiboard.views.create p_id=project.id %}">{% trans "New Wikiboard" %}</a>
+        
+    </div>
+    <div class="add_button_right"></div>
+    <br/><br/>
+{% endifhasperm %}
+{% endblock %}
+
+	
+{% block main_content %}
+	
+	{% displaynotification messages %}
+	
+    {% if not wikis %}   
+        {% trans "There are no Wikiboards in this project yet." %}
+    {% else %}  
+        {% autopaginate wikis 5 %}           
+        {% paginate %}
+        
+        {% for wiki in wikis %}
+			{% displaywikiboard wiki user %}
+        {% endfor %}
+    
+    {% paginate %}
+            
+    {% endif %}
+{% endblock %}

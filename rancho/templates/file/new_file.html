@@ -1,0 +1,37 @@
+{% extends "project/basicproject.html" %}
+
+{% load i18n usernamegen genmenu form_tags%}
+
+{% block pagetitle %} {{ project.name }} | {% trans "Add new file" %} {% endblock %}
+        
+{% block area_name %}
+    <p>{% trans "New File" %}</p>
+{% endblock %}
+
+{% block menu %}
+	{% genmenu "inproject" "files" project.id %}
+{% endblock %}
+        
+{% block right_content %}
+{% endblock %}
+
+{% block main_content %}
+    <form action="{% url file.views.create p_id=project.id %}" method="post" enctype="multipart/form-data">
+    	
+	   {% beginrequestbox "required" _("File upload") ""  %}
+          {% printfield  form.title "left" %}
+          {% printfield  form.description "left" %}
+		  {% printfield  form.file "left" %}
+       {% endrequestbox %}           
+
+       {% beginrequestbox "notrequired" _("File Tags") _("Apply optional tags to your message, split multime tags with comma.")  %}
+            {% printfield  form.tags "left" %}
+       {% endrequestbox %}
+	   
+	   {% beginrequestbox "notrequired" _("People in this project") _("Optionally check the persons you want to notify about the new file you're about to upload.")  %}
+           {% printfield  form.notify "none" %}
+       {% endrequestbox %}
+	
+	  {% printformfooter _("Submit File") _("Cancel") "rancho.file.views.list project.id" %}
+    </form>
+{% endblock %}

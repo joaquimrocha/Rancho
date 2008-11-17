@@ -1,0 +1,52 @@
+{% load i18n %}
+    {# div with creates dialog #}
+    <div id="modal_dialog_{{link_id}}" class="yes_no_dialog" style="display: none;">
+        <p class="title" style="margin-left: 2px;">{% trans "Please confirm" %}</p>
+        <p>{{question}}</p>
+        <br/>
+        <div class="buttons" align="center">
+        <div style="float:left;width:100px;">
+            <a id="modal_yes_{{link_id}}" class="blue" href="">{% trans "Yes" %}</a>
+        </div>
+        <div style="float:right;width:100px;">
+            <a id="modal_no_{{link_id}}" href="">{% trans "No" %}</a>
+        </div>
+        </div>
+    </div>
+    
+    {# output visible link #}
+        
+    
+      
+    {# necessary javascript to make this work #} 
+    <script type="text/javascript">
+        $("#{{link_id}}").click(
+            function(){
+                $("#modal_dialog_{{link_id}}").modal();
+                return false;
+            }
+        );
+        
+        
+        $("#modal_no_{{link_id}}").click(
+            function() {
+                $.modal.close();
+                {% if no_function %}
+                   return {{no_function}}({{no_function_args|safe}});
+                {% else %} 
+                   return false;
+                {% endif %}
+            }
+        );
+                
+        $("#modal_yes_{{link_id}}").click(
+            function() {
+                $.modal.close();
+				{% if yes_function %}
+                	return {{yes_function}}({{yes_function_args|safe}});
+				{% else %}
+					return false;
+				{% endif %}
+            }
+            );
+    </script>    

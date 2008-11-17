@@ -1,0 +1,12 @@
+{% load i18n %}
+{% trans "Company" %}: {{ milestone.project.company.short_name }}
+{% trans "Project" %}: {{ milestone.project.name }}
+--------------------------------------------------
+
+{% trans "This is a reminder" %}:
+{% blocktrans %}You are 48 hours from the milestone "{{milestone.title}}" with due date {{milestone.due_date}}{% endblocktrans %}
+
+--
+{% trans "DO NOT REPLY TO THIS EMAIL" %}
+{% trans "To view this milestone, please go to" %} {{ link_url }}.
+

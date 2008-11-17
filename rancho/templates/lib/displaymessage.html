@@ -1,0 +1,27 @@
+{% load formatdate usernamegen i18n modalconfirm permissions_tags message_tags displayuserphoto %}
+
+<div class="item_list">
+	<div class="blue_item">
+		<div class="item_title">
+			{% iconformessage message user %}
+			<a class="blue" href="{% url message.views.read_add_comment p_id=project.id,m_id=message.id %}">{{ message.title }}</a>
+		</div>
+		<div class="item_controls">
+			{% ifhasperm "PERMISSIONS_MESSAGE_EDITDELETE" user project message %} 
+				<a class="edit" href="{% url message.views.edit p_id=project.id,m_id=message.id %}">Edit</a> | <a href="" id="delete_message{{message.id}}" class="delete">Delete</a>
+				{% modalconfirm "delete_message{{message.id}}" _("Are you sure you want to delete this message?") "delete_message(message.id)" %}
+			{% endifhasperm %}
+		</div>
+	</div>
+	<div class="item_bottom">
+		<div class="responsible_and_date" style="overflow: hidden; margin-left: 5px;">
+			<div style="float: left; with: 50px;">
+				{% displayuserphoto user %}
+			</div>
+			<div style="float: left; width: 500px; margin-left: 5px;">
+				<p>{{ message.body|truncatewords:10 }}</p>
+				<p class="gray">{% trans "By" %} {% usernamegen message.creator %}, {% formatdate user message.creation_date %}.</p>
+			</div>
+		</div>
+	</div>
+</div>

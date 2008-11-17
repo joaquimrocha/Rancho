@@ -1,0 +1,31 @@
+{% load usernamegen modalconfirm i18n permissions_tags formatdate %}
+<div style="overflow: hidden;">
+	<div style="float: left;">
+		<p>
+			{% ifnotequal project.status "F" %} {# only can do this if active project #}
+                <a id="check{{todo.id}}_link" href="">
+            {% endifnotequal %}				
+			<img id="check{{todo.id}}" style="vertical-align: middle;" src="/media/basepage/images/{{image}}" border="0" />
+  		    {% ifnotequal project.status "F" %} {# only can do this if active project #}
+	          </a>
+	      {% endifnotequal %} 
+		   <span {% if todo.completion_date %} style="text-decoration: line-through;" {% endif %} id="check{{todo.id}}_text">{{todo.description}}</span>
+			<span id="responsible{{todo.id}}" style="font-weight: bold;">
+				{% if todo.responsible %} - {% usernamegen todo.responsible %}{% endif %}
+			</span>
+			<span id="date{{todo.id}}">
+			{% if todo.completion_date %}
+				, {% formatdate user todo.completion_date "False" %}
+			{% endif %}
+			</span>
+		</p>
+	</div>
+	<div style="float: right;">
+		{% if user %}
+			{% ifhasperm "PERMISSIONS_TODO_EDITDELETE" user project todo %}
+				<a class="edit" href="{% url todo.views.edit_todo p_id=project.id,todo_id=todo.id %}">Edit</a> | <a id="delete_todo{{todo.id}}" class="delete" href="">Delete</a>
+				{% modalconfirm "delete_todo{{todo.id}}" _("Are you sure you want to delete this ToDo?") "delete_todo(todo.id)" %}
+			{% endifhasperm %}
+		{% endif %}
+	</div>
+</div>

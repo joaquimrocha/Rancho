@@ -1,0 +1,13 @@
+{% load i18n usernamegen %}
+{% trans "Company" %}: {{ message.project.company.short_name }}
+{% trans "Project" %}: {{ message.project.name }}
+--------------------------------------------------
+
+{% blocktrans with message.title as title %}New comment for message "{{ title}}" by{% endblocktrans %}
+{% usernamegen message.creator %} <{{ message.creator.email }}>
+
+{{ message.body }}
+
+--
+{% trans "DO NOT REPLY TO THIS EMAIL" %}
+{% trans "To view or reply this message, please go to" %} {{ link_url }}.

@@ -1,0 +1,42 @@
+{% load i18n %}
+{% if activeprojects %}
+	<div class="widget">
+	    <p>{% trans "Active Projects" %}</p>
+	</div>
+	<div id="projects">
+	<ul>
+	    {% for project in activeprojects %}
+	        <li><a href="{% url project.views.overview project.id %}">{{project.name}}</a></li>
+	    {% endfor %}
+	    </ul>
+	</div>
+    <br/>	
+{% endif %}
+
+{% if finishedprojects %}
+	<div class="widget_gray">
+	    <p><img src="/media/basepage/images/yes.png" alt="" class="textcenter" /> {% trans "Finished Projects" %}</p>
+	</div>
+	<div id="projects">
+	<ul>
+	    {% for project in finishedprojects %}
+	        <li><a href="{% url project.views.overview project.id %}">{{project.name}}</a></li>
+	    {% endfor %}
+	    </ul>
+	</div>
+    <br/>	
+{% endif %}
+
+{% if frozenprojects %}
+	<div class="widget_gray">
+	    <p>{% trans "Frozen Projects" %}</p>
+	</div>
+	<div id="projects">
+	<ul>
+	    {% for project in frozenprojects %}
+	        <li><a href="{% url project.views.overview project.id %}">{{project.name}}</a></li>
+	    {% endfor %}
+	    </ul>
+	</div>
+{% endif %}	
+	

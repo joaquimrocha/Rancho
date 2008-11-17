@@ -1,0 +1,1 @@
+{% load i18n %}{% if milestone.responsible %}{% trans "New milestone assigned to you" %}{% else %}{% trans "New milestone" %}{% endif %}

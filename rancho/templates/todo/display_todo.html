@@ -1,0 +1,23 @@
+<taconite>
+{% load i18n usernamegen modalconfirm displaytodo %}
+<remove select="#ajax_edit_todo{{todo.id}}"/>
+{% if todo.completion_date %}
+	<attr select="#responsible{{todo.id}}" name="style" value="font-weight: bold;"/>
+	<attr select="#edit_todo{{todo.id}}" name="style" value="background: #EBF0FA;"/>
+	<attr select="#check{{todo.id}}_text" name="style" value="text-decoration: line-through;"/>
+	<attr select="#check{{todo.id}}" name="src" value="/media/basepage/images/check.png"/>
+	<eval>
+        $('#responsible{{todo.id}}').html(" - {% usernamegen todo.responsible %}");
+		$('#date{{todo.id}}').html(", {{todo.completion_date|date:"M. jS Y"}}");
+    </eval>
+{% else %}
+	<attr select="#check{{todo.id}}_text" name="style" value="background: none; text-decoration: none;"/>
+	<attr select="#check{{todo.id}}" name="src" value="/media/basepage/images/notcheck.png"/>
+	{% ifequal user todo.responsible %}
+		<attr select="#edit_todo{{todo.id}}" name="style" value="background: none;"/>
+	{% endifequal %}
+	<eval>
+		$('#date{{todo.id}}').html("");
+    </eval>
+{% endif %}
+</taconite>

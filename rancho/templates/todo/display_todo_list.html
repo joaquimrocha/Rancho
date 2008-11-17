@@ -1,0 +1,45 @@
+{% load i18n usernamegen displaytodo modalconfirm permissions_tags %}
+
+<p style="margin-bottom: 10px;">
+{% if view_alone %}
+	<span class="smallcaps_title blue_bg white">{{ todo_list.title }}</span>
+{% else %}
+	<a class="smallcaps_title blue_bg white" href="{% url todo.views.view_todo_list p_id=project.id,todo_list_id=todo_list.id %}">{{ todo_list.title }}</a>
+{% endif %}
+{% ifhasperm "PERMISSIONS_TODO_EDITDELETE" user project todo_list %}
+	 <a class="edit" href="{% url todo.views.edit_todo_list p_id=project.id,todo_list_id=todo_list.id %}">{% trans "Edit" %}</a> | <a id="delete_todo_list{{todo_list.id}}" href="" class="delete">Delete</a>
+{% endifhasperm %}
+
+</p>
+{% modalconfirm "delete_todo_list{{todo_list.id}}" _("Are you sure you want to delete this ToDo list?")  "delete_todo_list(todo_list.id)" %}
+<p class="todolist_desc">{{ todo_list.description }}</p>
+<div id="todos{{todo_list.id}}" class="display_todos">
+	{% for todo in todos %}
+		<div id="edit_todo{{todo.id}}" {% ifequal user todo.responsible %}style="background: #EBF0FA;"{% endifequal %}>
+			{% displaytodo todo user %}
+		</div>
+	{% endfor %}
+</div>
+{% ifhasperm "PERMISSIONS_TODO_CREATE" user project %}
+	<div style="margin: 5px 0 60px 15px;">
+		<div id="add_an_item{{todo_list.id}}">
+			<div class="add_button">
+				<a href="">{% trans "Add an item"%}</a>
+			</div>
+			<div class="add_button_right"></div>
+		</div>
+		<div class="blue_section" style="display: none;" id="add_item_form{{todo_list.id}}">
+			<div id="empty_todo_error{{ todo_list.id }}" class="red_msg" style="margin-bottom: 5px; display: none;">
+				{% trans "Please insert the name for this ToDo item" %}
+			</div>
+			<input type="text" id="todo_desc{{todo_list.id}}" name="todo_desc" class="xlarge"/><br/><br/>
+			<label>{% trans "Choose a responsible:"%}</label><select id="todo_responsible{{todo_list.id}}">
+			{% for user_id, user_name in users_in_project %}
+				<option value="{{user_id}}">{{user_name}}</option>
+			{% endfor %}
+			</select>
+			<hr/>
+			<input id="submit_todo{{todo_list.id}}" type="button" value="Add ToDo" class="submit" /><a href="" id="cancel{{todo_list.id}}" class="red" style="margin-left: 350px;">Cancel</a> 
+		</div>
+	</div>
+{% endifhasperm %}

@@ -1,0 +1,82 @@
+{% extends "project/basicproject.html" %}
+
+{% load i18n pagination_tags wordlimiter usernamegen modalconfirm genmenu permissions_tags displayuserphoto form_tags displaynotification tagging_tags message_tags formatdate displaymessage %}
+
+{% block pagetitle %} {{ project.name }} | {% trans "Overview" %} {% endblock %}
+
+{% block scripts%}
+<!-- Because IE sucks big time-->
+    <!--[if lt IE 7]>
+    <style type='text/css'>
+      
+      #modalContainer {
+        top: expression((document.documentElement.scrollTop
+            || document.body.scrollTop) + Math.round(15 *
+            (document.documentElement.offsetHeight
+            || document.body.clientHeight) / 100) + 'px');
+      }
+    </style>
+    <![endif]-->
+{% endblock %}
+
+{% block jquerypluginloader %}
+<script type="text/javascript" src="/media/js/jquery/simplemodal.js"></script>
+<script type="text/javascript" src="/media/js/jquery/taconite.js"></script>
+{% endblock %}
+		
+{% block jquerycode %}
+    function delete_message(message_id) {	               
+       window.location = "/project/{{project.id}}/message/delete/"+ message_id+"/?page=index";
+	   return false;	                  
+    }
+{% endblock %}
+
+{% block menu %}
+	{% genmenu "inproject" "message" project.id %}
+{% endblock %}
+
+{% block area_name %}
+    <p>{% trans "Messages" %}</p>
+{% endblock %}
+
+{% block right_content %}
+    {% ifhasperm "PERMISSIONS_MESSAGE_CREATE" user project %}
+		<div class="add_button">
+			<a href="{% url message.views.create project.id %}">{% trans "New Message" %}</a>
+		</div><div class="add_button_right"></div>
+		<br/><br/>
+	{% endifhasperm %}
+
+{% tag_cloud_for_model message.Message as message_tags with steps=6 distribution=log %}
+{% if message_tags %}
+<div class="widget">
+    <p>{% trans "Tag Cloud" %}</p>
+</div>
+<div class="tag-cloud">
+{% for tag in message_tags %}
+<span class="tag-{{tag.font_size}}"><a href="{% url message_list_tag p_id=project.id,tag=tag.name%}">{{tag.name}}</a></span> 
+{% endfor %}
+</div>
+{% endif %}
+
+
+
+{% endblock %}
+
+{% block main_content %}	
+	{% if not messagelist %}	
+	    {% trans "There are no messages in this project yet." %}
+    {% else %}	
+	    {% autopaginate messagelist 5 %}			
+		{% paginate %}	  
+		
+		{% displaynotification messages %}
+ 		
+		<table width="100%">
+		{% for message in messagelist %}
+			{% displaymessage message user %}
+		{% endfor %}
+		</table>
+		{% paginate %}			
+	{% endif %}
+{% endblock %}
