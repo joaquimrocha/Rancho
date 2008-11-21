@@ -65,7 +65,7 @@ After this, Rancho needs to be configured. Edit the settings_customize.py file a
 
 SEARCH_ENGINE = 'postgresql'
 
-DATABASE_ENGINE = 'postresql'
+DATABASE_ENGINE = 'postgresql'
 
 DATABASE_NAME = 'ranchodb'
 
