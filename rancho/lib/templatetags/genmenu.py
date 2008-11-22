@@ -46,7 +46,7 @@ def genmenu(context, menu_title, active_menu, url=None, before_text=None, on_nam
         on_name=u'active'
             
     if url:  
-        if type(url) == int: #to support when user only puts a variable
+        if type(url) in (int, long): #to support when user only puts a variable
             args = [url]
         else:          
             args = [Variable(arg).resolve(context) for arg in url.split(',')]
