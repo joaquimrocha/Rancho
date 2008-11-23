@@ -26,11 +26,12 @@ Here are the system requirements to run Rancho.
 
   * Linux/UNIX operating system;
   * Django (http://www.djangoproject.com);
-  * MySQL (http://www.mysql.com) OR PostgreSQL (http://www.postgresql.com);
+  * MySQL>=4.0.1 (http://www.mysql.com) OR PostgreSQL>=8.3 (http://www.postgresql.com);
   * Python MySQLDB (http://mysql-python.sourceforge.net/) in case of using the MySQL database;
   * PsycoPG (http://www.initd.org) in case of using the PostgreSQL database;
   * pytz (http://pytz.sourceforge.net/);
   * PIL - Python Image Library - (http://www.pythonware.com/products/pil/);
+  * <HTML>DOC - HTML to PDF converter (http://www.htmldoc.org/)
 
 Getting the Code
 =================
@@ -55,7 +56,7 @@ This section covers the installation of Django on a Debian system (or Debian bas
 
 Run the following command as superuser to install the other requirements:
 
-    # apt-get install python-psycopg python-tz python-imaging
+    # apt-get install python-psycopg python-tz python-imaging htmldoc
 
 Once the packages finish being installed, create a database to be used by Rancho:
 
