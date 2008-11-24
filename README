@@ -103,3 +103,25 @@ Once the previous command is finished, it's time to run Rancho. For this, the Dj
 If everything went okay, you can now visit http://localhost:8000 in your web browser to access Rancho. Log in with the information you supplied previously and that's it! Rancho is installed!
 
 **Important**: Note that it is not advisable to use this server for production. Visit the Django web site to learn how to deploy Rancho in a production environment.
+
+Important Configuration
+=======================
+
+When using Rancho in a production environment you have to configure some additional items.
+
+Sending files thought Django is very inefficient so you should configure Rancho to use Apache mod-xsendfile. You can get it from: http://tn123.ath.cx/mod_xsendfile/
+
+HOW_SEND_FILE='apache-modsendfile'
+
+You should also define a value for SECRET_KEY since this is used to provide a seed in secret-key hashing algorithms. Set this to a random string -- the longer, the better.
+
+Finally you should setup the cron:
+
+	# crontab -e
+
+add the following lines:
+	 
+	0 23 * * * RANCHO_INSTALL_DIR/rancho/manage.py run_cron 
+	0 * * * * RANCHO_INSTALL_DIR/rancho/manage.py send_mail
+
+The cron is run every day at 23h00 and the mail is sent every hour.
