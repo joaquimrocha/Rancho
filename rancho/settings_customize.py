@@ -60,7 +60,7 @@ MEDIA_URL = '/media/'
 ADMIN_MEDIA_PREFIX = '/admin/media/'
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '7&%@q1+b#ym+t0%5kq3x0m&2dm2p^%55j$28ny=zv*-k@!npj)'
+# SECRET_KEY = ''
 
 # Email stuffs
 DEFAULT_FROM_EMAIL = ''        # For example no-reply@YOUREMAILSERVER.COM
@@ -155,7 +155,7 @@ PROFILE_PICTURE_SIZE = (48, 48)
 PROFILE_LARGE_PICTURE_SIZE = (450, 500)
 
 #how to send a file back to the user (django builtin code is very bad)
-#apache-modsendfile, django
+#use of the following: apache-modsendfile , django
 HOW_SEND_FILE='django' 
 
 # LANGUAGES
