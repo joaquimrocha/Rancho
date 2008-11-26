@@ -116,7 +116,7 @@
 		{% if view_user.get_profile.im_name %}
 		<tr>
 			<td>
-				<p><strong>{{ view_user.get_profile.im_service }} {% trans "IM" %}:</strong></p>
+				<p><strong>{{ view_user.get_profile.get_im_service_display }} {% trans "IM" %}:</strong></p>
 			</td>
 			<td>
 				 <p>{{ view_user.get_profile.im_name }}</p>
