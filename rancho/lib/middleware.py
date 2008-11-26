@@ -70,3 +70,4 @@ class LocaleMiddleware(object):
         response['Content-Language'] = translation.get_language()                
         translation.deactivate()
         return response
+        

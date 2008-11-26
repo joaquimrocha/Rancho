@@ -64,7 +64,6 @@ class ShowAndSelectMultipleBase(SelectMultiple):
                 old_group = user.get_profile().company 
             #do user
             u = self.myrender(user, label_for, rendered_cb)
-
             if tmpcol == 1:
                 u = '<tr>' + u
                 tmpcol  += 1                
@@ -104,7 +103,6 @@ class ShowAndSelectMultipleProject(ShowAndSelectMultipleBase):
         context = Context()
         context['user'] = user
         return loader.get_template_from_string(u).render(context)
-
 
 class ShowAndSelectMultipleNotification(ShowAndSelectMultipleBase):
     def myrender(self, user, label_for, rendered_cb):

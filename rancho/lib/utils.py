@@ -191,7 +191,6 @@ def send_file(filename, size=0):
     if not content_type: content_type = 'application/octet-stream'
     #should add here more ways to serve files... (ngix, lighttpd., etc)
     if settings.HOW_SEND_FILE == 'apache-modsendfile':    
-        print >> sys.stderr, os.path.basename(filename), content_type, size
         response = HttpResponse() 
         response['X-Sendfile'] =  filename
         response['Content-Type'] = content_type 
