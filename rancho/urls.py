@@ -37,7 +37,6 @@ urlpatterns = urlpatterns + patterns('',
     (r'^project/', include('rancho.project.urls')),
     (r'^company/', include('rancho.company.urls')),
     (r'^people/', include('rancho.user.urls')),
-    (r'^todos/$', 'rancho.user.views.todos'),
     (r'^calendar/', include('rancho.cal.urls')),
     (r'^search/', include('rancho.search.urls')),
     
