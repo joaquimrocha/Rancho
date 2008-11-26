@@ -43,9 +43,7 @@ def search(request, p_id=None):
     if request.method == 'POST':    
         form = SearchForm(request.POST)            
         if form.is_valid():    
-            query = form.cleaned_data['query']
-            
-            #print File.index.search( query ).values_list('last_file_version',flat=True)
+            query = form.cleaned_data['query']        
             
             #search messages
             messages = Message.index.search( query )        

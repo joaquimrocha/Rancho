@@ -15,8 +15,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ########################################################################
-
-from django.dispatch import dispatcher
 from django.db.models import signals
 
 from django.utils.translation import ugettext_noop as _

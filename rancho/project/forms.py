@@ -50,7 +50,7 @@ class NewProjectForm(forms.Form):
         project.status = 'A'
         project.creator = user
         project.company = Company.objects.get(main_company = True)
-        
+        project.save()
         logo = self.cleaned_data['project_logo']
         if logo != None:
             utils.save_image(project, project.id, logo, settings.PROJECT_LOGO_SIZE, 'logo', 'JPEG')

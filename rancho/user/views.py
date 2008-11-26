@@ -343,26 +343,3 @@ def can_edit_user(user, edit_user):
         return False
     else:
         return True
-
-
-        
-def todos(request):
-    pass
-    #
-    # NEEDS TO BE FIXED USING THE CONTEXTS!
-    #
-    
-#    if request.session.get('user_auth', False):
-#    
-#        company = Company.objects.get(id=1)
-#        
-#        user = User.objects.get(id=request.session.get('user_id', False))
-#            
-#        area_name = _('Your ToDo items in all projects')
-#            
-#        return render_to_response('dashboard/todos.html', {'company': company, 'user': user, 'area': area_name})
-#        
-#    else:
-#        
-#        return HttpResponseRedirect('/')
-#        
