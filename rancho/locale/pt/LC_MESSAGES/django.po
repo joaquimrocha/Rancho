@@ -189,6 +189,10 @@ msgstr ""
 msgid "Files"
 msgstr "Ficheiros"
 
+#: lib/context_processors.py:27
+msgid "search..."
+msgstr "pesquisar..."
+
 #: lib/custom_widgets.py:111
 msgid "Show Tags"
 msgstr "Mostrar etiquetas"
