@@ -206,5 +206,5 @@ def gen_random_pass():
 
 def get_users_to_notify(project, perm):
     users_with_perm = granular_permissions.get_users_with_permission(project, perm)
-    superuser = User.objects.filter(is_superuser=True)
+    superuser = User.objects.filter(is_active=True, is_superuser=True)
     return (users_with_perm | superuser ).distinct().order_by('userprofile__company')
