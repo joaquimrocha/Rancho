@@ -1,7 +1,5 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Portuguese translation of Rancho
+# Joaquim Rocha <joaquimrocha1@gmail.com>, 2008.
 #
 #, fuzzy
 msgid ""
@@ -2542,3 +2540,9 @@ msgstr "Termos Legais"
 
 msgid "Rancho Legal Notices"
 msgstr "Termos Legais do Rancho"
+
+msgid "No milestones in your projects yet."
+msgstr "Sem milestones nos seus projectos, de momento."
+
+msgid "No projects available."
+msgstr "Não existem projectos disponíveis."
