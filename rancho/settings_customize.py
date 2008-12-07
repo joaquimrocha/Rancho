@@ -136,12 +136,7 @@ INSTALLED_APPS = (
     
 )
 
-#how to send a file back to the user (django builtin code is very bad)
-#apache-modsendfile, django
-HOW_SEND_FILE='django' 
-
-# LANGUAGES
-LANGUAGES = (('en-us', u'English'), ('pt-pt', u'Português'), ('es-es', u'Español'),)
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # COMPANY STUFF
 UPLOAD_DIR = 'upload/'
@@ -159,4 +154,4 @@ PROFILE_LARGE_PICTURE_SIZE = (450, 500)
 HOW_SEND_FILE='django' 
 
 # LANGUAGES
-LANGUAGES = (('en-us', u'English'), ('pt-pt', u'Português'),)
+LANGUAGES = (('en-us', u'English'), ('pt-pt', u'Português'), ('es-es', u'Español'),)
