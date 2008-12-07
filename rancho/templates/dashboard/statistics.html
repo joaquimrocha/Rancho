@@ -15,7 +15,7 @@
 {% block outter_main_content %}
 	
 	{% if not projects %}
-		<p>No Projects available!</p>
+		<p>{% trans "No projects available." %}</p>
 	{% endif %}
 	{% for project in projects %}
 		<p><a href="{% url project.views.overview project.project.id %}" class="smallcaps_title blue_bg white">{{ project.project.name }}</a></p>

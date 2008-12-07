@@ -16,7 +16,7 @@
 	
 	{% regroup projects by project as project_list %}
 	{% if not project_list %}
-		<p>No milestone in your projects yet!</p>
+		<p>{% trans "No milestones in your projects yet." %}</p>
 	{% endif %}
 	{% for project in project_list %}
 		<p><a href="{% url milestone.views.list project.grouper.id %}" class="smallcaps_title blue_bg white">{{ project.grouper.name }}</a></p>
