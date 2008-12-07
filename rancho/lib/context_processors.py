@@ -17,11 +17,12 @@
 ########################################################################
 
 from django.contrib.sites.models import Site
-
+from django.utils.translation import ugettext_lazy as _
 from rancho.company.models import Company
 from rancho.search.forms import GeneralSearchForm
 
+
 def rancho(request):
     return {'company': Company.objects.get(main_company=True),
-            'generalsearchform': GeneralSearchForm(initial={'query': 'search...'})
+            'generalsearchform': GeneralSearchForm(initial={'query': _('search...')})
             }
