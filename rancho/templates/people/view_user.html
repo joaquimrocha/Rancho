@@ -32,11 +32,13 @@
 {% endblock %}
 
 {% block right_content %}
-	<div class="edit_button">
-        <a href="{% url user.views.edituser view_user.id %}">{% trans "Edit This User" %}</a>
-    </div>
-    <div class="add_button_right"></div>
-    <br/><br/>
+	{% if can_edit %}
+		<div class="edit_button">
+	        <a href="{% url user.views.edituser view_user.id %}">{% trans "Edit This User" %}</a>
+	    </div>
+	    <div class="add_button_right"></div>
+	    <br/><br/>
+	{% endif %}
 
 	<div class="widget">
 	<p>{% trans "User's projects" %}</p>

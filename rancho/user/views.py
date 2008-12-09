@@ -157,8 +157,10 @@ def view_user(request, user_id):
     user = get_object_or_404(User, id = user_id)
     
     userprojects = Project.objects.get_projects_for_user(user)
-        
-    context = {'view_user': user, 'projects': userprojects}
+    can_edit = can_edit_user(me, user)
+    if me != user and user.get_profile().is_account_owner:
+        can_edit = False
+    context = {'view_user': user, 'projects': userprojects, 'can_edit': can_edit}
     return render_to_response('people/view_user.html', 
                               context,
                               context_instance=RequestContext(request))
