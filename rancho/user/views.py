@@ -175,18 +175,17 @@ def newuser(request):
         if form.is_valid():            
             newuser, newpassword, personal_note = form.save()        
                         
-            #TODO: ROCHA: style this        
             context = {
                        'username': usernamegen(newuser, 'username'),
                        'fullname': usernamegen(newuser, 'fullname'),
                        'password': newpassword,
-                       'site_name': "http://%s"%Site.objects.current_site.domain,                       
+                       'site_name': "http://%s"%Site.objects.get_current().domain,                       
                        'link_login': "http://%s%s" % ( unicode(Site.objects.get_current()), urlresolvers.reverse('rancho.user.views.dashboard'),),
                        'link_pass': "http://%s%s" % ( unicode(Site.objects.get_current()), urlresolvers.reverse('rancho.user.views.edituser', args=[newuser.id]),),
                        'personal_note': personal_note
                        }
             content = render_to_string('emails/newuser.txt',context)            
-            replyemail = 'no-reply@%s'%Site.objects.current_site.domain
+            replyemail = 'no-reply@%s'%Site.objects.get_current().domain
             send_mail(_('New Rancho Register'), content, replyemail, [newuser.email])    
             
             request.user.message_set.create(message=_("User has been successfully created."))
