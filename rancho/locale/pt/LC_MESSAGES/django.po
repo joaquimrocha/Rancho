@@ -1549,7 +1549,7 @@ msgid ""
 "have the higher level of permission prior to the account owner's one."
 msgstr ""
 "<strong>Importante:</strong> Se a pessoa for definida como administrador, esta irá "
-"ter o nível de permissão mais alto prévio ao do dono da conta."
+"ter o nível de permissão mais alto prévio ao do proprietário da conta."
 
 #: templates/people/add_user.html:21
 msgid ""
@@ -1705,11 +1705,26 @@ msgstr "Nova Pessoa"
 
 #: templates/people/view_people.html:50
 msgid "This section presents all the people present in all companies."
-msgstr "Esta secão apresenta todas as pessoas presentes em todas as empresas."
+msgstr "Esta secção apresenta todas as pessoas presentes em todas as empresas."
 
 #: templates/people/view_people.html:51
 msgid "You can:"
-msgstr "Você pode."
+msgstr "Você pode:"
+
+#: templates/people/view_people.html:53
+msgid "<strong>Edit</strong> the person's details."
+msgstr "<strong>Editar</strong> os detalhes da pessoa."
+
+#: templates/people/view_people.html:54
+msgid ""
+"<strong>Disable</strong> the person's account. This way the person cannot "
+"log in anymore. After disabling a person, you can go back and "
+"<strong>enable</strong> the person again."
+
+msgstr ""
+"<strong>Desactivar</strong> a conta de uma pessoa. Desta forma a pessoa não poderá "
+"ligar-se mais. Depois de desactivar uma pessoa, pode voltar atrás e "
+"<strong>activá-la</strong> de novo."
 
 #: templates/people/view_people.html:53
 msgid "<strong>Edit</strong>"
@@ -1717,7 +1732,7 @@ msgstr "<strong>Editar</strong>"
 
 #: templates/people/view_people.html:54
 msgid "<strong>Disable</strong>"
-msgstr "<strong>Desabilitar</strong>"
+msgstr "<strong>Desactivar</strong>"
 
 #: templates/people/view_people.html:73
 msgid "Are you sure you want to delete this company?"
@@ -1733,7 +1748,7 @@ msgstr ""
 
 #: templates/people/view_people.html:95 templates/project/showpeople.html:57
 msgid "Account Owner"
-msgstr "Dono da Conta"
+msgstr "Proprietário da Conta"
 
 #: templates/people/view_people.html:97 templates/people/view_people.html:121
 #: templates/todo/display_todo_list.html:10
@@ -1743,11 +1758,11 @@ msgstr "Editar"
 
 #: templates/people/view_people.html:97
 msgid "Disable"
-msgstr "Desabilitar"
+msgstr "Desactivar"
 
 #: templates/people/view_people.html:98
 msgid "Are you sure you want to disable this user?"
-msgstr "Tem a certeza que deseja desabilitar este utilzador?"
+msgstr "Tem a certeza que deseja desactivar este utilzador?"
 
 #: templates/people/view_people.html:110
 msgid "Inactive Users"
@@ -1755,11 +1770,11 @@ msgstr "Utilizadores Inactivos"
 
 #: templates/people/view_people.html:121
 msgid "Enable"
-msgstr "Habilitar"
+msgstr "Activar"
 
 #: templates/people/view_people.html:122
 msgid "Are you sure you want to enable this user?"
-msgstr "Tem a certeza que deseja habilitar este utilizador?"
+msgstr "Tem a certeza que deseja activar este utilizador?"
 
 #: templates/people/view_user.html:5 templates/project/edit_permissions.html:5
 msgid "View User"
@@ -2444,12 +2459,12 @@ msgstr "Os dois campos de palavra-passe não coíncidiram."
 #: user/views.py:134
 #, python-format
 msgid "User %s has been disable."
-msgstr "O utilizaodr %s foi desabilitado."
+msgstr "O utilizaodr %s foi desactivado."
 
 #: user/views.py:148
 #, python-format
 msgid "User %s has been enabled."
-msgstr "O utilizaodr %s foi habilitado."
+msgstr "O utilizaodr %s foi activado."
 
 #: user/views.py:190
 msgid "New Rancho Register"
@@ -2550,3 +2565,6 @@ msgstr "Sem milestones nos seus projectos, de momento."
 
 msgid "No projects available."
 msgstr "Não existem projectos disponíveis."
+
+msgid "Main Company"
+msgstr "Empresa Principal"
