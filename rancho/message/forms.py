@@ -29,7 +29,7 @@ import datetime
 class MessageForm(forms.Form):
     
     title=forms.CharField(label=_('Title'), widget=forms.TextInput(attrs={'class':'fillx'}), max_length=50,error_messages={'required': _('Please write a title for the message')})
-    tags=TagField(required=False)    
+    tags=TagField(label = _('Tags'), required=False)    
     message=forms.CharField(label=_('Body'), widget=forms.Textarea(attrs={'class':'fillx'}), error_messages={'required': _('The message body cannot be blank.')})
     notify=forms.MultipleChoiceField(label=_('Notify'))
     

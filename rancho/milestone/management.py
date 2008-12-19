@@ -26,7 +26,7 @@ try:
     
     def create_notice_types(app, created_models, verbosity, **kwargs):
         notification.create_notice_type("milestone_new", _("New milestone"), _("A new milestone has been created"))
-        notification.create_notice_type("milestone_complete", _("Milestone complete"), _("A milestone as been completed"))
+        notification.create_notice_type("milestone_complete", _("Milestone complete"), _("A milestone has been completed"))
         notification.create_notice_type("milestone_datewarning", _("Milestone completion date approaching"), _("A milestone completion date is approaching "))
         notification.create_notice_type("milestone_updated", _("Milestone updated"), _("A milestone has been updated"))
 
