@@ -19,7 +19,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from rancho.timezones.forms import PRETTY_TIMEZONE_CHOICES
+from rancho.timezones.forms import TIMEZONE_CHOICES
 from rancho import  settings
 
 class UserProfile(models.Model):
@@ -52,7 +52,7 @@ class UserProfile(models.Model):
     webpage = models.URLField(null=True)    
     
     language = models.CharField(max_length=10, choices=settings.LANGUAGES, default=settings.LANGUAGE_CODE)
-    timezone = models.CharField(max_length=50, choices=PRETTY_TIMEZONE_CHOICES, default=settings.TIME_ZONE)
+    timezone = models.CharField(max_length=50, choices=TIMEZONE_CHOICES, default=settings.TIME_ZONE)
     
     is_account_owner = models.BooleanField(default=False)
     
