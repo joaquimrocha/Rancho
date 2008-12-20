@@ -31,7 +31,7 @@ Here are the system requirements to run Rancho.
   * PsycoPG (http://www.initd.org) in case of using the PostgreSQL database;
   * pytz (http://pytz.sourceforge.net/);
   * PIL - Python Image Library - (http://www.pythonware.com/products/pil/);
-  * ReportLab (http://www.reportlab.org/downloads.html);
+  * ReportLab>=2.2 (http://www.reportlab.org/downloads.html);
   * html5lib - Library for working with HTML5 documents (http://code.google.com/p/html5lib/);
   * XHTML2PDF - HTML to PDF converter (http://www.xhtml2pdf.com/)
 
