@@ -22,7 +22,8 @@ from django.shortcuts import get_object_or_404
 from django.core import urlresolvers
 from django.utils.translation import ugettext as _
 from django.shortcuts import render_to_response
-from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden,\
+    HttpResponseServerError
 
 from rancho.project.models import Project
 from rancho.wikiboard.models import Wiki, WikiEntry
@@ -30,8 +31,10 @@ from rancho.wikiboard.forms import NewWikiEntryForm, TinyMceForm
 from rancho.granular_permissions.permissions import PERMISSIONS_WIKIBOARD_VIEW, PERMISSIONS_WIKIBOARD_CREATE, PERMISSIONS_WIKIBOARD_EDITDELETE
 from rancho.granular_permissions.permissions import checkperm
 
-from tempfile import mkstemp
-import os
+import ho.pisa as pisa
+from StringIO import StringIO
+
+
 
 # Basic operations for this app
 ####################################################################################
@@ -209,37 +212,39 @@ def export_wiki(request,p_id,entry_id,entry_version, file_type):
     if not checkperm(PERMISSIONS_WIKIBOARD_VIEW, user, project ):
         return HttpResponseForbidden(_('Forbidden Access'))
 
-
-    
-    htmlFile, htmlFilename = mkstemp(wiki.name)
-    os.write(htmlFile,"<h1>"+wiki.name+"</h1> "+ wikicurentry.content)
-    os.close(htmlFile)
-    os.environ["HTMLDOC_NOCGI"] = 'yes'
-        
+    text  = u"<h1>%s</h1> %s"%(wiki.name,wikicurentry.content)
+    html = u"""
+<html>
+<style>
+@page {
+   margin: 1cm;
+   @frame footer {
+     -pdf-frame-content: footerContent;
+     bottom: 1cm;
+     margin-left: 1cm;
+     margin-right: 1cm;
+     height: 1cm;
+     text-align: center;
+   }
+}
+</style>
+<body>
+  %s
+  <div id="footerContent"  align="right">
+     <pdf:pagenumber> 
+  </div>
+</body>
+</html>
+"""%text
+            
     if file_type == 'pdf':
-        pdfFile, pdfFilename = mkstemp(wiki.name + '.pdf')
-        os.close(pdfFile)
+        result = StringIO()
+        pdf = pisa.pisaDocument(StringIO(html.encode("ISO-8859-1")), result)
+        if not pdf.err:
+            return HttpResponse(result.getvalue(), mimetype='application/pdf')
+        return HttpResponseServerError(_('Could not generate pdf file.'))
     
-        os.system("htmldoc --webpage -f " + pdfFilename + " " + htmlFilename + " --logoimage media/basepage/images/powered.png " "--footer .l/ --header ... --linkstyle underline --color")
-        out = open(pdfFilename, 'rb').read()
-        os.unlink(pdfFilename)
-        os.unlink(htmlFilename)
-  
-        response = HttpResponse(mimetype='application/pdf')
-    
-    elif file_type == 'ps':            
-        psFile, psFilename = mkstemp(wiki.name + '.ps')
-        os.close(psFile)
-    
-        os.system("htmldoc --webpage -f " + psFilename + " " + htmlFilename + " --logoimage media/basepage/images/powered.png " "--footer .l/ --linkstyle underline")
-        out = open(psFilename, 'rb').read()
-        os.unlink(psFilename)
-        os.unlink(htmlFilename)
-   
-        response = HttpResponse(mimetype='application/ps')
     elif file_type == 'html':
         response = HttpResponse(mimetype='text/html')
-        out = open(htmlFilename, 'rb').read()
-           
-    response.write(out)
-    return response
+        response.write(html)
+        return response

@@ -1,4 +1,4 @@
-==================================================
+as==================================================
 Rancho: Open Source Group/Project Management Tool
 ==================================================
 
@@ -31,7 +31,9 @@ Here are the system requirements to run Rancho.
   * PsycoPG (http://www.initd.org) in case of using the PostgreSQL database;
   * pytz (http://pytz.sourceforge.net/);
   * PIL - Python Image Library - (http://www.pythonware.com/products/pil/);
-  * <HTML>DOC - HTML to PDF converter (http://www.htmldoc.org/)
+  * ReportLab (http://www.reportlab.org/downloads.html);
+  * html5lib - Library for working with HTML5 documents (http://code.google.com/p/html5lib/);
+  * XHTML2PDF - HTML to PDF converter (http://www.xhtml2pdf.com/)
 
 Getting the Code
 =================
@@ -56,7 +58,8 @@ This section covers the installation of Django on a Debian system (or Debian bas
 
 Run the following command as superuser to install the other requirements:
 
-    # apt-get install python-psycopg python-tz python-imaging htmldoc
+    # apt-get install python-psycopg python-tz python-imaging python-reportlab python-html5lib
+    # easy_install pisa
 
 Once the packages finish being installed, create a database to be used by Rancho:
 
