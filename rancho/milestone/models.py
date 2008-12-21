@@ -54,7 +54,7 @@ class Milestone(models.Model):
     project = models.ForeignKey(Project)
     #Se null e o projecto todo o responsavel
     responsible = models.ForeignKey(User, related_name='responsible', null=True)
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=500)
     creation_date = models.DateTimeField(auto_now_add = True)
     due_date = models.DateTimeField()
     send_notification_email = models.BooleanField()
