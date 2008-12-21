@@ -1,14 +1,13 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Spanish translation of Rancho
+# Javier Sánchez Ladrón de Guevara <ludolab31 @ gmail.com>, 2008
+# Antonio Santos <antonio.santos.velasco @ gmail.com>, 2008
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-04 17:19+0000\n"
+"POT-Creation-Date: 2008-12-18 19:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,7 +35,7 @@ msgstr "Nombre completo"
 msgid "Company Description"
 msgstr "Descripción de la compañía"
 
-#: company/forms.py:37 templates/people/view_user.html:139 user/forms.py:60
+#: company/forms.py:37 templates/people/view_user.html:141 user/forms.py:60
 msgid "Mailing Address"
 msgstr "Dirección de correo"
 
@@ -48,7 +47,7 @@ msgstr "Teléfono"
 msgid "Please insert a valid webpage"
 msgstr "Por favor, inserte un sitio web válido"
 
-#: company/forms.py:41 templates/people/view_user.html:129
+#: company/forms.py:41 templates/people/view_user.html:131
 msgid "Web Page"
 msgstr "Sitio web"
 
@@ -73,8 +72,8 @@ msgid ""
 "The image file you tried to upload is too large. Please upload an image of "
 "less than 1 Mb."
 msgstr ""
-"La imagen que ha intentado subir es demasiado grande. Por favor, suba una imagen de "
-"menos de 1 Mb."
+"La imagen que ha intentado subir es demasiado grande. Por favor, suba una "
+"imagen de menos de 1 Mb."
 
 #: company/views.py:64
 msgid "Company settings have been successfully edited."
@@ -246,7 +245,7 @@ msgstr "Etapa"
 
 #: lib/utils.py:102 templates/todo/edit_todo.html:25
 msgid "ToDo"
-msgstr "Tarea pendiente"
+msgstr "Tarea"
 
 #: lib/utils.py:104 templates/lib/displayfile.html:37
 #: templates/lib/displayfile.html.py:42 templates/lib/displaymessage.html:23
@@ -288,6 +287,10 @@ msgstr "Vistazo"
 #: message/forms.py:31
 msgid "Please write a title for the message"
 msgstr "Por favor, escriba un título para el mensaje"
+
+#: message/forms.py:32
+msgid "Tags"
+msgstr "Etiquetas"
 
 #: message/forms.py:33 message/forms.py:68
 msgid "Body"
@@ -629,8 +632,8 @@ msgid ""
 "If a list or tuple of tags is provided, they must all be tag names, Tag "
 "objects or Tag ids."
 msgstr ""
-"Si se proporciona una lista o tupla de etiquetas, todas deben ser nombres de etiqueta, "
-"Objetos de etiqueta o Identificadores de etiqueta."
+"Si se proporciona una lista o tupla de etiquetas, todas deben ser nombres de "
+"etiqueta, Objetos de etiqueta o Identificadores de etiqueta."
 
 #: tagging/utils.py:191
 msgid "The tag input given was invalid."
@@ -643,7 +646,9 @@ msgstr "El algoritmo de distribución especificado no es válido: %s."
 
 #: tagging/views.py:33
 msgid "tagged_object_list must be called with a queryset or a model."
-msgstr "tagged_object_list debe llamarse a través de una consulta agrupada o un modelo."
+msgstr ""
+"tagged_object_list debe llamarse a través de una consulta agrupada o un "
+"modelo."
 
 #: tagging/views.py:39
 msgid "tagged_object_list must be called with a tag."
@@ -657,17 +662,21 @@ msgstr "No se encontró ninguna Tag que se corresponda con \"%s\"."
 #: tagging/templatetags/tagging_tags.py:19
 #, python-format
 msgid "tags_for_model tag was given an invalid model: %s"
-msgstr "Se ha suministrado un modelo no válido para la etiqueta tags_for_model: %s"
+msgstr ""
+"Se ha suministrado un modelo no válido para la etiqueta tags_for_model: %s"
 
 #: tagging/templatetags/tagging_tags.py:32
 #, python-format
 msgid "tag_cloud_for_model tag was given an invalid model: %s"
-msgstr "Se ha suministrado un modelo no válido para la etiqueta tag_cloud_for_model: %s"
+msgstr ""
+"Se ha suministrado un modelo no válido para la etiqueta tag_cloud_for_model: "
+"%s"
 
 #: tagging/templatetags/tagging_tags.py:56
 #, python-format
 msgid "tagged_objects tag was given an invalid model: %s"
-msgstr "Se ha suministrado un modelo no válido para la etiqueta tagged_objects: %s"
+msgstr ""
+"Se ha suministrado un modelo no válido para la etiqueta tagged_objects: %s"
 
 #: tagging/templatetags/tagging_tags.py:89
 #, python-format
@@ -695,27 +704,35 @@ msgstr "si existe, el quinto argumento de la etiqueta %s debe ser 'counts'"
 #: tagging/templatetags/tagging_tags.py:141
 #, python-format
 msgid "%s tag requires either three or between five and seven arguments"
-msgstr "La etiqueta %s requiere o tres argumentos, o entre cinco y siete argumentos"
+msgstr ""
+"La etiqueta %s requiere o tres argumentos, o entre cinco y siete argumentos"
 
 #: tagging/templatetags/tagging_tags.py:155
 #, python-format
 msgid "%(tag)s tag's '%(option)s' option was not a valid integer: '%(value)s'"
-msgstr "La opción '%(option)s' de la etiqueta %(tag)s no es un entero válido: '%(value)s'"
+msgstr ""
+"La opción '%(option)s' de la etiqueta %(tag)s no es un entero válido: '%"
+"(value)s'"
 
 #: tagging/templatetags/tagging_tags.py:164
 #, python-format
 msgid "%(tag)s tag's '%(option)s' option was not a valid choice: '%(value)s'"
-msgstr "La opción '%(option)s' de la etiqueta %(tag)s no es una selección válida: '%(value)s'"
+msgstr ""
+"La opción '%(option)s' de la etiqueta %(tag)s no es una selección válida: '%"
+"(value)s'"
 
 #: tagging/templatetags/tagging_tags.py:170
 #, python-format
 msgid "%(tag)s tag was given an invalid option: '%(option)s'"
-msgstr "Se ha suminitrado una opción no válida para la etiqueta %(tag)s: '%(option)s'"
+msgstr ""
+"Se ha suminitrado una opción no válida para la etiqueta %(tag)s: '%(option)s'"
 
 #: tagging/templatetags/tagging_tags.py:175
 #, python-format
 msgid "%(tag)s tag was given a badly formatted option: '%(option)s'"
-msgstr "Se ha suministrado una opción con formato erróneo para la etiqueta %(tag)s: '%(option)s'"
+msgstr ""
+"Se ha suministrado una opción con formato erróneo para la etiqueta %(tag)s: "
+"'%(option)s'"
 
 #: tagging/templatetags/tagging_tags.py:196
 #, python-format
@@ -854,9 +871,9 @@ msgid ""
 "the logo to be visible or not, in which case, the company's small name will "
 "appear instead."
 msgstr ""
-"El logo de la empresa se mostrará en el rincón superior izquierdo de cada página. Puedes decidir "
-"mostrar el logo u ocultarlo; en este último caso, se mostrará en su lugar el nombre "
-"de la empresa."
+"El logo de la empresa se mostrará en el rincón superior izquierdo de cada "
+"página. Puedes decidir mostrar el logo u ocultarlo; en este último caso, se "
+"mostrará en su lugar el nombre de la empresa."
 
 #: templates/company/settings.html:44
 msgid "Company optional info"
@@ -871,14 +888,15 @@ msgid ""
 "You can add an optional description that will take place on the dashboard "
 "page of the company."
 msgstr ""
-"Puedes añadir una descripción opcional que se mostrará en la página del panel "
-"de control de la empresa."
+"Puedes añadir una descripción opcional que se mostrará en la página del "
+"panel de control de la empresa."
 
 #: templates/company/settings.html:56 templates/project/settings.html:54
 msgid "Upload a new logo or delete the existing one."
 msgstr "Sube un nuevo logo o borra el que existe actualmente."
 
-#: templates/company/settings.html:63 templates/project/settings.html:61
+#: templates/company/settings.html:63 templates/people/view_people.html:72
+#: templates/people/view_people.html:75 templates/project/settings.html:61
 msgid "Delete"
 msgstr "Borrar"
 
@@ -902,13 +920,23 @@ msgstr "Añadir un Nuevo Proyecto"
 msgid "Milestones for all your projects"
 msgstr "Etapas de todos tus proyectos"
 
+#: templates/dashboard/milestones.html:19
+msgid "No milestones in your projects yet."
+msgstr "No hay etapas en sus proyectos en este momento."
+
 #: templates/dashboard/milestones.html:36
 msgid "In here you have a general view of all milestones in all your projects."
-msgstr "Aquí puedes tener una visión general de todas las etapas de todos tus proyectos."
+msgstr ""
+"Aquí puedes tener una visión general de todas las etapas de todos tus "
+"proyectos."
 
 #: templates/dashboard/statistics.html:12
 msgid "Statistics for all your projects"
 msgstr "Estadísticas de todos tus proyectos"
+
+#: templates/dashboard/statistics.html:18
+msgid "No projects available."
+msgstr "No hay proyectos disponibles."
 
 #: templates/dashboard/statistics.html:28 templates/todo/todos_list.html:78
 msgid "ToDo Lists"
@@ -919,8 +947,8 @@ msgid ""
 "In here you have a general view of all projects you are in and some "
 "statistics."
 msgstr ""
-"Aquí se muestra una descripción general de todos los proyectos en los que estas registrado "
-"así como algunas estadísticas."
+"Aquí se muestra una descripción general de todos los proyectos en los que "
+"estas registrado así como algunas estadísticas."
 
 #: templates/file/edit_version.html:5 templates/file/edit_version.html.py:8
 msgid "Edit file version"
@@ -938,8 +966,8 @@ msgstr "Etiquetas de Archivo"
 #: templates/file/edit_version.html:26 templates/file/new_file.html:27
 #: templates/file/new_upload.html:27 templates/message/edit_message.html:36
 #: templates/message/new_message.html:29
-msgid "Apply optional tags to your message, split multiple tags with comma."
-msgstr "Asignar etiquetas opcionales a tu mensaje, separadas por coma."
+msgid "Apply optional tags to your message, split multime tags with comma."
+msgstr "Asigne etiquetas opcionales a tu mensaje, separadas por coma."
 
 #: templates/file/edit_version.html:30
 msgid "Update File"
@@ -978,8 +1006,8 @@ msgid ""
 "Optionally check the persons you want to notify about the new file you're "
 "about to upload."
 msgstr ""
-"Opcionalmente, comprobar las personas a las que quieres notificar sobre el nuevo archivo "
-"que estás a punto de subir."
+"Opcionalmente, comprobar las personas a las que quieres notificar sobre el "
+"nuevo archivo que estás a punto de subir."
 
 #: templates/file/new_file.html:35 templates/file/new_upload.html:31
 msgid "Submit File"
@@ -1036,7 +1064,7 @@ msgstr "¿Estás seguro/a de que quieres marcar esta etapa como incompleta?"
 
 #: templates/lib/displaymilestone.html:46
 msgid "Set as complete"
-msgstr "Marcada como completa"
+msgstr "Marcada como terminada"
 
 #: templates/lib/displaymilestone.html:47
 msgid "Are you sure you want set this milestone as complete?"
@@ -1104,23 +1132,26 @@ msgid ""
 "Tags make messages easier to search for and relate to concepts in this "
 "project. By clicking \"Show Tags\" you can use already existing tags in this "
 "project."
-msgstr "Las etiquetas facilitan la búsqueda de mensajes y los relacionan con conceptos"
-"de este proyecto. Eligiendo \"Mostrar Etiquetas\" puedes utilizar etiquetas existentes"
-"para este proyecto."
+msgstr ""
+"Las etiquetas facilitan la búsqueda de mensajes y los relacionan con "
+"conceptosde este proyecto. Eligiendo \"Mostrar Etiquetas\" puedes utilizar "
+"etiquetas existentespara este proyecto."
 
 #: templates/message/new_message.html:19
 msgid ""
 "You can notify people about the posting of this new message by selecting "
 "them from \"People in this project\"."
-msgstr "Puedes anunciar a otras personas sobre la publicación de un nuevo mensaje"
-"seleccionándolas en \"Personas en este proyecto\"."
+msgstr ""
+"Puedes anunciar a otras personas sobre la publicación de un nuevo "
+"mensajeseleccionándolas en \"Personas en este proyecto\"."
 
 #: templates/message/new_message.html:33
 msgid ""
 "Optionally check the persons you want to notify about the new message you're "
 "about to send."
-msgstr "Opcionalmente, revisar las personas a las que quieres notificar sobre el"
-"mensaje que estás a punto de enviar."
+msgstr ""
+"Opcionalmente, revisar las personas a las que quieres notificar sobre "
+"elmensaje que estás a punto de enviar."
 
 #: templates/message/new_message.html:37
 msgid "Submit Message"
@@ -1183,7 +1214,7 @@ msgstr "Todos estos campos son obligatorios"
 #: templates/milestone/edit_milestone.html:41
 #: templates/people/edit_user.html:107
 msgid "Other Info"
-msgstr "Otra Información"
+msgstr "Información Adicional"
 
 #: templates/milestone/create_milestone.html:37
 #: templates/milestone/edit_milestone.html:41
@@ -1238,8 +1269,9 @@ msgstr "Tus Ajustes de Notificación"
 msgid ""
 "Here you can decide whether to receive a notification email whenever an "
 "event occurs."
-msgstr "Aquí puedes decir si quieres recibir un mensaje de aviso cuando"
-"ocurra un evento."
+msgstr ""
+"Aquí puedes decir si quieres recibir un mensaje de aviso cuandoocurra un "
+"evento."
 
 #: templates/notification/notices.html:12
 msgid "Events are described in the \"Notification\" column."
@@ -1291,7 +1323,7 @@ msgstr "Etapa actualizada"
 
 #: templates/notification/todo_new/notice.html:1 todo/management.py:26
 msgid "New ToDo"
-msgstr "Nueva Tarea Pendientes"
+msgstr "Nueva Tarea"
 
 #: templates/people/add_user.html:5
 msgid "Add User"
@@ -1309,36 +1341,40 @@ msgstr "Aquí puedes añadir una nueva persona."
 msgid ""
 "Click the \"Show More\" link to fill aditional information about the new "
 "person."
-msgstr "Presiona el enlace \"Ver Más\" para añadir información adicional sobre"
-"la nueva persona."
+msgstr ""
+"Presiona el enlace \"Ver Más\" para añadir información adicional sobrela "
+"nueva persona."
 
 #: templates/people/add_user.html:20
 msgid ""
 "<strong>Important:</strong> If the person is set as admin, he or she will "
 "have the higher level of permission prior to the account owner's one."
-msgstr "<stron>Importante:</strong> Si la persona es configurada como administrador, él o ella podrá "
-"tener el nivel de permisos más alto después de el del propietario de la cuenta."
+msgstr ""
+"<strong>Importante:</strong> Si la persona es configurada como administrador, "
+"él o ella podrá tener el nivel de permisos más alto después de el del "
+"propietario de la cuenta."
 
 #: templates/people/add_user.html:21
 msgid ""
 "The new person will be able to edit the \"personal info\" settings after "
 "logging in."
 msgstr ""
-"La nueva persona será capza de editar los ajustes de \"información personal\" después de "
-"iniciar sesión."
+"La nueva persona será capza de editar los ajustes de \"información personal"
+"\" después de iniciar sesión."
 
 #: templates/people/add_user.html:26
 msgid "Login Info"
 msgstr "Información de Inicio de Sesión"
 
-
 #: templates/people/add_user.html:26
 msgid "Choose a username with which this person can log in later."
-msgstr "Elige un nombre de usuario con el que esta persona pueda iniciar sesión en adelante."
+msgstr ""
+"Elige un nombre de usuario con el que esta persona pueda iniciar sesión en "
+"adelante."
 
 #: templates/people/add_user.html:31 templates/people/edit_user.html:91
 msgid "Member Settings"
-msgstr "Ajustes de Miembros"
+msgstr "Ajustes de Usuario"
 
 #: templates/people/add_user.html:38
 msgid "Personal Info"
@@ -1348,8 +1384,9 @@ msgstr "Información Personal"
 msgid ""
 "All fields in this section are optional. You can fill them now or the person "
 "can fill or change them later."
-msgstr "Todos los cmapos en esta sección son opcionales. Puedes rellenarlos ahora o la "
-"persona puede rellenarlos o cambiarlos después."
+msgstr ""
+"Todos los cmapos en esta sección son opcionales. Puedes rellenarlos ahora o "
+"la persona puede rellenarlos o cambiarlos después."
 
 #: templates/people/add_user.html:57 user/forms.py:63
 msgid "Personal Note"
@@ -1357,9 +1394,10 @@ msgstr "Nota Personal"
 
 #: templates/people/add_user.html:57
 msgid ""
-"You can send a personal note to the person you are adding in addition to "
-"the email notification. This note is optional."
-msgstr "Puedes enviar una nota personal a la persona que estás añadiendo, adicional "
+"You can send a personal note to the person you are adding in addition to the "
+"email notification. This note is optional."
+msgstr ""
+"Puedes enviar una nota personal a la persona que estás añadiendo, adicional "
 "a la notificación de correo. Esta nota es opcional."
 
 #: templates/people/add_user.html:61
@@ -1410,15 +1448,17 @@ msgstr "Las imágenes deben estar en formato PNG, GIF o JPEG."
 msgid ""
 "This photo will appear in your comments and in other areas. It is mainly for "
 "quick identification."
-msgstr "Esta foto aparecerá en tus comentarios así como en otras áreas, principalmente "
-"para facilitar la identificación."
+msgstr ""
+"Esta foto aparecerá en tus comentarios así como en otras áreas, "
+"principalmente para facilitar la identificación."
 
 #: templates/people/edit_user.html:143
 msgid ""
 "This photo will appear in this person's comments and in other areas. It is "
 "mainly for quick identification."
-msgstr "Esta foto aparecerá en los comentarios de esta persona así como en otras áreas, "
-"principalmente para facilitar la identificación."
+msgstr ""
+"Esta foto aparecerá en los comentarios de esta persona así como en otras "
+"áreas, principalmente para facilitar la identificación."
 
 #: templates/people/edit_user.html:153
 msgid "Are you sure you want to delete this user's small photo?"
@@ -1432,14 +1472,16 @@ msgstr "La imagen será redimensionada a un máximo de 64x64 pixels."
 msgid ""
 "This photo will appear in your area. People will see this when they are "
 "viewing your details."
-msgstr "Esta foto aparecerá en tu área. Se mostrará a otras personas cuando vean "
-"tus detalles."
+msgstr ""
+"Esta foto aparecerá en tu área. Se mostrará a otras personas cuando vean tus "
+"detalles."
 
 #: templates/people/edit_user.html:191
 msgid ""
 "This photo will appear in this person's area. People will see this when they "
 "are viewing this person's details."
-msgstr "Esta foto aparecerá en el área de esta persona. Se mostrará a otras personas "
+msgstr ""
+"Esta foto aparecerá en el área de esta persona. Se mostrará a otras personas "
 "cuando vean los detalles de ésta."
 
 #: templates/people/edit_user.html:202
@@ -1468,19 +1510,37 @@ msgstr "Nueva Persona"
 
 #: templates/people/view_people.html:50
 msgid "This section presents all the people present in all companies."
-msgstr "Esta sección muestra todas las personas presentes en todas las empresas."
+msgstr ""
+"Esta sección muestra todas las personas presentes en todas las empresas."
 
 #: templates/people/view_people.html:51
 msgid "You can:"
 msgstr "Puedes:"
 
 #: templates/people/view_people.html:53
-msgid "<strong>Edit</strong>"
-msgstr "<strong>Editar</strong>"
+msgid "<strong>Edit</strong> the person's details."
+msgstr "<strong>Editar</strong> los detalles del usuario."
 
 #: templates/people/view_people.html:54
-msgid "<strong>Disable</strong>"
-msgstr "<strong>Desactivar</strong>"
+msgid ""
+"<strong>Disable</strong> the person's account. This way the person cannot "
+"log in anymore. After disabling a person, you can go back and "
+"<strong>enable</strong> the person again."
+msgstr ""
+"<strong>Desactivar</strong> la cuenta del usuario, lo cual impide que pueda "
+"iniciar sesión. Después de desactivar a un usuario, puedes volver atrás y "
+"<strong>activar</strong> al usuario de nuevo."
+
+#: templates/people/view_people.html:66 templates/people/view_people.html:69
+#: templates/people/view_people.html:97 templates/people/view_people.html:121
+#: templates/todo/display_todo_list.html:10
+#: templates/wikiboard/edit_entry.html:5
+msgid "Edit"
+msgstr "Editar"
+
+#: templates/people/view_people.html:67
+msgid "Main Company"
+msgstr "Empresa Principal"
 
 #: templates/people/view_people.html:73
 msgid "Are you sure you want to delete this company?"
@@ -1490,18 +1550,13 @@ msgstr "¿Estás seguro de que quieres borrar esta empresa?"
 msgid ""
 "This company has employees, to delete it they will be moved to your main "
 "company. Do you agree?"
-msgstr "Esta empresa tiene empleados, al borrarla los empleados se moverán a tu "
+msgstr ""
+"Esta empresa tiene empleados, al borrarla los empleados se moverán a tu "
 "empresa principal. ¿Quieres aceptar?"
 
 #: templates/people/view_people.html:95 templates/project/showpeople.html:57
 msgid "Account Owner"
 msgstr "Propietario de la Cuenta"
-
-#: templates/people/view_people.html:97 templates/people/view_people.html:121
-#: templates/todo/display_todo_list.html:10
-#: templates/wikiboard/edit_entry.html:5
-msgid "Edit"
-msgstr "Editar"
 
 #: templates/people/view_people.html:97
 msgid "Disable"
@@ -1527,52 +1582,52 @@ msgstr "¿Estás seguro de que quieres activar este usuario?"
 msgid "View User"
 msgstr "Ver Usuario"
 
-#: templates/people/view_user.html:36
+#: templates/people/view_user.html:37
 msgid "Edit This User"
 msgstr "Editar Este Usuario"
 
-#: templates/people/view_user.html:42
+#: templates/people/view_user.html:44
 msgid "User's projects"
 msgstr "Projectos del Usuario"
 
-#: templates/people/view_user.html:58
+#: templates/people/view_user.html:60
 msgid "User"
 msgstr "Usuario"
 
-#: templates/people/view_user.html:71
+#: templates/people/view_user.html:73
 #: templates/project/edit_permissions.html:46
 msgid "Send email to this user"
 msgstr "Enviar correo a este usuario"
 
-#: templates/people/view_user.html:79 user/forms.py:52
+#: templates/people/view_user.html:81 user/forms.py:52
 msgid "Office"
 msgstr "Oficina"
 
-#: templates/people/view_user.html:89 user/forms.py:53
+#: templates/people/view_user.html:91 user/forms.py:53
 msgid "Office Phone"
 msgstr "Teléfono de la Oficina"
 
-#: templates/people/view_user.html:92
+#: templates/people/view_user.html:94
 msgid "Extension"
 msgstr "Extensión"
 
-#: templates/people/view_user.html:99 user/forms.py:55
+#: templates/people/view_user.html:101 user/forms.py:55
 msgid "Mobile Phone"
 msgstr "Teléfono Móvil"
 
-#: templates/people/view_user.html:109 user/forms.py:56
+#: templates/people/view_user.html:111 user/forms.py:56
 msgid "Home Phone"
 msgstr "Teléfono de Casa"
 
-#: templates/people/view_user.html:119
+#: templates/people/view_user.html:121
 msgid "IM"
 msgstr "IM"
 
-#: templates/people/view_user.html:149 user/forms.py:119
+#: templates/people/view_user.html:151 user/forms.py:119
 msgid "Large Photo"
 msgstr "Foto Grande"
 
-#: templates/people/view_user.html:162
+#: templates/people/view_user.html:164
 msgid "Back"
 msgstr "Volver"
 
@@ -1593,8 +1648,9 @@ msgstr "Personas fuera de este proyecto"
 msgid ""
 "Select the people you want to add to the project from the companies list "
 "below."
-msgstr "Selecciona las personas que quieras añadir a este proyecto de la lista "
-"de empresas que se muestra a continuación."
+msgstr ""
+"Selecciona las personas que quieras añadir a este proyecto de la lista de "
+"empresas que se muestra a continuación."
 
 #: templates/project/addusers.html:34
 msgid "Add People to Project"
@@ -1640,15 +1696,17 @@ msgstr "Crear un nuevo proyecto"
 msgid ""
 "The project logo will appear on the right part of every \"inside project\" "
 "page."
-msgstr "El logo del proyecto se mostrará en la parte derecha de cada página "
-"\"dentro del proyecto\"."
+msgstr ""
+"El logo del proyecto se mostrará en la parte derecha de cada página \"dentro "
+"del proyecto\"."
 
 #: templates/project/new_project.html:30
 msgid ""
 "After creating the project you can add people to it and define their "
 "permissions."
-msgstr "Después de crear el proyecto, puedes añadir personas al mismo y definir "
-"sus permisos."
+msgstr ""
+"Después de crear el proyecto, puedes añadir personas al mismo y definir sus "
+"permisos."
 
 #: templates/project/new_project.html:36
 msgid "Choose the name of the project"
@@ -1712,14 +1770,15 @@ msgstr "El proyecto está abierto y funcionando"
 
 #: templates/project/settings.html:34
 msgid "Frozen"
-msgstr "Congelado"
+msgstr "Paralizado"
 
 #: templates/project/settings.html:34
 msgid ""
 "The project is in a pause state and its entities such as messages and "
 "milestones will not show up on the dashboard."
-msgstr "El proyecto está en estado de espera, y sus entidades -tales como mensajes "
-" y etapas- no se mostrarán en el panel." 
+msgstr ""
+"El proyecto está en estado de espera, y sus entidades -tales como mensajes  "
+"y etapas- no se mostrarán en el panel."
 
 #: templates/project/settings.html:35
 msgid "Finished"
@@ -1727,7 +1786,8 @@ msgstr "Finalizado"
 
 #: templates/project/settings.html:35
 msgid "The project is finished and cannot be edited by its users."
-msgstr "El proyecto ha sido finalizado y no puede ser editado por sus usuarios."
+msgstr ""
+"El proyecto ha sido finalizado y no puede ser editado por sus usuarios."
 
 #: templates/project/settings.html:46
 msgid "Project Info"
@@ -1737,8 +1797,9 @@ msgstr "Información del Proyecto"
 msgid ""
 "You can add an optional description that will take place on the overview "
 "page of the project."
-msgstr "Puedes añadir una descripción opcional que se mostrará en página de "
-"resumen del proyecto."
+msgstr ""
+"Puedes añadir una descripción opcional que se mostrará en página de resumen "
+"del proyecto."
 
 #: templates/project/settings.html:62
 msgid "Are you sure you want to delete this project logo?"
@@ -1782,7 +1843,7 @@ msgstr "Proyectos Terminados"
 
 #: templates/project/boxes/myprojects.html:32
 msgid "Frozen Projects"
-msgstr "Proyectos Congelados"
+msgstr "Proyectos Paralizados"
 
 #: templates/registration/logged_out.html:3
 msgid "Logged out"
@@ -1804,7 +1865,9 @@ msgstr "Iniciar Sesión"
 #: templates/registration/login.html:28
 #, python-format
 msgid "Welcome to <strong>%(short_name)s</strong>'s Rancho! Please log in."
-msgstr "¡Bienvenido al Rancho de <strong>%(short_name)s</strong>! Por favor inicia sesión."
+msgstr ""
+"¡Bienvenido al Rancho de <strong>%(short_name)s</strong>! Por favor inicia "
+"sesión."
 
 #: templates/registration/login.html:49
 msgid "(I forgot my password...)"
@@ -1822,7 +1885,9 @@ msgstr "Recuperar Contraseña"
 
 #: templates/registration/password_reset_complete.html:8
 msgid "Your password has been set.  You may go ahead and log in now."
-msgstr "Tu contraseña ha sido configurada. Puedes continuar e iniciar sesión a continuación."
+msgstr ""
+"Tu contraseña ha sido configurada. Puedes continuar e iniciar sesión a "
+"continuación."
 
 #: templates/registration/password_reset_complete.html:9
 msgid "Log in"
@@ -1836,8 +1901,9 @@ msgstr "Cambiar Contraseña"
 msgid ""
 "Please enter your new password twice so we can verify you typed it in "
 "correctly."
-msgstr "Por favor, introduce tu nueva contraseña dos veces para que podamos verificar "
-"que la has escrito correctamente."
+msgstr ""
+"Por favor, introduce tu nueva contraseña dos veces para que podamos "
+"verificar que la has escrito correctamente."
 
 #: templates/registration/password_reset_confirm.html:20
 msgid "Change my password"
@@ -1847,12 +1913,15 @@ msgstr "Cambiar mi contraseña "
 msgid ""
 "We've e-mailed you instructions for setting your password to the e-mail "
 "address you submitted. You should be receiving it shortly."
-msgstr "Hemos enviado un correo con instrucciones para configurar tu contraseña "
-"a la dirección especificada. Deberías recibir dicho mensaje en breve."
+msgstr ""
+"Hemos enviado un correo con instrucciones para configurar tu contraseña a la "
+"dirección especificada. Deberías recibir dicho mensaje en breve."
 
 #: templates/registration/password_reset_email.html:2
 msgid "You're receiving this e-mail because you requested a password reset"
-msgstr "Este correo ha sido enviado debido a que has solicitado un cambio de contraseña"
+msgstr ""
+"Este correo ha sido enviado debido a que has solicitado un cambio de "
+"contraseña"
 
 #: templates/registration/password_reset_email.html:3
 #, python-format
@@ -1876,8 +1945,9 @@ msgstr "El equipo de %(site_name)s"
 msgid ""
 "Forgotten your password? Enter your e-mail address below, and we'll e-mail "
 "instructions for setting a new one."
-msgstr "¿Has olvidado tu contraseña? Introduce tu dirección de correo, y te enviaremos un email "
-"con instrucciones para establecer una nueva."
+msgstr ""
+"¿Has olvidado tu contraseña? Introduce tu dirección de correo, y te "
+"enviaremos un email con instrucciones para establecer una nueva."
 
 #: templates/registration/password_reset_form.html:17
 msgid "Reset my password"
@@ -2024,8 +2094,10 @@ msgstr "Acerca de las Tareas"
 msgid ""
 "ToDos are simple checklists, they can be assigned by anyone but may have "
 "information about who is supposed to check them."
-msgstr "Las Tareas son simplemente listas de control, que pueden ser asignadas por cualquiera, pero que "
-"pueden contener información acerca de quién debe supuestamente revisarla."
+msgstr ""
+"Las Tareas son simplemente listas de control, que pueden ser asignadas por "
+"cualquiera, pero que pueden contener información acerca de quién debe "
+"supuestamente revisarla."
 
 #: templates/todo/todos_list.html:110
 msgid "There are no ToDo lists in this project yet."
@@ -2190,8 +2262,9 @@ msgstr "Página Web"
 msgid ""
 "There is already a user with the name you inserted, please choose another "
 "username."
-msgstr "Ya existe un usuario con el nombre que has introducido, por favor elige "
-"otro nombre de usuario."
+msgstr ""
+"Ya existe un usuario con el nombre que has introducido, por favor elige otro "
+"nombre de usuario."
 
 #: user/forms.py:115
 msgid "New password"
@@ -2219,32 +2292,33 @@ msgstr "El usuario %s ha sido desactivado."
 msgid "User %s has been enabled."
 msgstr "El susuario %s ha sido activado."
 
-#: user/views.py:190
+#: user/views.py:191
 msgid "New Rancho Register"
 msgstr "Nuevo Registro Rancho"
 
-#: user/views.py:192
+#: user/views.py:193
 msgid "User has been successfully created."
 msgstr "El usuario ha sido creado con éxito."
 
-#: user/views.py:216
+#: user/views.py:217
 msgid ""
 "Choose the email to which you will receive every notification from Rancho."
 msgstr ""
 "Elige una direccion de correo en la que recibir las notificaciones de Rancho."
 
-#: user/views.py:218
+#: user/views.py:219
 msgid ""
 "Choose this person's email to which they will receive every notification "
 "from Rancho."
-msgstr "Elige una dirección de correo para esta persona donde recibirá las "
+msgstr ""
+"Elige una dirección de correo para esta persona donde recibirá las "
 "notificaciones de Rancho."
 
-#: user/views.py:229
+#: user/views.py:230
 msgid "Your settings have been successfully edited."
 msgstr "Tus ajustes han sido editados con éxito."
 
-#: user/views.py:231
+#: user/views.py:232
 #, python-format
 msgid "The settings for %s have been successfully edited."
 msgstr "Los ajustes para %s han sido editados con éxito."
@@ -2288,9 +2362,5 @@ msgstr "La Wikiboard \"%s\" ha sido actualizada con éxito."
 msgid "The Wikiboard \"%s\" has been successfully deleted."
 msgstr "La Wikiboard \"%s\" ha sido borrada con éxito."
 
-
-msgid "No milestones in your projects yet."
-msgstr "No hay etapas en sus proyectos en este momento."
-
-msgid "No projects available."
-msgstr "No hay proyectos disponibles."
+#~ msgid "<strong>Disable</strong>"
+#~ msgstr "<strong>Desactivar</strong>"
