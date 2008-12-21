@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-19 12:49+0000\n"
+"POT-Creation-Date: 2008-12-18 19:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,48 +14,47 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-
-#: company/forms.py:7
+#: company/forms.py:27
 msgid "Please write a short name for the company"
 msgstr "Por favor escreve o nome curto para a empresa"
 
-#: company/forms.py:8 company/forms.py:28
+#: company/forms.py:28
 msgid "Short Name"
 msgstr "Nome Curto"
 
-#: company/forms.py:9
+#: company/forms.py:29
 msgid "Please write a long name for the company"
 msgstr "Por favor escreva o nome longo para a empresa"
 
-#: company/forms.py:10
+#: company/forms.py:30
 msgid "Long Name"
 msgstr "Nome Longo"
 
-#: company/forms.py:15
+#: company/forms.py:35 templates/company/settings.html:51
 msgid "Company Description"
 msgstr "Descrição da Empresa"
 
-#: company/forms.py:17
+#: company/forms.py:37 templates/people/view_user.html:141 user/forms.py:60
 msgid "Mailing Address"
 msgstr "Morada"
 
-#: company/forms.py:19
+#: company/forms.py:39
 msgid "Phone"
 msgstr "Telefone"
 
-#: company/forms.py:21
+#: company/forms.py:41
 msgid "Please insert a valid webpage"
 msgstr "Por favor insira uma página web válida"
 
-#: company/forms.py:21
+#: company/forms.py:41 templates/people/view_user.html:131
 msgid "Web Page"
 msgstr "Página Web"
 
-#: company/forms.py:23
+#: company/forms.py:43 templates/company/settings.html:56
 msgid "Company Logo"
 msgstr "Logo da Empresa"
 
-#: company/forms.py:23 project/forms.py:32 user/forms.py:108 user/forms.py:109
+#: company/forms.py:43 project/forms.py:34 user/forms.py:118 user/forms.py:119
 msgid ""
 "The file you uploaded was either not an image or a corrupted image. Please "
 "choose a valid image file."
@@ -63,11 +62,11 @@ msgstr ""
 "O ficheiro carregado não é uma imagem ou é uma imagem corrupta. Por favor "
 "escolha um ficheiro de imagem válido."
 
-#: company/forms.py:25
+#: company/forms.py:45
 msgid "Display company logo"
 msgstr "Mostrar o logo da empresa"
 
-#: company/forms.py:34 project/forms.py:42 user/forms.py:121
+#: company/forms.py:54 project/forms.py:44 user/forms.py:124 user/forms.py:131
 msgid ""
 "The image file you tried to upload is too large. Please upload an image of "
 "less than 1 Mb."
@@ -75,117 +74,111 @@ msgstr ""
 "O ficheiro de imagem que tentou carregar é demasiado grande. Por favor "
 "carregue uma imagem commenos de 1 Mb"
 
-#: company/views.py:46
+#: company/views.py:64
 msgid "Company settings have been successfully edited."
 msgstr "As definições da empresa fora editadas com sucesso"
 
-#: company/views.py:59
-msgid "Upload a new logo or delete the existing one."
-msgstr "Faça upload de um novo logo ou apague o existente."
-
-#: company/views.py:61
-msgid "Upload a logo for the company."
-msgstr "Faça upload de um logo para a empresa"
-
-#: company/views.py:100
+#: company/views.py:113
 #, python-format
 msgid "Company %s have been successfully created."
 msgstr "A empresa %s foi editada com sucesso."
 
-#: company/views.py:128
+#: company/views.py:141
 #, python-format
 msgid "Company %s information has been successfully updated."
 msgstr "A informação da empresa %s foi editada com sucesso."
 
-#: company/views.py:157
+#: company/views.py:170
 #, python-format
 msgid "Company %s has been deleted."
 msgstr "A empresa %s foi removida."
 
-#: file/forms.py:12 todo/forms.py:9
+#: file/forms.py:29 templates/todo/edit_todo_list.html:29
+#: templates/todo/new_todo_list.html:45 todo/forms.py:27
 msgid "Description"
 msgstr "Descrição"
 
-#: file/forms.py:27 lib/utils.py:104
-#: templates/notification/file_new/plain.txt:8
-#: templates/notification/fileversion_new/plain.txt:8
+#: file/forms.py:44 lib/utils.py:110 templates/file/list_file.html:35
 msgid "File"
 msgstr "Ficheiro"
 
-#: file/forms.py:36 message/forms.py:13 milestone/forms.py:10
-#: templates/notification/milestone_updated/plain.txt:8 todo/forms.py:27
-#: user/forms.py:40
+#: file/forms.py:53 message/forms.py:31 milestone/forms.py:29 todo/forms.py:33
+#: user/forms.py:50
 msgid "Title"
 msgstr "Título"
 
-#: file/forms.py:37 message/forms.py:16
+#: file/forms.py:54 message/forms.py:34
 msgid "Notify"
 msgstr "Notificar"
 
-#: file/management.py:10
+#: file/management.py:28
 msgid "New file"
 msgstr "Novo ficheiro"
 
-#: file/management.py:10
+#: file/management.py:28
 msgid "A new file has been uploaded"
 msgstr "Um novo ficheiro foi carregado."
 
-#: file/management.py:11
+#: file/management.py:29
 msgid "New file version"
 msgstr "Nova versão do ficheiro"
 
-#: file/management.py:11
+#: file/management.py:29
 msgid "A new version of a file has been uploaded"
 msgstr "Uma nova versão de um ficheiro foi guardada"
 
-#: file/views.py:40 file/views.py:79 file/views.py:110 file/views.py:150
-#: file/views.py:180 file/views.py:206 file/views.py:241 message/views.py:44
-#: message/views.py:73 message/views.py:109 message/views.py:156
-#: message/views.py:190 message/views.py:200 milestone/views.py:30
-#: milestone/views.py:58 milestone/views.py:99 milestone/views.py:153
-#: milestone/views.py:167 milestone/views.py:181 todo/views.py:33
-#: todo/views.py:57 todo/views.py:76 todo/views.py:115 todo/views.py:183
-#: todo/views.py:220 todo/views.py:246 todo/views.py:263 todo/views.py:279
-#: todo/views.py:300 wikiboard/views.py:35 wikiboard/views.py:56
-#: wikiboard/views.py:103 wikiboard/views.py:150 wikiboard/views.py:169
-#: wikiboard/views.py:198
+#: file/views.py:58 file/views.py:97 file/views.py:128 file/views.py:168
+#: file/views.py:198 file/views.py:224 file/views.py:259 message/views.py:53
+#: message/views.py:82 message/views.py:118 message/views.py:165
+#: message/views.py:199 message/views.py:209 milestone/views.py:49
+#: milestone/views.py:77 milestone/views.py:118 milestone/views.py:172
+#: milestone/views.py:186 milestone/views.py:200 templates/403.html:6
+#: todo/views.py:47 todo/views.py:71 todo/views.py:90 todo/views.py:125
+#: todo/views.py:198 todo/views.py:235 todo/views.py:261 todo/views.py:278
+#: todo/views.py:294 todo/views.py:315 wikiboard/views.py:48
+#: wikiboard/views.py:69 wikiboard/views.py:115 wikiboard/views.py:162
+#: wikiboard/views.py:181 wikiboard/views.py:210
 msgid "Forbidden Access"
 msgstr "Acesso proíbido"
 
-#: file/views.py:125
+#: file/views.py:143
 #, python-format
 msgid "File \"%s\" successfully uploaded"
 msgstr "Ficheiro \"%s\" guardado com sucesso"
 
-#: file/views.py:188
+#: file/views.py:206
 msgid "File successfully deleted"
 msgstr "Ficheiro removido com sucesso"
 
-#: file/views.py:218
+#: file/views.py:236
 msgid "New file revision created"
 msgstr "Nova revisão de ficheiro criada"
 
-#: granular_permissions/permissions.py:3
+#: granular_permissions/permissions.py:21 lib/templatetags/genmenu.py:36
+#: templates/dashboard/statistics.html:24
+#: templates/message/message_list.html:39
 msgid "Messages"
 msgstr "Mensagens"
 
-#: granular_permissions/permissions.py:3 lib/templatetags/genmenu.py:13
-#: lib/templatetags/genmenu.py:20 granular_permissions/permissions.py:21
-#: lib/templatetags/genmenu.py:31 lib/templatetags/genmenu.py:38
-#: templates/dashboard/milestones.html:5
+#: granular_permissions/permissions.py:21 lib/templatetags/genmenu.py:37
+msgid "ToDos"
+msgstr ""
+
+#: granular_permissions/permissions.py:21 lib/templatetags/genmenu.py:31
+#: lib/templatetags/genmenu.py:38 templates/dashboard/milestones.html:5
 #: templates/dashboard/statistics.html:32
 #: templates/milestone/milestones_list.html:43
 msgid "Milestones"
 msgstr ""
 
-#: granular_permissions/permissions.py:3 lib/templatetags/genmenu.py:21
 #: granular_permissions/permissions.py:21 lib/templatetags/genmenu.py:39
 #: templates/dashboard/statistics.html:35
 #: templates/wikiboard/list_wiki.html:34
 msgid "Wikiboards"
 msgstr ""
 
-#: granular_permissions/permissions.py:3 lib/templatetags/genmenu.py:22
+#: granular_permissions/permissions.py:21 lib/templatetags/genmenu.py:40
+#: templates/dashboard/statistics.html:38 templates/file/list_file.html:37
 msgid "Files"
 msgstr "Ficheiros"
 
@@ -193,220 +186,221 @@ msgstr "Ficheiros"
 msgid "search..."
 msgstr "pesquisar..."
 
-#: lib/custom_widgets.py:111
+#: lib/custom_widgets.py:130
 msgid "Show Tags"
 msgstr "Mostrar etiquetas"
 
-#: lib/custom_widgets.py:112
+#: lib/custom_widgets.py:131
 msgid "Hide Tags"
 msgstr "Esconder etiquetas"
 
-#: lib/custom_widgets.py:165
+#: lib/custom_widgets.py:184
 msgid "None"
 msgstr "Nada"
 
-#: lib/custom_widgets.py:166
+#: lib/custom_widgets.py:185 templates/people/edit_user.html:56
+#: templates/wikiboard/view.html:5
 msgid "View"
 msgstr "Ver"
 
-#: lib/custom_widgets.py:167
+#: lib/custom_widgets.py:186
 msgid "View and Create"
 msgstr "Ver e Criar"
 
-#: lib/custom_widgets.py:168
+#: lib/custom_widgets.py:187
 msgid "View, Create and Edit/Delete"
 msgstr "Ver, Criar e Editar/Apagar"
 
-#: lib/utils.py:51
+#: lib/utils.py:59 templates/lib/displaymilestone.html:35
 msgid "Anyone"
 msgstr "Qualquer pessoa"
 
-#: lib/utils.py:56
+#: lib/utils.py:64
 #, python-format
 msgid "Myself: %s"
 msgstr "Eu próprio: %s"
 
-#: lib/utils.py:78
+#: lib/utils.py:86 templates/search/search.html:39
 msgid "Posted by"
 msgstr "Escrito por"
 
-#: lib/utils.py:79 lib/templatetags/genmenu.py:18
+#: lib/utils.py:87 templates/message/edit_message.html:28
+#: templates/message/new_message.html:24
 msgid "Message"
 msgstr "Mensagem"
 
-#: lib/utils.py:81 lib/utils.py:88
+#: lib/utils.py:89 lib/utils.py:96
 msgid "Assigned to"
 msgstr "Atribuído a"
 
-#: lib/utils.py:84 lib/utils.py:94
+#: lib/utils.py:92 lib/utils.py:100 templates/lib/displaymilestone.html:23
 msgid "Completed by"
 msgstr "Completado por"
 
-#: lib/utils.py:86 templates/notification/milestone_new/plain.txt:8
-#: lib/utils.py:93 templates/milestone/create_milestone.html:31
+#: lib/utils.py:94 templates/milestone/create_milestone.html:31
 #: templates/milestone/edit_milestone.html:35
 msgid "Milestone"
 msgstr ""
 
-#: lib/utils.py:96 templates/notification/todo_new/plain.txt:8
-#: lib/utils.py:101 templates/todo/edit_todo.html:25
+#: lib/utils.py:102 templates/todo/edit_todo.html:25
 msgid "ToDo"
 msgstr ""
 
-#: lib/utils.py:98
+#: lib/utils.py:104 templates/lib/displayfile.html:37
+#: templates/lib/displayfile.html.py:42 templates/lib/displaymessage.html:23
+#: templates/search/search.html:89
 msgid "By"
 msgstr "Por"
 
-#: lib/utils.py:100 lib/utils.py:105 templates/wikiboard/create_entry.html:27
+#: lib/utils.py:106 templates/wikiboard/create_entry.html:27
 msgid "Wikiboard"
 msgstr ""
 
-#: lib/utils.py:102
+#: lib/utils.py:108 templates/search/search.html:63
 msgid "Uploaded by"
 msgstr "Enviado por"
 
-#: lib/templatetags/displaynotification.py:12
+#: lib/templatetags/displaynotification.py:30
 msgid "Hide"
 msgstr "Esconder"
 
-#: lib/templatetags/displayuserphoto.py:24
+#: lib/templatetags/displayuserphoto.py:42
 #, python-format
 msgid "%s's Photo"
 msgstr "A foto de %s"
 
-#: lib/templatetags/genmenu.py:12
+#: lib/templatetags/genmenu.py:30 templates/dashboard/dashboard.html:5
+#: templates/project/basicproject.html:10
 msgid "Dashboard"
 msgstr "Painel"
 
-#: lib/templatetags/genmenu.py:14
+#: lib/templatetags/genmenu.py:32 templates/dashboard/statistics.html:5
 msgid "Statistics"
 msgstr "Estatísticas"
 
-#: lib/templatetags/genmenu.py:17
+#: lib/templatetags/genmenu.py:35 templates/message/message_list.html:5
+#: templates/message/read_message.html:5 templates/project/overview.html:5
 msgid "Overview"
 msgstr "Vista Geral"
 
-#: lib/templatetags/genmenu.py:19 granular_permissions/permissions.py:21
-#: lib/templatetags/genmenu.py:37
-msgid "ToDos"
-msgstr ""
-
-#: message/forms.py:13
+#: message/forms.py:31
 msgid "Please write a title for the message"
 msgstr "Por favor escreva um título para a mensagem"
 
-#: message/forms.py:15 message/forms.py:50
+#: message/forms.py:32
+msgid "Tags"
+msgstr "Etiquetas"
+
+#: message/forms.py:33 message/forms.py:68
 msgid "Body"
 msgstr "Mensagem"
 
-#: message/forms.py:15
+#: message/forms.py:33
 msgid "The message body cannot be blank."
 msgstr "O corpo da mensagem não pode ser vazio"
 
-#: message/forms.py:50
+#: message/forms.py:68
 msgid "Please write a message"
 msgstr "Por favor escreva uma mensagem"
 
-#: message/management.py:10
+#: message/management.py:27
 msgid "New message"
 msgstr "Nova mensagem"
 
-#: message/management.py:10
+#: message/management.py:27
 msgid "A new message has been created"
 msgstr "Uma nova mensagem foi criada"
 
-#: message/management.py:11
+#: message/management.py:28
 msgid "Message replyed"
 msgstr "Mensagem respondida"
 
-#: message/management.py:11
+#: message/management.py:28
 msgid "A message has been replyed"
 msgstr "A mensagem foi respondida"
 
-#: message/views.py:87
+#: message/views.py:96
 msgid "Message Created"
 msgstr "Mensagem Criada"
 
-#: message/views.py:166
+#: message/views.py:175
 msgid "Message Deleted."
 msgstr "Mensagem Removida"
 
-#: milestone/forms.py:10
+#: milestone/forms.py:29
 msgid "Please write a title for the milestone"
 msgstr "Por favor escreva um título para a milestone"
 
-#: milestone/forms.py:11 todo/forms.py:28
+#: milestone/forms.py:30 todo/forms.py:34
 msgid "Responsible"
 msgstr "Responsável"
 
-#: milestone/forms.py:12
+#: milestone/forms.py:31
 msgid "Send notification email"
 msgstr "Enviar email de notificação"
 
-#: milestone/forms.py:13 templates/notification/milestone_new/plain.txt:9
-#: templates/notification/milestone_updated/plain.txt:9
+#: milestone/forms.py:32
 msgid "Due date"
 msgstr "Prazo"
 
-#: milestone/forms.py:13
+#: milestone/forms.py:32
 msgid "Due date field is empty"
 msgstr "O campo do prazo está vazio"
 
-#: milestone/forms.py:13
+#: milestone/forms.py:32
 msgid "Invalid date format"
 msgstr "Formato de data inválido"
 
-#: milestone/forms.py:18
+#: milestone/forms.py:37
 msgid "Please select a responsible for the milestone"
 msgstr "Por favor escolha um responsável para a milestone"
 
-#: milestone/forms.py:18 todo/forms.py:33
+#: milestone/forms.py:37 todo/forms.py:39
 msgid "invalid choice"
 msgstr "escolha inválida"
 
-#: milestone/management.py:10 templates/notification/milestone_new/short.txt:1
+#: milestone/management.py:28
 msgid "New milestone"
 msgstr "Nova milestone"
 
-#: milestone/management.py:10
+#: milestone/management.py:28
 msgid "A new milestone has been created"
 msgstr "Uma nova milestone foi criada"
 
-#: milestone/management.py:11
+#: milestone/management.py:29
 msgid "Milestone complete"
 msgstr "Milestone completa"
 
-#: milestone/management.py:11
-msgid "A milestone as been completed"
+#: milestone/management.py:29
+msgid "A milestone has been completed"
 msgstr "Uma milestone foi completada"
 
-#: milestone/management.py:12
+#: milestone/management.py:30
 msgid "Milestone completion date approaching"
 msgstr "O prazo final de uma milestone está a aproximar-se"
 
-#: milestone/management.py:12
+#: milestone/management.py:30
 msgid "A milestone completion date is approaching "
 msgstr "O prazo final de uma milestone está a aproximar-se"
 
-#: milestone/management.py:13
+#: milestone/management.py:31
 msgid "Milestone updated"
 msgstr "Milestone actualizada"
 
-#: milestone/management.py:13
-#: templates/notification/milestone_updated/short.txt:1
+#: milestone/management.py:31
 msgid "A milestone has been updated"
 msgstr "Uma milestone foi actualizada"
 
-#: milestone/views.py:77
+#: milestone/views.py:96
 #, python-format
 msgid "Milestone \"%s\" successfully created."
 msgstr "Milestone \"%s\" criada com sucesso."
 
-#: milestone/views.py:129
+#: milestone/views.py:148
 msgid "Milestone successfully edited."
 msgstr "Milestone editada com sucesso"
 
-#: milestone/views.py:183
+#: milestone/views.py:202
 #, python-format
 msgid "Milestone \"%s\" successfully deleted."
 msgstr "Milestone \"%s\" editada com sucesso."
@@ -440,7 +434,7 @@ msgid "default"
 msgstr "valor de origem"
 
 #: notification/models.py:51 notification/models.py:72
-#: notification/models.py:128 notification/models.py:369
+#: notification/models.py:128 notification/models.py:368
 msgid "notice type"
 msgstr "tipo de notificação"
 
@@ -453,7 +447,7 @@ msgid "Email"
 msgstr "Email"
 
 #: notification/models.py:71 notification/models.py:126
-#: notification/models.py:363
+#: notification/models.py:362
 msgid "user"
 msgstr "utilizador"
 
@@ -477,7 +471,7 @@ msgstr "definições das notificações"
 msgid "message"
 msgstr "mensagem"
 
-#: notification/models.py:129 notification/models.py:371
+#: notification/models.py:129 notification/models.py:370
 msgid "added"
 msgstr "adicionado"
 
@@ -501,86 +495,72 @@ msgstr "notificação"
 msgid "notices"
 msgstr "notificações"
 
-#: notification/models.py:374
+#: notification/models.py:373
 msgid "signal"
 msgstr "sinal"
 
-#: notification/models.py:380
+#: notification/models.py:379
 msgid "observed item"
 msgstr "item observado"
 
-#: notification/models.py:381
+#: notification/models.py:380
 msgid "observed items"
 msgstr "itens observados"
 
-#: notification/templates/notification/email_body.txt:1
-#, python-format
-msgid ""
-"You have received the following notice from %(current_site)s:\n"
-"\n"
-"%(message)s\n"
-"\n"
-"To see other notices or change how you receive notifications, please go to %"
-"(notices_url)s.\n"
-msgstr ""
-"Recebeu a seguinte notificação de %(current_site)s:\n"
-"\n"
-"%(message)s\n"
-"\n"
-"Para ver otras notificações ou mudar como as recebe, por favor visite %"
-"(notices_url)s.\n"
-
-#: notification/templates/notification/email_subject.txt:1
-#, python-format
-msgid "[%(current_site)s] %(message)s"
-msgstr ""
-
-#: notification/templates/notification/plain.txt:1
-#: notification/templates/notification/short.txt:1
 #: notification/templates/notification/full.html:1
 #: notification/templates/notification/notice.html:1
 #, python-format
 msgid "%(notice)s"
 msgstr ""
 
-#: project/forms.py:31 project/forms.py:66 todo/forms.py:8
+#: pagination/templates/pagination/pagination.html:5
+#: pagination/templates/pagination/pagination.html:7
+msgid "previous"
+msgstr ""
+
+#: pagination/templates/pagination/pagination.html:21
+#: pagination/templates/pagination/pagination.html:23
+msgid "next"
+msgstr ""
+
+#: project/forms.py:33 project/forms.py:70 todo/forms.py:26
 msgid "Name"
 msgstr "Nome"
 
-#: project/forms.py:32 project/forms.py:34
+#: project/forms.py:34
 msgid "Logo"
 msgstr ""
 
-#: project/forms.py:36 project/forms.py:77
+#: project/forms.py:38 project/forms.py:81
 msgid "This project name is already in use."
 msgstr "O nome deste projecto já está em uso."
 
-#: project/forms.py:67
+#: project/forms.py:71 templates/project/settings.html:50
 msgid "Project Description"
 msgstr "Descrição do Projecto"
 
-#: project/forms.py:68
+#: project/forms.py:72
 msgid "Project Status"
 msgstr "Estado do Projecto"
 
-#: project/views.py:78
+#: project/views.py:88
 msgid "Permissions updated"
 msgstr "Permissões actualizadas"
 
-#: project/views.py:106
+#: project/views.py:116
 msgid "Users added to project."
 msgstr "Utilizadores adicionados ao projecto."
 
-#: project/views.py:126
+#: project/views.py:136
 #, python-format
 msgid "User %s has been remove from project."
 msgstr "O utilizador %s foi removido do projecto."
 
-#: project/views.py:162
+#: project/views.py:172
 msgid "Project settings have been successfully edited."
 msgstr "As definições do projecto foram editadas com sucesso."
 
-#: search/forms.py:5 search/forms.py:8
+#: search/forms.py:23 search/forms.py:26
 msgid "Query"
 msgstr "Termos da pesquisa"
 
@@ -594,6 +574,20 @@ msgstr "O modelo %s já foi registado."
 msgid "%s can only be set on instances."
 msgstr "%s só pode ser definido em instâncias."
 
+#: tagging/forms.py:19
+msgid "Multiple tags were given."
+msgstr "Múltiplas etiquetas dadas."
+
+#: tagging/forms.py:22
+#, python-format
+msgid "A tag may be no more than %s characters long."
+msgstr ""
+
+#: tagging/forms.py:38
+#, python-format
+msgid "Each tag may be no more than %s characters long."
+msgstr "Cada etiqueta não pode ter mais do que %s caracteres de largura."
+
 #: tagging/models.py:58
 #, python-format
 msgid "No tags were given: \"%s\"."
@@ -604,31 +598,31 @@ msgstr "Nenhuma etiqueta dada: \"%s\"."
 msgid "Multiple tags were given: \"%s\"."
 msgstr "Múltiplas etiquetas foram dadas: \"%s\"."
 
-#: tagging/models.py:445
+#: tagging/models.py:450
 msgid "name"
 msgstr "nome"
 
-#: tagging/models.py:451 tagging/models.py:461
+#: tagging/models.py:456 tagging/models.py:466
 msgid "tag"
 msgstr "etiqueta"
 
-#: tagging/models.py:452
+#: tagging/models.py:457
 msgid "tags"
 msgstr "etiquetas"
 
-#: tagging/models.py:462
+#: tagging/models.py:467
 msgid "content type"
 msgstr "tipo de conteúdo"
 
-#: tagging/models.py:463
+#: tagging/models.py:468
 msgid "object id"
 msgstr "id do objecto"
 
-#: tagging/models.py:471
+#: tagging/models.py:476
 msgid "tagged item"
 msgstr "item etiquetado"
 
-#: tagging/models.py:472
+#: tagging/models.py:477
 msgid "tagged items"
 msgstr "itens etiquetados"
 
@@ -648,20 +642,6 @@ msgstr "O input da etiqueta dado é inválido."
 #, python-format
 msgid "Invalid distribution algorithm specified: %s."
 msgstr "Algoritmo de distribuição inválido: %s."
-
-#: tagging/validators.py:19
-#, python-format
-msgid "Each tag may be no more than %s characters long."
-msgstr "Cada etiqueta não pode ter mais do que %s caracteres de largura."
-
-#: tagging/validators.py:28
-msgid "Multiple tags were given."
-msgstr "Múltiplas etiquetas dadas."
-
-#: tagging/validators.py:31 tagging/forms.py:22
-#, python-format
-msgid "A tag may be no more than %s characters long."
-msgstr ""
 
 #: tagging/views.py:33
 msgid "tagged_object_list must be called with a queryset or a model."
@@ -759,266 +739,46 @@ msgstr ""
 msgid "fourth argument to %s tag must be 'as'"
 msgstr ""
 
-#: templates/emails/newuser.txt:1
-msgid "Hello"
-msgstr "Olá"
-
-#: templates/emails/newuser.txt:3
-msgid "You have been registered on"
-msgstr "Você foi registado(a) em"
-
-#: templates/emails/newuser.txt:5
-msgid "User name"
-msgstr "Nome de utilizador"
-
-#: templates/emails/newuser.txt:6
-msgid "Password"
-msgstr "Palavra-chave"
-
-#: templates/emails/newuser.txt:8
-msgid "You can access your dashboard at"
-msgstr "Pode aceder ao seu painel em"
-
-#: templates/emails/newuser.txt:11
-msgid "Here's a note from the person who added you"
-msgstr "Aqui está uma nota da pessoa que o(a) adicionou"
-
-#: templates/emails/newuser.txt:15
-msgid "To modify your password and other personal information, go to:"
-msgstr ""
-"Para modificar a sua palavra-chave ou outras informações pessoais, visite:"
-
-#: templates/notification/file_new/plain.txt:2
-#: templates/notification/fileversion_new/plain.txt:2
-#: templates/notification/message_new/plain.txt:2
-#: templates/notification/message_replied/plain.txt:2
-#: templates/notification/milestone_datewarning/plain.txt:2
-#: templates/notification/milestone_new/plain.txt:2
-#: templates/notification/milestone_updated/plain.txt:2
-#: templates/notification/todo_new/plain.txt:2 user/forms.py:33
-msgid "Company"
-msgstr "Empresa"
-
-#: templates/notification/file_new/plain.txt:3
-#: templates/notification/fileversion_new/plain.txt:3
-#: templates/notification/message_new/plain.txt:3
-#: templates/notification/message_replied/plain.txt:3
-#: templates/notification/milestone_datewarning/plain.txt:3
-#: templates/notification/milestone_new/plain.txt:3
-#: templates/notification/milestone_updated/plain.txt:3
-msgid "Project"
-msgstr "Projecto"
-
-#: templates/notification/file_new/plain.txt:6
-msgid "New file uploaded by"
-msgstr "Novo ficheiro enviado por"
-
-#: templates/notification/file_new/plain.txt:12
-#: templates/notification/fileversion_new/plain.txt:12
-#: templates/notification/message_new/plain.txt:13
-#: templates/notification/message_replied/plain.txt:12
-#: templates/notification/milestone_datewarning/plain.txt:10
-#: templates/notification/milestone_new/plain.txt:12
-#: templates/notification/milestone_updated/plain.txt:12
-#: templates/notification/todo_new/plain.txt:11
-msgid "DO NOT REPLY TO THIS EMAIL"
-msgstr "NÃO RESPONDA A ESTE EMAIL"
-
-#: templates/notification/file_new/plain.txt:13
-#: templates/notification/fileversion_new/plain.txt:13
-msgid "To view this file, please go to"
-msgstr "Para ver este ficheiro, por favor visite"
-
-#: templates/notification/file_new/short.txt:1
-msgid "New file uploaded"
-msgstr "Novo ficheiro enviado"
-
-#: templates/notification/fileversion_new/plain.txt:6
-msgid "New file version uploaded by"
-msgstr "Novo ficheiro enviado por"
-
-#: templates/notification/fileversion_new/plain.txt:9
-msgid "New version:"
-msgstr "Nova versão:"
-
-#: templates/notification/fileversion_new/short.txt:1
-msgid "New file version uploaded"
-msgstr "Nova versão do ficheiro enviada"
-
-#: templates/notification/message_new/plain.txt:6
-msgid "New message by"
-msgstr "Nova mensagem de"
-
-#: templates/notification/message_new/plain.txt:8
-msgid "Subject"
-msgstr "Assunto"
-
-#: templates/notification/message_new/plain.txt:14
-#: templates/notification/message_replied/plain.txt:13
-msgid "To view or reply this message, please go to"
-msgstr "Para ver ou responder a esta mensagem, por favor visite"
-
-#: templates/notification/message_replied/plain.txt:6
-#, python-format
-msgid "New comment for message \"%(title)s\" by"
-msgstr "Novo comentário para a mensagem \"%(title)s\" de"
-
-#: templates/notification/message_replied/short.txt:1
-msgid "Re"
-msgstr ""
-
-#: templates/notification/milestone_datewarning/plain.txt:6
-msgid "This is a reminder"
-msgstr "Isto é um lembrete"
-
-#: templates/notification/milestone_datewarning/plain.txt:7
-#, python-format
-msgid ""
-"You are 48 hours from the milestone \"%(milestone.title)s\" with due date %"
-"(milestone.due_date)s"
-msgstr ""
-"Você está a 48 horas da milestone \"%(milestone.title)s\" com o prazo %"
-"(milestone.due_date)s"
-
-#: templates/notification/milestone_datewarning/plain.txt:11
-#: templates/notification/milestone_new/plain.txt:13
-#: templates/notification/milestone_updated/plain.txt:13
-msgid "To view this milestone, please go to"
-msgstr "Para ver esta milestone, por favor visite"
-
-#: templates/notification/milestone_datewarning/short.txt:1
-msgid "Milestone reminder"
-msgstr "Lembrete de Milestone"
-
-#: djangologging/templates/logging.html:8
-msgid "Request Log"
-msgstr ""
-
-#: djangologging/templates/logging.html:16
-msgid "Level"
-msgstr ""
-
-#: djangologging/templates/logging.html:17
-msgid "Timestamp"
-msgstr ""
-
-#: djangologging/templates/logging.html:18
-#: djangologging/templates/redirect.html:44
-msgid "Location"
-msgstr ""
-
-#: djangologging/templates/logging.html:20
-msgid "Time"
-msgstr ""
-
-#: djangologging/templates/logging.html:58
-#, python-format
-msgid "Completed in %(elapsed_time)s <abbr title=\"milliseconds\">ms</abbr>"
-msgstr ""
-
-#: djangologging/templates/logging.html:60
-#, python-format
-msgid "with %(query_count)s database query"
-msgid_plural "with %(query_count)s database queries"
-msgstr[0] ""
-msgstr[1] ""
-
-#: djangologging/templates/logging.html:62
-#, python-format
-msgid ""
-"which took %(query_time)s <abbr title=\"milliseconds\">ms</abbr> (%"
-"(query_percentage)s&#37; of total time)"
-msgstr ""
-
-#: djangologging/templates/logging.html:63
-msgid ""
-"If you set <code>LOGGING_LOG_SQL</code> to <code>True</code> in your Django "
-"settings file, you'll see all the individual database queries"
-msgstr ""
-
-#: djangologging/templates/logging.html:68
-msgid "Did you know?"
-msgstr ""
-
-#: djangologging/templates/logging.html:71
-msgid ""
-"To have your SQL pretty printed, simply install <a href=\"http://pygments."
-"org/\">pygments</a>."
-msgstr ""
-
-#: djangologging/templates/logging.html:79
-msgid "No log entries."
-msgstr ""
-
-#: djangologging/templates/logging.html:147
-#: djangologging/templates/logging.html:158
-msgid "Show"
-msgstr ""
-
-#: djangologging/templates/logging.html:200
-msgid "No log messages matching filter."
-msgstr ""
-
-#: djangologging/templates/logging.html:211
-msgid "Show location"
-msgstr ""
-
-#: djangologging/templates/logging.html:214
-msgid "Filter"
-msgstr ""
-
-#: djangologging/templates/logging.html:230
-msgid "No filter (show all)"
-msgstr ""
-
-#: djangologging/templates/redirect.html:48
-msgid ""
-"You would normally have been redirected to the above location automatically, "
-"but some log messages are available to read below."
-msgstr ""
-
-#: djangologging/templates/redirect.html:52
-msgid ""
-"You're seeing this page because amongst other things you have "
-"<code>LOGGING_INTERCEPT_REDIRECTS = True</code> in your Django settings "
-"file. Change that to <code>False</code>, and Django will redirect you "
-"properly, discarding any messages logged in the process."
-msgstr ""
-
-#: pagination/templates/pagination/pagination.html:5
-#: pagination/templates/pagination/pagination.html:7
-msgid "previous"
-msgstr ""
-
-#: pagination/templates/pagination/pagination.html:21
-#: pagination/templates/pagination/pagination.html:23
-msgid "next"
-msgstr ""
-
 #: templates/base.html:10 templates/registration/login.html:7
 msgid "Group management made simple."
 msgstr ""
+
+#: templates/base.html:43 templates/company/settings.html:25
+msgid "Company Settings"
+msgstr "Definições da Empresa"
 
 #: templates/base.html:64
 msgid "Edit your settings"
 msgstr "Edite as suas definições"
 
-#: templates/base.html:100
+#: templates/base.html:65
+msgid "Log-out"
+msgstr "Sair"
+
+#: templates/base.html:99
 msgid "Manage people and companies"
 msgstr "Gerir pessoas e empresas"
 
-#: templates/base.html:100
+#: templates/base.html:99
 msgid "People and Companies"
 msgstr "Pessoas e Empresas"
 
-#: templates/base.html:102 templates/project/basicproject.html:24
+#: templates/base.html:101 templates/project/basicproject.html:24
 msgid "Go to general calendar"
 msgstr "Ir para calendário geral"
 
-#: templates/base.html:102 templates/cal/basecalendar.html:16
+#: templates/base.html:101 templates/cal/basecalendar.html:16
 #: templates/project/basicproject.html:24
 msgid "Calendar"
 msgstr "Calendário"
+
+#: templates/base.html:182 templates/legal_notice.html:12
+msgid "Rancho Legal Notices"
+msgstr "Termos Legais do Rancho"
+
+#: templates/legal_notice.html:5
+msgid "Legal Notices"
+msgstr "Termos Legais"
 
 #: templates/cal/basecalendar.html:19
 msgid "My Calendar"
@@ -1043,8 +803,8 @@ msgid ""
 "You can add companies to better identify who accesses your projects, for "
 "example, a client of yours."
 msgstr ""
-"Pode adicionar empresas para melhor identificar quem acede aos seus projectos, por"
-"exemplo, clientes seus."
+"Pode adicionar empresas para melhor identificar quem acede aos seus "
+"projectos, porexemplo, clientes seus."
 
 #: templates/company/create.html:18
 msgid "After you add a company you can add people to it."
@@ -1086,10 +846,6 @@ msgstr "Actualizar Informação da Empresa"
 msgid "Update Company"
 msgstr "Actualizar Empresa"
 
-#: templates/company/settings.html:25
-msgid "Company Settings"
-msgstr "Definições da Empresa"
-
 #: templates/company/settings.html:30
 msgid "Here you can edit the company's settings."
 msgstr "Aqui pode editar as definições da empresa"
@@ -1100,9 +856,9 @@ msgid ""
 "the logo to be visible or not, in which case, the company's small name will "
 "appear instead."
 msgstr ""
-"O logo da empresa será colocado à esquerda no topo de cada página. Pode definir "
-"o logo para ser visível ou não, caso em que o nome curto da empresa irá"
-"aparecer em vez do logo."
+"O logo da empresa será colocado à esquerda no topo de cada página. Pode "
+"definir o logo para ser visível ou não, caso em que o nome curto da empresa "
+"iráaparecer em vez do logo."
 
 #: templates/company/settings.html:44
 msgid "Company optional info"
@@ -1117,10 +873,15 @@ msgid ""
 "You can add an optional description that will take place on the dashboard "
 "page of the company."
 msgstr ""
-"Pode adicionar uma descrição opcional que será colocada na página do "
-"painel da empresa"
+"Pode adicionar uma descrição opcional que será colocada na página do painel "
+"da empresa"
 
-#: templates/company/settings.html:63 templates/project/settings.html:61
+#: templates/company/settings.html:56 templates/project/settings.html:54
+msgid "Upload a new logo or delete the existing one."
+msgstr "Faça upload de um novo logo ou apague o existente."
+
+#: templates/company/settings.html:63 templates/people/view_people.html:72
+#: templates/people/view_people.html:75 templates/project/settings.html:61
 msgid "Delete"
 msgstr "Apagar"
 
@@ -1132,7 +893,11 @@ msgstr "Tem a certeza que deseja apagar o logo desta empresa?"
 msgid "Project Overview & Activity"
 msgstr "Vista Geral & Actividade do Projecto"
 
-#: templates/dashboard/dashboard.html:33
+#: templates/dashboard/dashboard.html:13
+msgid "There is no activity yet."
+msgstr "Não existe actividade, de momento."
+
+#: templates/dashboard/dashboard.html:36
 msgid "Add New Project"
 msgstr "Adicionar Novo Projecto"
 
@@ -1140,15 +905,24 @@ msgstr "Adicionar Novo Projecto"
 msgid "Milestones for all your projects"
 msgstr "Milestones para todos os projectos"
 
+#: templates/dashboard/milestones.html:19
+msgid "No milestones in your projects yet."
+msgstr "Sem milestones nos seus projectos, de momento."
+
 #: templates/dashboard/milestones.html:36
 msgid "In here you have a general view of all milestones in all your projects."
-msgstr "Aqui tem uma vista geral de todas as milestones em todos os seus projectos."
+msgstr ""
+"Aqui tem uma vista geral de todas as milestones em todos os seus projectos."
 
 #: templates/dashboard/statistics.html:12
 msgid "Statistics for all your projects"
 msgstr "Estatísticas para todos os seus projectos"
 
-#: templates/dashboard/statistics.html:28 templates/todo/todos_list.html:79
+#: templates/dashboard/statistics.html:18
+msgid "No projects available."
+msgstr "Não existem projectos disponíveis."
+
+#: templates/dashboard/statistics.html:28 templates/todo/todos_list.html:78
 msgid "ToDo Lists"
 msgstr "Listas de ToDos"
 
@@ -1160,7 +934,7 @@ msgstr ""
 "Aqui tem uma vista geral de todos os projectos em que está e algumas "
 "estatísticas."
 
-#: templates/file/edit_version.html:5
+#: templates/file/edit_version.html:5 templates/file/edit_version.html.py:8
 msgid "Edit file version"
 msgstr "Editar versão do ficheiro"
 
@@ -1177,7 +951,9 @@ msgstr "Etiquetas do Ficheiro"
 #: templates/file/new_upload.html:27 templates/message/edit_message.html:36
 #: templates/message/new_message.html:29
 msgid "Apply optional tags to your message, split multime tags with comma."
-msgstr "Aplique etiquetas opcionais à sua mensagem, separe múltiplas etiquetas com vírgulas."
+msgstr ""
+"Aplique etiquetas opcionais à sua mensagem, separe múltiplas etiquetas com "
+"vírgulas."
 
 #: templates/file/edit_version.html:30
 msgid "Update File"
@@ -1198,6 +974,10 @@ msgstr "Novo Ficheiro"
 #: templates/file/list_file.html:62 templates/message/message_list.html:53
 msgid "Tag Cloud"
 msgstr "Nuvem de Etiquetas"
+
+#: templates/file/list_file.html:78
+msgid "There are no files in this project yet."
+msgstr "Não existem ficheiros neste projecto, de momento."
 
 #: templates/file/new_file.html:5
 msgid "Add new file"
@@ -1277,7 +1057,7 @@ msgid "Are you sure you want set this milestone as complete?"
 msgstr "Tem a certeza que quer definir esta milestone como completa?"
 
 #: templates/lib/displaytodo.html:27
-msgid "Are you sure you want to delete this todo?"
+msgid "Are you sure you want to delete this ToDo?"
 msgstr "Tem a certeza que quer apagar esta ToDo"
 
 #: templates/lib/displaywikiboard.html:17
@@ -1340,24 +1120,24 @@ msgid ""
 "project."
 msgstr ""
 "As etiquetas tornam as mensagens mais fáceis de pesquisar e relacionar com "
-"conceitos deste projecto. Ao clicar em \"Mostrar Etiquetas\" poderá usar etiquetas já "
-"existentes neste projecto."
+"conceitos deste projecto. Ao clicar em \"Mostrar Etiquetas\" poderá usar "
+"etiquetas já existentes neste projecto."
 
 #: templates/message/new_message.html:19
 msgid ""
 "You can notify people about the posting of this new message by selecting "
 "them from \"People in this project\"."
 msgstr ""
-"Pode notificar pessoas sobre esta nova mensagem seleccionando-as "
-"a partir de \"Pessoas neste projecto\""
+"Pode notificar pessoas sobre esta nova mensagem seleccionando-as a partir de "
+"\"Pessoas neste projecto\""
 
 #: templates/message/new_message.html:33
 msgid ""
 "Optionally check the persons you want to notify about the new message you're "
 "about to send."
 msgstr ""
-"Escolha opcionalmente as pessoas que quer notificar acerca da nova mensagem que "
-"está prestes a enviar."
+"Escolha opcionalmente as pessoas que quer notificar acerca da nova mensagem "
+"que está prestes a enviar."
 
 #: templates/message/new_message.html:37
 msgid "Submit Message"
@@ -1448,18 +1228,22 @@ msgstr "Ver Milestones"
 msgid "Back to milestones list"
 msgstr "De volta à lista de milestones"
 
-#: templates/milestone/milestones_list.html:75
-#: templates/milestone/milestones_list.html:77
+#: templates/milestone/milestones_list.html:72
+msgid "There are no milestones in this project yet."
+msgstr "Não existem milestones neste projecto, de momento."
+
+#: templates/milestone/milestones_list.html:78
+#: templates/milestone/milestones_list.html:80
 msgid "Late Milestones"
 msgstr "Milestones Atrasadas"
 
-#: templates/milestone/milestones_list.html:87
-#: templates/milestone/milestones_list.html:89
+#: templates/milestone/milestones_list.html:90
+#: templates/milestone/milestones_list.html:92
 msgid "Upcoming Milestones"
 msgstr "Próximas Milestones"
 
-#: templates/milestone/milestones_list.html:99
-#: templates/milestone/milestones_list.html:101
+#: templates/milestone/milestones_list.html:102
+#: templates/milestone/milestones_list.html:104
 msgid "Complete Milestones"
 msgstr "Milestones Completas"
 
@@ -1472,8 +1256,8 @@ msgid ""
 "Here you can decide whether to receive a notification email whenever an "
 "event occurs."
 msgstr ""
-"Aqui pode decidir se quer receber uma notificação sempre que um "
-"evento ocorre."
+"Aqui pode decidir se quer receber uma notificação sempre que um evento "
+"ocorre."
 
 #: templates/notification/notices.html:12
 msgid "Events are described in the \"Notification\" column."
@@ -1494,6 +1278,10 @@ msgstr "Notificação"
 #: templates/notification/notices.html:38
 msgid "Update Nofication Settings"
 msgstr "Actualizar Definições de Notificação"
+
+#: templates/notification/file_new/notice.html:1
+msgid "New file uploaded"
+msgstr "Novo ficheiro enviado"
 
 #: templates/notification/fileversion_new/notice.html:1
 msgid "New file revision"
@@ -1519,7 +1307,7 @@ msgstr "Nova milestone criada"
 msgid "Milestone update"
 msgstr "Milestone actualizada"
 
-#: templates/notification/todo_new/notice.html:1
+#: templates/notification/todo_new/notice.html:1 todo/management.py:26
 msgid "New ToDo"
 msgstr "Novo ToDo"
 
@@ -1540,16 +1328,17 @@ msgid ""
 "Click the \"Show More\" link to fill aditional information about the new "
 "person."
 msgstr ""
-"Clique em \"Mostrar Mais\" para preencher informação adicional acerca da nova "
-"pessoa."
+"Clique em \"Mostrar Mais\" para preencher informação adicional acerca da "
+"nova pessoa."
 
 #: templates/people/add_user.html:20
 msgid ""
 "<strong>Important:</strong> If the person is set as admin, he or she will "
 "have the higher level of permission prior to the account owner's one."
 msgstr ""
-"<strong>Importante:</strong> Se a pessoa for definida como administrador, esta irá "
-"ter o nível de permissão mais alto prévio ao do proprietário da conta."
+"<strong>Importante:</strong> Se a pessoa for definida como administrador, "
+"esta irá ter o nível de permissão mais alto prévio ao do proprietário da "
+"conta."
 
 #: templates/people/add_user.html:21
 msgid ""
@@ -1565,7 +1354,8 @@ msgstr "Informação de Login"
 
 #: templates/people/add_user.html:26
 msgid "Choose a username with which this person can log in later."
-msgstr "Escolha o nome de utilizador com o qual a pessoa se poderá ligar mais tarde."
+msgstr ""
+"Escolha o nome de utilizador com o qual a pessoa se poderá ligar mais tarde."
 
 #: templates/people/add_user.html:31 templates/people/edit_user.html:91
 msgid "Member Settings"
@@ -1580,8 +1370,8 @@ msgid ""
 "All fields in this section are optional. You can fill them now or the person "
 "can fill or change them later."
 msgstr ""
-"Todos os campos desta secção são opcionais. Pode preenchê-los agora ou a pessoa "
-"pode preenchê-los ou mudá-los mais tarde."
+"Todos os campos desta secção são opcionais. Pode preenchê-los agora ou a "
+"pessoa pode preenchê-los ou mudá-los mais tarde."
 
 #: templates/people/add_user.html:57 user/forms.py:63
 msgid "Personal Note"
@@ -1589,8 +1379,8 @@ msgstr "Nota Pessoal"
 
 #: templates/people/add_user.html:57
 msgid ""
-"You can send a personal note to the person you are adding in addiction to "
-"the email notification. This note is optional."
+"You can send a personal note to the person you are adding in addition to the "
+"email notification. This note is optional."
 msgstr ""
 "Pode enviar uma nota pessoal para a pessoa que está a adicionar em adição à "
 "notificação por email. Esta nota é opcional."
@@ -1644,16 +1434,16 @@ msgid ""
 "This photo will appear in your comments and in other areas. It is mainly for "
 "quick identification."
 msgstr ""
-"Esta foto irá aparecer nos seus comentários e noutras áreas. Serve principalmente "
-"para uma identificação rápida."
+"Esta foto irá aparecer nos seus comentários e noutras áreas. Serve "
+"principalmente para uma identificação rápida."
 
 #: templates/people/edit_user.html:143
 msgid ""
 "This photo will appear in this person's comments and in other areas. It is "
 "mainly for quick identification."
 msgstr ""
-"Esta foto irá aparecer nos comentários desta pessoa e noutras áreas. Serve principalmente "
-"para uma identificação rápida."
+"Esta foto irá aparecer nos comentários desta pessoa e noutras áreas. Serve "
+"principalmente para uma identificação rápida."
 
 #: templates/people/edit_user.html:153
 msgid "Are you sure you want to delete this user's small photo?"
@@ -1676,8 +1466,8 @@ msgid ""
 "This photo will appear in this person's area. People will see this when they "
 "are viewing this person's details."
 msgstr ""
-"Esta foto irá aparecer na área desta pessoa. Outras pessoas irão vê-la quando "
-"estiverem a consultar os detalhes desta."
+"Esta foto irá aparecer na área desta pessoa. Outras pessoas irão vê-la "
+"quando estiverem a consultar os detalhes desta."
 
 #: templates/people/edit_user.html:202
 msgid "Are you sure you want to delete this user's large photo?"
@@ -1720,19 +1510,21 @@ msgid ""
 "<strong>Disable</strong> the person's account. This way the person cannot "
 "log in anymore. After disabling a person, you can go back and "
 "<strong>enable</strong> the person again."
-
 msgstr ""
-"<strong>Desactivar</strong> a conta de uma pessoa. Desta forma a pessoa não poderá "
-"ligar-se mais. Depois de desactivar uma pessoa, pode voltar atrás e "
+"<strong>Desactivar</strong> a conta de uma pessoa. Desta forma a pessoa não "
+"poderá ligar-se mais. Depois de desactivar uma pessoa, pode voltar atrás e "
 "<strong>activá-la</strong> de novo."
 
-#: templates/people/view_people.html:53
-msgid "<strong>Edit</strong>"
-msgstr "<strong>Editar</strong>"
+#: templates/people/view_people.html:66 templates/people/view_people.html:69
+#: templates/people/view_people.html:97 templates/people/view_people.html:121
+#: templates/todo/display_todo_list.html:10
+#: templates/wikiboard/edit_entry.html:5
+msgid "Edit"
+msgstr "Editar"
 
-#: templates/people/view_people.html:54
-msgid "<strong>Disable</strong>"
-msgstr "<strong>Desactivar</strong>"
+#: templates/people/view_people.html:67
+msgid "Main Company"
+msgstr "Empresa Principal"
 
 #: templates/people/view_people.html:73
 msgid "Are you sure you want to delete this company?"
@@ -1749,12 +1541,6 @@ msgstr ""
 #: templates/people/view_people.html:95 templates/project/showpeople.html:57
 msgid "Account Owner"
 msgstr "Proprietário da Conta"
-
-#: templates/people/view_people.html:97 templates/people/view_people.html:121
-#: templates/todo/display_todo_list.html:10
-#: templates/wikiboard/edit_entry.html:5
-msgid "Edit"
-msgstr "Editar"
 
 #: templates/people/view_people.html:97
 msgid "Disable"
@@ -1780,48 +1566,52 @@ msgstr "Tem a certeza que deseja activar este utilizador?"
 msgid "View User"
 msgstr "Ver Utilizador"
 
-#: templates/people/view_user.html:36
+#: templates/people/view_user.html:37
 msgid "Edit This User"
 msgstr "Editar Este Utilizador"
 
-#: templates/people/view_user.html:42
+#: templates/people/view_user.html:44
 msgid "User's projects"
 msgstr "Projectos do utilizador"
 
-#: templates/people/view_user.html:58
+#: templates/people/view_user.html:60
 msgid "User"
 msgstr "Utilizador"
 
-#: templates/people/view_user.html:71
+#: templates/people/view_user.html:73
 #: templates/project/edit_permissions.html:46
 msgid "Send email to this user"
 msgstr "Enviar email a este utilizador"
 
-#: templates/people/view_user.html:79 user/forms.py:52
+#: templates/people/view_user.html:81 user/forms.py:52
 msgid "Office"
 msgstr "Escritório"
 
-#: templates/people/view_user.html:89 user/forms.py:53
+#: templates/people/view_user.html:91 user/forms.py:53
 msgid "Office Phone"
 msgstr "Telefone do Escritório"
 
-#: templates/people/view_user.html:92
+#: templates/people/view_user.html:94
 msgid "Extension"
 msgstr "Extensão"
 
-#: templates/people/view_user.html:99 user/forms.py:55
+#: templates/people/view_user.html:101 user/forms.py:55
 msgid "Mobile Phone"
 msgstr "Telemóvel"
 
-#: templates/people/view_user.html:109 user/forms.py:56
+#: templates/people/view_user.html:111 user/forms.py:56
 msgid "Home Phone"
 msgstr "Telefone de Casa"
 
-#: templates/people/view_user.html:119
+#: templates/people/view_user.html:121
 msgid "IM"
 msgstr "IM"
 
-#: templates/people/view_user.html:150
+#: templates/people/view_user.html:151 user/forms.py:119
+msgid "Large Photo"
+msgstr "Foto Grande"
+
+#: templates/people/view_user.html:164
 msgid "Back"
 msgstr "Atrás"
 
@@ -1850,6 +1640,10 @@ msgstr ""
 msgid "Add People to Project"
 msgstr "Adicionar Pessoas ao Projecto"
 
+#: templates/project/basicproject.html:12 templates/project/settings.html:25
+msgid "Project Settings"
+msgstr "Definições do Projecto"
+
 #: templates/project/basicproject.html:22
 msgid "Manage people in project"
 msgstr "Gerir pessoas no projecto"
@@ -1857,6 +1651,10 @@ msgstr "Gerir pessoas no projecto"
 #: templates/project/basicproject.html:22
 msgid "People in Project"
 msgstr "Pessoas no Projecto"
+
+#: templates/project/basicproject.html:28
+msgid "Project"
+msgstr "Projecto"
 
 #: templates/project/edit_permissions.html:36
 msgid "Edit permissions for"
@@ -1883,8 +1681,8 @@ msgid ""
 "The project logo will appear on the right part of every \"inside project\" "
 "page."
 msgstr ""
-"O logo do projecto irá aparecer na parte direita de cada página "
-"\"dentro do projecto\"."
+"O logo do projecto irá aparecer na parte direita de cada página \"dentro do "
+"projecto\"."
 
 #: templates/project/new_project.html:30
 msgid ""
@@ -1926,13 +1724,13 @@ msgstr "Última entrada"
 msgid "You are logged in"
 msgstr "Você está ligado(a)"
 
+#: templates/project/overview.html:41
+msgid "There is no activity in this project yet."
+msgstr "Não existe actividade neste projecto, de momento."
+
 #: templates/project/settings.html:5
 msgid "Settings"
 msgstr "Definições"
-
-#: templates/project/settings.html:25
-msgid "Project Settings"
-msgstr "Definições do Projecto"
 
 #: templates/project/settings.html:29
 msgid "Info"
@@ -1972,7 +1770,8 @@ msgstr "Finalizado"
 
 #: templates/project/settings.html:35
 msgid "The project is finished and cannot be edited by its users."
-msgstr "O projecto está finalizado e não pode ser editado pelos seus utilizadores."
+msgstr ""
+"O projecto está finalizado e não pode ser editado pelos seus utilizadores."
 
 #: templates/project/settings.html:46
 msgid "Project Info"
@@ -1983,8 +1782,8 @@ msgid ""
 "You can add an optional description that will take place on the overview "
 "page of the project."
 msgstr ""
-"Pode adicionar uma descrição opcional que ficará na página da vista geral "
-"do projecto."
+"Pode adicionar uma descrição opcional que ficará na página da vista geral do "
+"projecto."
 
 #: templates/project/settings.html:62
 msgid "Are you sure you want to delete this project logo?"
@@ -2050,13 +1849,14 @@ msgstr "Ligar"
 #: templates/registration/login.html:28
 #, python-format
 msgid "Welcome to <strong>%(short_name)s</strong>'s Rancho! Please log in."
-msgstr "Bem-vindo ao Rancho de <strong>%(short_name)s</strong>! Por favor ligue-se."
+msgstr ""
+"Bem-vindo ao Rancho de <strong>%(short_name)s</strong>! Por favor ligue-se."
 
-#: templates/registration/login.html:51
+#: templates/registration/login.html:49
 msgid "(I forgot my password...)"
 msgstr "(Perdi a minha palavra-chave...)"
 
-#: templates/registration/login.html:59
+#: templates/registration/login.html:57
 msgid "Sign in"
 msgstr "Entrar"
 
@@ -2083,8 +1883,8 @@ msgid ""
 "Please enter your new password twice so we can verify you typed it in "
 "correctly."
 msgstr ""
-"Por favor insira a sua nova palavra-passe duas vezes para confirmarmos "
-"que a inseriu correctamente."
+"Por favor insira a sua nova palavra-passe duas vezes para confirmarmos que a "
+"inseriu correctamente."
 
 #: templates/registration/password_reset_confirm.html:20
 msgid "Change my password"
@@ -2095,8 +1895,8 @@ msgid ""
 "We've e-mailed you instructions for setting your password to the e-mail "
 "address you submitted. You should be receiving it shortly."
 msgstr ""
-"Enviámos-lhe por email as instruções para definir a sua palavra-passe para o endereço de "
-"email que submeteu. Deverá recebê-las dentro de momentos."
+"Enviámos-lhe por email as instruções para definir a sua palavra-passe para o "
+"endereço de email que submeteu. Deverá recebê-las dentro de momentos."
 
 #: templates/registration/password_reset_email.html:2
 msgid "You're receiving this e-mail because you requested a password reset"
@@ -2125,8 +1925,8 @@ msgid ""
 "Forgotten your password? Enter your e-mail address below, and we'll e-mail "
 "instructions for setting a new one."
 msgstr ""
-"Perdeu a sua palavra-passe? Insira o seu endereço de email abaixo e nós enviaremos-lhe "
-"as instruções para definir uma nova."
+"Perdeu a sua palavra-passe? Insira o seu endereço de email abaixo e nós "
+"enviaremos-lhe as instruções para definir uma nova."
 
 #: templates/registration/password_reset_form.html:17
 msgid "Reset my password"
@@ -2249,33 +2049,37 @@ msgstr "Submeter Lista"
 msgid "View ToDos"
 msgstr "Ver ToDos"
 
-#: templates/todo/todos_list.html:41
+#: templates/todo/todos_list.html:40
 msgid "Done!"
 msgstr "Feito!"
 
-#: templates/todo/todos_list.html:77
+#: templates/todo/todos_list.html:76
 msgid "ToDo List"
 msgstr "Lista de ToDos"
 
-#: templates/todo/todos_list.html:90
+#: templates/todo/todos_list.html:89
 msgid "Back to ToDos lists"
 msgstr "De volta à lista de ToDos"
 
-#: templates/todo/todos_list.html:97
+#: templates/todo/todos_list.html:96
 msgid "New ToDo List"
 msgstr "Nova lista de ToDos"
 
-#: templates/todo/todos_list.html:103
+#: templates/todo/todos_list.html:102
 msgid "About ToDos"
 msgstr "Acerca das ToDos"
 
-#: templates/todo/todos_list.html:104
+#: templates/todo/todos_list.html:103
 msgid ""
 "ToDos are simple checklists, they can be assigned by anyone but may have "
 "information about who is supposed to check them."
 msgstr ""
-"As ToDos são simples checklists, podem ser atribuídas a qualquer pessoa mas podem "
-"ter informação sobre quem é suposto completá-las."
+"As ToDos são simples checklists, podem ser atribuídas a qualquer pessoa mas "
+"podem ter informação sobre quem é suposto completá-las."
+
+#: templates/todo/todos_list.html:110
+msgid "There are no ToDo lists in this project yet."
+msgstr "Não existem listas de ToDos neste projecto, de momento."
 
 #: templates/wikiboard/create_entry.html:5
 #: templates/wikiboard/create_entry.html:8
@@ -2342,7 +2146,7 @@ msgstr "Clique numa versão para vê-la:"
 msgid "Click to view"
 msgstr "Clique para ver"
 
-#: tinymce/views.py:67
+#: tinymce/views.py:65
 msgid "Error running spellchecker"
 msgstr "Erro ao correr o corrector ortográfico"
 
@@ -2354,7 +2158,7 @@ msgstr "Por favor escreva um título para o item ToDo"
 msgid "Please select a responsible for the ToDo item"
 msgstr "Por favor seleccione um responsável para o item ToDo"
 
-#: todo/management.py:28
+#: todo/management.py:26
 msgid "A new ToDo has been created"
 msgstr "Uma nova ToDo foi criada"
 
@@ -2395,6 +2199,10 @@ msgstr "Por favor insira um email válido."
 #: user/forms.py:42
 msgid "E-Mail"
 msgstr "E-Mail"
+
+#: user/forms.py:43
+msgid "Company"
+msgstr "Empresa"
 
 #: user/forms.py:44
 msgid "Language"
@@ -2448,10 +2256,6 @@ msgstr "Confirmação de nova palavra-passe"
 msgid "Small Photo"
 msgstr "Foto Pequena"
 
-#: user/forms.py:119
-msgid "Large Photo"
-msgstr "Foto Grande"
-
 #: user/forms.py:140
 msgid "The two password fields didn't match."
 msgstr "Os dois campos de palavra-passe não coíncidiram."
@@ -2466,21 +2270,21 @@ msgstr "O utilizaodr %s foi desactivado."
 msgid "User %s has been enabled."
 msgstr "O utilizaodr %s foi activado."
 
-#: user/views.py:190
+#: user/views.py:191
 msgid "New Rancho Register"
 msgstr "Novo Registo do Rancho"
 
-#: user/views.py:192
+#: user/views.py:193
 msgid "User has been successfully created."
 msgstr "O utilizador foi criado com sucesso."
 
-#: user/views.py:216
+#: user/views.py:217
 msgid ""
 "Choose the email to which you will receive every notification from Rancho."
 msgstr ""
 "Escolha o email para o qual quer receber todas as notificações do Rancho."
 
-#: user/views.py:218
+#: user/views.py:219
 msgid ""
 "Choose this person's email to which they will receive every notification "
 "from Rancho."
@@ -2488,11 +2292,11 @@ msgstr ""
 "Escolha o email desta pessoa para o qual vai receber todas as notificações "
 "do Rancho."
 
-#: user/views.py:229
+#: user/views.py:230
 msgid "Your settings have been successfully edited."
 msgstr "As suas definições foram editadas com sucesso."
 
-#: user/views.py:231
+#: user/views.py:232
 #, python-format
 msgid "The settings for %s have been successfully edited."
 msgstr "As definições de %s foram editadas com sucesso."
@@ -2536,35 +2340,94 @@ msgstr "O Wikiboard \"%s\" foi actualizado com sucesso."
 msgid "The Wikiboard \"%s\" has been successfully deleted."
 msgstr "O Wikiboard \"%s\" foi apagado com sucesso."
 
-msgid "Log-out"
-msgstr "Sair"
+#~ msgid "Upload a logo for the company."
+#~ msgstr "Faça upload de um logo para a empresa"
 
-msgid "There are no files in this project yet."
-msgstr "Não existem ficheiros neste projecto, de momento."
+#~ msgid ""
+#~ "You have received the following notice from %(current_site)s:\n"
+#~ "\n"
+#~ "%(message)s\n"
+#~ "\n"
+#~ "To see other notices or change how you receive notifications, please go "
+#~ "to %(notices_url)s.\n"
+#~ msgstr ""
+#~ "Recebeu a seguinte notificação de %(current_site)s:\n"
+#~ "\n"
+#~ "%(message)s\n"
+#~ "\n"
+#~ "Para ver otras notificações ou mudar como as recebe, por favor visite %"
+#~ "(notices_url)s.\n"
 
-msgid "There are no ToDo lists in this project yet."
-msgstr "Não existem listas de ToDos neste projecto, de momento."
+#~ msgid "Hello"
+#~ msgstr "Olá"
 
-msgid "There is no activity in this project yet."
-msgstr "Não existe actividade neste projecto, de momento."
+#~ msgid "You have been registered on"
+#~ msgstr "Você foi registado(a) em"
 
-msgid "There are no milestones in this project yet."
-msgstr "Não existem milestones neste projecto, de momento."
+#~ msgid "User name"
+#~ msgstr "Nome de utilizador"
 
-msgid "There is no activity yet."
-msgstr "Não existe actividade, de momento."
+#~ msgid "Password"
+#~ msgstr "Palavra-chave"
 
-msgid "Legal Notices"
-msgstr "Termos Legais"
+#~ msgid "You can access your dashboard at"
+#~ msgstr "Pode aceder ao seu painel em"
 
-msgid "Rancho Legal Notices"
-msgstr "Termos Legais do Rancho"
+#~ msgid "Here's a note from the person who added you"
+#~ msgstr "Aqui está uma nota da pessoa que o(a) adicionou"
 
-msgid "No milestones in your projects yet."
-msgstr "Sem milestones nos seus projectos, de momento."
+#~ msgid "To modify your password and other personal information, go to:"
+#~ msgstr ""
+#~ "Para modificar a sua palavra-chave ou outras informações pessoais, visite:"
 
-msgid "No projects available."
-msgstr "Não existem projectos disponíveis."
+#~ msgid "New file uploaded by"
+#~ msgstr "Novo ficheiro enviado por"
 
-msgid "Main Company"
-msgstr "Empresa Principal"
+#~ msgid "DO NOT REPLY TO THIS EMAIL"
+#~ msgstr "NÃO RESPONDA A ESTE EMAIL"
+
+#~ msgid "To view this file, please go to"
+#~ msgstr "Para ver este ficheiro, por favor visite"
+
+#~ msgid "New file version uploaded by"
+#~ msgstr "Novo ficheiro enviado por"
+
+#~ msgid "New version:"
+#~ msgstr "Nova versão:"
+
+#~ msgid "New file version uploaded"
+#~ msgstr "Nova versão do ficheiro enviada"
+
+#~ msgid "New message by"
+#~ msgstr "Nova mensagem de"
+
+#~ msgid "Subject"
+#~ msgstr "Assunto"
+
+#~ msgid "To view or reply this message, please go to"
+#~ msgstr "Para ver ou responder a esta mensagem, por favor visite"
+
+#~ msgid "New comment for message \"%(title)s\" by"
+#~ msgstr "Novo comentário para a mensagem \"%(title)s\" de"
+
+#~ msgid "This is a reminder"
+#~ msgstr "Isto é um lembrete"
+
+#~ msgid ""
+#~ "You are 48 hours from the milestone \"%(milestone.title)s\" with due date "
+#~ "%(milestone.due_date)s"
+#~ msgstr ""
+#~ "Você está a 48 horas da milestone \"%(milestone.title)s\" com o prazo %"
+#~ "(milestone.due_date)s"
+
+#~ msgid "To view this milestone, please go to"
+#~ msgstr "Para ver esta milestone, por favor visite"
+
+#~ msgid "Milestone reminder"
+#~ msgstr "Lembrete de Milestone"
+
+#~ msgid "<strong>Edit</strong>"
+#~ msgstr "<strong>Editar</strong>"
+
+#~ msgid "<strong>Disable</strong>"
+#~ msgstr "<strong>Desactivar</strong>"
