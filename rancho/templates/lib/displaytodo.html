@@ -23,7 +23,7 @@
 	<div style="float: right;">
 		{% if user %}
 			{% ifhasperm "PERMISSIONS_TODO_EDITDELETE" user project todo %}
-				<a class="edit" href="{% url todo.views.edit_todo p_id=project.id,todo_id=todo.id %}">Edit</a> | <a id="delete_todo{{todo.id}}" class="delete" href="">Delete</a>
+				<a class="edit" href="{% url todo.views.edit_todo p_id=project.id,todo_id=todo.id %}">{% trans "Edit" %}</a> | <a id="delete_todo{{todo.id}}" class="delete" href="">{% trans "Delete" %}</a>
 				{% modalconfirm "delete_todo{{todo.id}}" _("Are you sure you want to delete this ToDo?") "delete_todo(todo.id)" %}
 			{% endifhasperm %}
 		{% endif %}
