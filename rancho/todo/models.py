@@ -43,7 +43,7 @@ class ToDo(models.Model):
     creator = models.ForeignKey(User, related_name='todocreator')
     responsible = models.ForeignKey(User, related_name='todoresponsible', null=True)
     
-    description = models.CharField(max_length=50)
+    description = models.CharField(max_length=500)
     completion_date = models.DateTimeField(null=True)
     creation_date = models.DateTimeField(auto_now_add=True)
     def get_todo_list(self):

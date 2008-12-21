@@ -7,7 +7,7 @@
 	<a class="smallcaps_title blue_bg white" href="{% url todo.views.view_todo_list p_id=project.id,todo_list_id=todo_list.id %}">{{ todo_list.title }}</a>
 {% endif %}
 {% ifhasperm "PERMISSIONS_TODO_EDITDELETE" user project todo_list %}
-	 <a class="edit" href="{% url todo.views.edit_todo_list p_id=project.id,todo_list_id=todo_list.id %}">{% trans "Edit" %}</a> | <a id="delete_todo_list{{todo_list.id}}" href="" class="delete">Delete</a>
+	 <a class="edit" href="{% url todo.views.edit_todo_list p_id=project.id,todo_list_id=todo_list.id %}">{% trans "Edit" %}</a> | <a id="delete_todo_list{{todo_list.id}}" href="" class="delete">{% trans "Delete" %}</a>
 {% endifhasperm %}
 
 </p>
@@ -32,7 +32,7 @@
 			<div id="empty_todo_error{{ todo_list.id }}" class="red_msg" style="margin-bottom: 5px; display: none;">
 				{% trans "Please insert the name for this ToDo item" %}
 			</div>
-			<input type="text" id="todo_desc{{todo_list.id}}" name="todo_desc" class="xlarge"/><br/><br/>
+			<input type="text" id="todo_desc{{todo_list.id}}" name="todo_desc" class="xlarge" maxlength="500"/><br/><br/>
 			<label>{% trans "Choose a responsible:"%}</label><select id="todo_responsible{{todo_list.id}}">
 			{% for user_id, user_name in users_in_project %}
 				<option value="{{user_id}}">{{user_name}}</option>

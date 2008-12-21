@@ -23,7 +23,7 @@ from django.utils.translation import ugettext_lazy as _
 
 class NewToDoListForm(forms.Form):
     
-    todolist_name = forms.CharField(widget=forms.TextInput(attrs={'size':40, 'class': 'big_entry'}),label=_("Name"))
+    todolist_name = forms.CharField(widget=forms.TextInput(attrs={'size':40, 'class': 'big_entry'}), max_length = 50, label=_("Name"))
     todolist_description = forms.CharField(widget=forms.Textarea(attrs={'class': 'fillx', 'rows':4}), required=False,label=_("Description"))
 
 class EditToDoListForm(NewToDoListForm):
