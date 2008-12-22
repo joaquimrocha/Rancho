@@ -4,7 +4,7 @@
 --------------------------------------------------
 
 {% trans "This is a reminder" %}:
-{% blocktrans %}You are 48 hours from the milestone "{{milestone.title}}" with due date {{milestone.due_date}}{% endblocktrans %}
+{% blocktrans with milestone.title as title and milestone.due_date as due_date %}You are 48 hours from the milestone "{{title}}" with due date {{due_date}}{% endblocktrans %}
 
 --
 {% trans "DO NOT REPLY TO THIS EMAIL" %}
