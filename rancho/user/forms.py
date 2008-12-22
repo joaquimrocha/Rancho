@@ -43,7 +43,7 @@ class NewUserForm(forms.Form):
     company = forms.ChoiceField(choices=company_choices(), label=_('Company'))
     language = forms.ChoiceField(choices=settings.LANGUAGES, label=_('Language'))
     role = forms.ChoiceField(required=False, widget=RadioSelect(renderer=MyRadioFieldRenderer), choices=YES_NO_CHOICES, label=_('Is Admin'), initial=False)
-    timezone = TimeZoneField(label=_('Timezone'))
+    timezone = TimeZoneField(label=_('Timezone'), initial=settings.TIME_ZONE)
     
     first_name = forms.CharField(required=False, widget=forms.TextInput(attrs={'class':'large'}),label=_("First Name"))
     last_name = forms.CharField(required=False, widget=forms.TextInput(attrs={'class':'large'}), label=_("Last Name"))
