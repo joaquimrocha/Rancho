@@ -1,8 +1,16 @@
+{% extends "base.html" %}
+
 {% load i18n %}
 
-<html>
-<head></head>	
-<body>
-<h1>{% trans "Forbidden Access" %}</h1>
-</body>             
-</html>
+{% block pagetitle %} {{ company.short_name }} {% endblock %}
+
+{% block area_name %}
+    <p>{% trans "Forbidden Access" %}</p>
+{% endblock %}
+
+{% block main_content %}
+{% blocktrans %}
+You are not allowed to access thia area of the site. <br/>If you think this is wrong please contact
+the administrator.
+{% endblocktrans %}
+{% endblock %}
