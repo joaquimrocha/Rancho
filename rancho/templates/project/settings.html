@@ -8,6 +8,21 @@
 	{% genmenu "inproject" "overview" project.id %}
 {% endblock %}
 
+{% block scripts%}
+<!-- Because IE sucks big time-->
+    <!--[if lt IE 7]>
+    <style type='text/css'>
+      
+      #modalContainer {
+        top: expression((document.documentElement.scrollTop
+            || document.body.scrollTop) + Math.round(15 *
+            (document.documentElement.offsetHeight
+            || document.body.clientHeight) / 100) + 'px');
+      }
+    </style>
+    <![endif]-->
+{% endblock %}
+
 {% block jquerypluginloader %}
 <script type="text/javascript" src="/media/js/jquery/simplemodal.js"></script>
 <script type="text/javascript" src="/media/js/jquery/taconite.js"></script>
@@ -19,6 +34,11 @@ function delete_logo(){
 	$("#project_logo").fadeOut();
 	return false;
 }
+function delete_project() {                  
+   window.location = "/project/{{project.id}}/delete/";
+   return false;                      
+}
+
 {% endblock %}
 
 {% block area_name %}
@@ -26,6 +46,7 @@ function delete_logo(){
 {% endblock %}
 
 {% block right_content %}
+
 {% sidewidget _("Info") "information" %}
 <p>{% blocktrans %}Here you can set the project basic settings.{% endblocktrans %}</p>
 <p>{% blocktrans %}A project can be either:{% endblocktrans %}</p>
@@ -34,6 +55,12 @@ function delete_logo(){
 	<li style="margin-bottom: 10px;"><strong>{% trans "Frozen" %}</strong> - {% trans "The project is in a pause state and its entities such as messages and milestones will not show up on the dashboard." %}</li>
 	<li style="margin-bottom: 10px;"><strong>{% trans "Finished" %}</strong> - {% trans "The project is finished and cannot be edited by its users." %}</li>
 </ul>
+
+{% if user.is_superuser %}
+<br/>
+<p align="right"><a class="delete" href="" id="delete_project">{% trans "Remove Project" %}</a></p>
+{% modalconfirm "delete_project" _("Are you sure you want to delete this project?") "delete_project" %}
+{% endif %}
 {% endblock %}
 
 

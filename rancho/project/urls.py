@@ -33,4 +33,5 @@ urlpatterns = patterns('rancho.project.views',
     (r'^(?P<p_id>\d+)/people/remove/', 'remove_user'),
     (r'^(?P<p_id>\d+)/milestones/', include('milestone.urls')),
     (r'^(?P<p_id>\d+)/files/', include('file.urls')),
+    (r'^(?P<p_id>\d+)/delete/', 'delete_project'),
 )

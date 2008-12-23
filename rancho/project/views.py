@@ -195,3 +195,13 @@ def delete_logo(request, p_id):
         
         project.save()
     return HttpResponse("")
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def delete_project(request, p_id):
+
+    project = get_object_or_404(Project, id = p_id)
+    request.user.message_set.create(message=_("Project %s Deleted."%project.name))    
+    project.delete()    
+    
+    return HttpResponseRedirect(urlresolvers.reverse('rancho.user.views.dashboard'))

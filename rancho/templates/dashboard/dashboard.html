@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load i18n displayevent %}
+{% load i18n displayevent displaynotification %}
 
 {% block pagetitle %} {{ company.short_name }} | {% trans "Dashboard" %} {% endblock %}
 	
@@ -9,6 +9,9 @@
 {% endblock %}
 
 {% block outter_main_content %}
+
+    {% displaynotification messages %}
+
 	{% if not general_overview %}
 	    <p>{% trans "There is no activity yet." %}</p>
 	{% endif %}
