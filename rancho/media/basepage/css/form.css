@@ -1,0 +1,78 @@
+input.big_entry{
+	height: 25px;
+	font-size: 20px;
+	font-weight: bold;
+	width: 500px;
+}
+
+input.submit {
+	font-style: italic;
+	cursor: pointer;
+}
+
+div.blue_section{
+
+	background: #EBF0FA;
+	padding: 5px 5px 5px 5px;
+	margin-top: 10px;
+}
+
+/*
+When it's mandatory
+*/
+div.blue_section_obl{
+
+	background: #EBF0FA;
+	padding: 10px 10px 10px 10px;
+	border: 1px solid #006cc8;
+}
+
+input.large{
+
+	width: 200px;
+}
+
+
+input.xlarge{
+
+	width: 500px;
+}
+
+input.fillx{
+	width: 100%;
+}
+
+textarea.fillx{
+    width: 100%;
+}
+
+
+input.small{
+
+	width: 50px;
+}
+
+textarea.small{
+
+	height: 100px;
+}
+
+textarea.small_wide{
+
+	height: 100px;
+	width: 450px;
+}
+
+.form_bottom{
+	border-top: 2px solid #4D4D4D;
+	margin-top:10px;
+	padding-top: 10px;
+	height: 30px;
+}
+
+label {
+
+	font-size: 14px;
+	color: #2D2D2D;
+	font-family: Verdana, Arial, sans-serif;
+}

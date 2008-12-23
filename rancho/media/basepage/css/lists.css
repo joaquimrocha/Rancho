@@ -1,0 +1,93 @@
+div.item_list {
+	margin: 5px 0 10px 5px;
+}
+
+div.item_list p{
+	padding: 2px 5px 5px 5px;
+}
+
+div.item_list .red {
+	color: #C10000;
+}
+
+div.item_list .green {
+	color: #037F00;
+}
+
+div.item_list .responsible_and_date {
+	float: left;
+}
+
+div.item_list .complete_incomplete {
+	float: right;
+}
+
+div.item_list .complete_incomplete a.complete{
+	color: #6B6666;
+	font-weight: normal;
+}
+
+div.item_list .complete_incomplete a{
+	color: #0070C1;
+	font-weight: bold;
+}
+
+div.item_list .incomplete {
+	float: right;
+}
+
+div.item_list .incomplete a, div.item_list .incomplete span{
+	color: #0070C1;
+	font-weight: bold;
+}
+
+div.item_list ,item_bottom {
+	overflow: hidden;
+}
+
+.red_item {
+	background: #FFE0DC;
+	font-weight: bold;
+	width: 100%;
+	padding: 3px;
+	overflow: hidden;
+}
+
+.item_title {
+	float: left;
+}
+
+.red_item .item_title a:hover{
+	background: none;
+}
+
+.item_controls {
+	float: right;
+	font-size: 16px;
+	font-weight: normal;
+	margin-right: 3px;
+}
+
+.blue_item {
+	background: #EBF0FA;
+	font-weight: bold;
+	width: 100%;
+	padding: 3px;
+	overflow: hidden;
+}
+
+.blue_item .item_title a, .blue_item .item_title span{
+	color: #0070C1;
+}
+
+.green_item {
+	background: #C9FFC9;
+	font-weight: bold;
+	width: 100%;
+	padding: 3px;
+	overflow: hidden;
+}
+
+.green_item .item_title a{
+	color: #037F00;
+}

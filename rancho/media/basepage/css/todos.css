@@ -1,0 +1,16 @@
+p.todolist_title{
+
+	font-size: 14px;
+	font-weight: bold;
+}
+
+p.todolist_desc{
+
+	margin: 0 0 12px 5px;
+	font-style: italic;
+	font-size: 14px;
+}
+
+div.display_todos{
+	margin: 0 0 0 15px;
+}

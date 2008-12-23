@@ -1,0 +1,53 @@
+
+div #calendar {
+	font-family: Verdana, Arial, sans-serif;
+}
+
+.cal_not_in_month{
+	color: #949494;
+}
+
+div#calendar thead {
+	font-family: Times;
+	background: #EBF0FA;
+	border: 1px solid #006CC7;
+	border-collapse: collapse;
+}
+
+div#calendar table.cal_large td {
+	text-align: right;
+	padding: 5px 22px 5px 5px;
+}
+
+div#calendar tr {
+	height: 30px;
+}
+
+div#calendar table {
+	border-collapse: collapse;
+}
+
+div#calendar caption {
+	margin-bottom: 15px;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+div#calendar caption a {
+	font-size: 14px;
+}
+
+div#calendar table.cal_small {
+}
+
+div#calendar table.cal_large{
+	width: 500px;
+}
+
+div#calendar table td.upcoming_event{
+	background: #EBF0FA;
+}
+
+div#calendar table td.late_event{
+	background: #FFE0DC;
+}

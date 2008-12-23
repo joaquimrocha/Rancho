@@ -1,0 +1,46 @@
+div.display_person{
+
+	width: 600px;
+}
+
+div.display_person .person{
+
+	width: 190px;
+	height: 100px;
+	float: left;
+	overflow: hidden;
+}
+
+div.display_person .person .img{
+
+	float: left;
+	width: 50px;
+}
+
+div.display_person .person .details a.edit{
+
+	color: #006cc8;
+	font-size: 11px;
+	text-decoration: none;
+}
+
+div.display_person .person .details a.edit:hover{
+
+	background: #006cc8;
+	color: #FFF;
+	font-size: 11px;
+}
+
+div.display_person .person .details a.delete{
+
+	color: #C90909;
+	font-size: 11px;
+	text-decoration: none;
+}
+
+div.display_person .person .details a.delete:hover{
+
+	background: #C90909;
+	color: #FFF;
+	font-size: 11px;
+}

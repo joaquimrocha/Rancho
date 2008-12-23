@@ -1,0 +1,36 @@
+.tag-cloud {
+    text-align: center;    
+}
+
+.tag-1 a {
+    font-size: 10px;
+}
+
+.tag-2 a{
+    font-size: 12px;
+}
+
+.tag-3 a{
+    font-size: 14px;
+}
+
+.tag-4 a{
+    font-size: 16px;
+}
+
+.tag-5 a{
+    font-size: 18px;
+}
+
+.tag-6 a{
+    font-size: 20px;
+}
+
+/* For large tag cloud 6 step */
+.tag-7 a{
+    font-size: 22px;
+}
+
+.tag-8 a{
+    font-size: 24px;
+}

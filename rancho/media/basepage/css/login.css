@@ -11,7 +11,7 @@ div#logo {
 
 div#top {
 
-	background: url('login/top.png') no-repeat;
+	background: url('/media/basepage/login/top.png') no-repeat;
 	width: 398px;
 	height: 13px;
 	margin-left: auto;
@@ -22,7 +22,7 @@ div#top {
 
 div#center {
 
-	background: #f3f3f3 url('login/bg_repeat.png') repeat-x;
+	background: #f3f3f3 url('/media/basepage/login/bg_repeat.png') repeat-x;
 	width: 396px;
 	margin-left: auto;
 	margin-right: auto;
@@ -48,7 +48,7 @@ div.green_msg {
 	min-height: 30px;
 	font-family: Verdana, Arial, sans-serif;
 	
-	background: #E1EBFF url('images/id.png') no-repeat 5px center;
+	background: #E1EBFF url('/media/basepage/images/id.png') no-repeat 5px center;
 	border: 1px solid #5790FF;
 }
 
@@ -63,7 +63,7 @@ div.red_msg {
 	min-height: 30px;
 	font-family: Verdana, Arial, sans-serif;
 	
-	background: #FFF5F4 url('images/stop.png') no-repeat 5px center;
+	background: #FFF5F4 url('/media/basepage/images/stop.png') no-repeat 5px center;
 	border: 1px solid #FF5339;
 	color: #B21800;
 	font-weight: bold;
@@ -91,7 +91,7 @@ div#warn p{
 
 div#footer {
 
-	background: url('login/footer.png') no-repeat;
+	background: url('/media/basepage/login/footer.png') no-repeat;
 	width: 398px;
 	height: 13px;
 	margin-left: auto;
@@ -128,7 +128,7 @@ a:hover {
 
 div#powered{
 
-	background: url('images/powered.png') left no-repeat;
+	background: url('/media/basepage/images/powered.png') left no-repeat;
 	width: 340px;
 	height: 22px;
 	margin-left: auto;

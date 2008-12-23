@@ -1,0 +1,91 @@
+
+div.add_button{
+
+	background: url('/media/basepage/images/add_button_left.png') top left no-repeat;
+	height: 24px;
+	float: left;
+	padding: 3px 0 0 0;
+	margin: 0;
+	
+}
+
+div.add_button a{
+
+	
+	font-weight: bold;
+	text-decoration: none;
+	padding: 0 0 5px 23px;
+	
+}
+
+div.settings_button{
+
+	background: url('/media/basepage/images/settings_button_left.png') top left no-repeat;
+	height: 24px;
+	float: left;
+	padding: 3px 0 0 0;
+	margin: 0;
+	
+}
+
+div.people_button{
+
+	background: url('/media/basepage/images/people_button_left.png') top left no-repeat;
+	height: 24px;
+	float: left;
+	padding: 3px 0 0 0;
+	margin: 0;
+	
+}
+
+div.edit_button{
+
+	background: url('/media/basepage/images/edit_button_left.png') top left no-repeat;
+	height: 24px;
+	float: left;
+	padding: 3px 0 0 0;
+	margin: 0;
+	
+}
+
+div.settings_button a{
+
+	
+	font-weight: bold;
+	text-decoration: none;
+	padding: 0 0 5px 25px;
+	
+}
+
+div.people_button a{
+
+	
+	font-weight: bold;
+	text-decoration: none;
+	padding: 0 0 5px 28px;
+	
+}
+
+div.edit_button a{
+
+	font-weight: bold;
+	text-decoration: none;
+	padding: 0 0 5px 29px;
+	
+}
+
+div.add_button_right{
+
+	background: url('/media/basepage/images/add_button_right.png') top right no-repeat;
+	float: left;
+	height: 24px;
+	width: 11px;
+}
+
+.left_button{
+	float: left;
+}
+
+.right_button{
+	float: right;
+}
