@@ -24,7 +24,7 @@ from rancho import settings
 class Company(models.Model):
     YES_NO_CHOICES = (('1', 'Yes'), ('0', 'No'),)
         
-    short_name = models.CharField(max_length=10)
+    short_name = models.CharField(max_length=20)
     long_name = models.CharField(max_length=100)
     
     description = models.CharField(max_length=500, null=True)
