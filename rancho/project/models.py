@@ -22,8 +22,9 @@ from django.http import Http404
 from django.db.models import Q
 
 from rancho.company.models import Company
-
 from rancho import settings
+
+import datetime
 
 class ProjectManager(models.Manager):    
     
@@ -39,7 +40,7 @@ class Project(models.Model):
     PROJECT_STATUS_CHOICES = (('A', 'Active'), ('Z','Frozen'), ('F','Finished'),)
     
     name = models.CharField(max_length=50)
-    creation_date = models.DateTimeField(auto_now_add=True)
+    creation_date = models.DateTimeField(default = datetime.datetime.now())
     finish_date = models.DateTimeField(null=True)
     
     logo = models.ImageField(upload_to=settings.PROJECT_DIR, blank=True, null=True)
@@ -55,7 +56,6 @@ class Project(models.Model):
     def get_users(self, status = 'a'):
         #LR: distinct should be necessary... think about a better query        
         return (User.objects.filter(is_superuser=True, is_active=True) |  User.objects.filter(is_active=True, project=self, userinproject__state='a' )).distinct().order_by('userprofile__company')
-
     
     def get_users_not_in(self):
         return User.objects.filter(is_active=True).exclude(project=self).exclude(is_superuser=True, is_active=True).order_by('userprofile__company')
@@ -73,7 +73,7 @@ class UserInProject(models.Model):
         
     user = models.ForeignKey(User)
     project = models.ForeignKey(Project)
-    added_date = models.DateTimeField(auto_now_add=True)
+    added_date = models.DateTimeField(default = datetime.datetime.now())
     state = models.CharField(max_length=1,choices=STATE_CHOICES)
     
     
