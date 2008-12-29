@@ -33,10 +33,9 @@ from rancho.project.models import Project
 from rancho.file.models import File, FileVersion
 from rancho.granular_permissions.permissions import checkperm
 from rancho.granular_permissions.permissions import PERMISSIONS_FILE_CREATE, PERMISSIONS_FILE_VIEW, PERMISSIONS_FILE_EDITDELETE
-from rancho.tagging.models import Tag
 from rancho.notification import models as notification
 from rancho.lib import utils
-from rancho.tagging.models import TaggedItem
+from rancho.tagging.models import TaggedItem, Tag
 
 import os
 from rancho import settings
@@ -59,6 +58,7 @@ def list(request,p_id, tag=None):
 
     #Get all the files (consider tag filter)
     if tag:
+        tag = "\"%s\""%tag
         files = TaggedItem.objects.get_by_model(File, tag)
     else:
         files = File.objects
@@ -70,16 +70,19 @@ def list(request,p_id, tag=None):
         versions = FileVersion.objects.filter(file = file).order_by('-creation_date')
         index=versions.count()
         for file_version in versions:
-            #TODO: ROCHA: this is ugly... think abou cleaning please
+            #TODO: ROCHA: this is ugly... think about cleaning please
             file_name = str(_remove_ids_from_file(file_version.file_location))
             file_version_list.append((index, file_name, file_version))
             index -= 1
         file_list.append((file, file_version_list))
         
+    file_tags = Tag.objects.cloud_for_model(File, steps=6, filters=dict(project=project))
+                    
     context = {
                'project': project,
                'users_in_project': users_in_project,
                'files':file_list, 
+               'file_tags': file_tags,
                'media_path': 'http://'+request.META['HTTP_HOST'] + settings.MEDIA_URL+'icons/',
                }
     return render_to_response('file/list_file.html', context,
@@ -128,7 +131,7 @@ def create(request, p_id):
         return HttpResponseForbidden(_('Forbidden Access'))
 
 
-    tags = utils.get_site_tags()
+    tags = utils.get_site_tags(project)
     
     users_to_notify = utils.get_users_to_notify(project, PERMISSIONS_FILE_VIEW)
 
@@ -167,7 +170,7 @@ def edit(request,p_id,v_id):
     if not checkperm(PERMISSIONS_FILE_EDITDELETE, user, project, file_version) or file_version.file.project != project:
         return HttpResponseForbidden(_('Forbidden Access'))
         
-    tags = utils.get_site_tags()                              
+    tags = utils.get_site_tags(project)                              
     if request.method == 'POST':
         form=FileVersionForm(tags, request.POST)
         if form.is_valid():
@@ -223,7 +226,7 @@ def new_upload(request,p_id,f_id):
     if not checkperm(PERMISSIONS_FILE_CREATE, user, project ) or file.project != project:
         return HttpResponseForbidden(_('Forbidden Access'))
 
-    tags = utils.get_site_tags()
+    tags = utils.get_site_tags(project)
     
     if request.method == 'POST':
         form=UploadFileForm(tags,request.POST,request.FILES)

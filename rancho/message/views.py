@@ -31,7 +31,7 @@ from rancho.message.models import Message
 from rancho.project.models import Project
 from rancho.granular_permissions.permissions import PERMISSIONS_MESSAGE_CREATE, PERMISSIONS_MESSAGE_VIEW, PERMISSIONS_MESSAGE_EDITDELETE
 from rancho.granular_permissions.permissions import checkperm
-from rancho.tagging.models import TaggedItem
+from rancho.tagging.models import TaggedItem, Tag
 from rancho.lib import utils
 from rancho.notification import models as notification
 
@@ -54,19 +54,22 @@ def list(request,p_id, tag=None):
     
     #Get all the messages, except the ones that are comments
     if tag:
+        tag = "\"%s\""%tag
         messagelist = TaggedItem.objects.get_by_model(Message, tag)
     else:
         messagelist = Message.objects
     messagelist = messagelist.filter(project=project).extra(where=['message_message.initial_message_id = message_message.id']).order_by('-creation_date')
         
+    message_tags = Tag.objects.cloud_for_model(Message, steps=6, filters=dict(project=project))
         
     context = {'project': project,
                'users_in_project': users_in_project,
+               'message_tags': message_tags,
                'messagelist': messagelist }
     return render_to_response('message/message_list.html', 
                               context,
-                              context_instance=RequestContext(request))
-
+                              context_instance=RequestContext(request))    
+     
     
 @login_required    
 def create(request,p_id):
@@ -81,7 +84,7 @@ def create(request,p_id):
     if not checkperm(PERMISSIONS_MESSAGE_CREATE, user, project ):        
         return HttpResponseForbidden(_('Forbidden Access'))
         
-    tags = utils.get_site_tags()
+    tags = utils.get_site_tags(project)
     
     users_to_notify = utils.get_users_to_notify(project, PERMISSIONS_MESSAGE_VIEW)
     
@@ -117,7 +120,7 @@ def edit(request,p_id,m_id):
     if not checkperm(PERMISSIONS_MESSAGE_EDITDELETE, user, project, message ) or message.project != project:
         return HttpResponseForbidden(_('Forbidden Access'))
     
-    tags = utils.get_site_tags()
+    tags = utils.get_site_tags(project)
     
     if request.method == 'POST':        
         if message.initial_message == message:            

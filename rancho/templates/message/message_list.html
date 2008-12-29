@@ -47,19 +47,16 @@
 		<br/><br/>
 	{% endifhasperm %}
 
-{% tag_cloud_for_model message.Message as message_tags with steps=6 distribution=log %}
-{% if message_tags %}
-<div class="widget">
-    <p>{% trans "Tag Cloud" %}</p>
-</div>
-<div class="tag-cloud">
-{% for tag in message_tags %}
-<span class="tag-{{tag.font_size}}"><a href="{% url message_list_tag p_id=project.id,tag=tag.name%}">{{tag.name}}</a></span> 
-{% endfor %}
-</div>
-{% endif %}
-
-
+	{% if message_tags %}
+	<div class="widget">
+	    <p>{% trans "Tag Cloud" %}</p>
+	</div>
+	<div class="tag-cloud">
+	{% for tag in message_tags %}
+	<span class="tag-{{tag.font_size}}"><a href="{% url message_list_tag p_id=project.id,tag=tag.name%}">{{tag.name}}</a></span> 
+	{% endfor %}
+	</div>
+	{% endif %}
 
 {% endblock %}
 
