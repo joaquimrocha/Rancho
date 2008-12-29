@@ -27,6 +27,7 @@ class UserProfile(models.Model):
     
     IM_SERVICES_CHOICES = ( ('A', 'AOL'), ('G', 'Google'), ('I', 'ICQ'), 
                             ('J', 'Jabber'), ('S', 'Skype'), ('Y', 'Yahoo'), 
+                            ('M', 'MSN'),
                             )
     
     user = models.ForeignKey(User, unique=True)
