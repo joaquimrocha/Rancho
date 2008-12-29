@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block pagetitle %} {{ company.short_name }} {% endblock %}
+
+{% block area_name %}
+    <p>{% trans "Document not Found" %}</p>
+{% endblock %}
+
+{% block main_content %}
+{% blocktrans %}
+The document you were loking for was not found.
+{% endblocktrans %}
+{% endblock %}
