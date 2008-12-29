@@ -21,6 +21,7 @@ from django.contrib.auth.models import User
 
 from rancho.timezones.forms import TIMEZONE_CHOICES
 from rancho import  settings
+from rancho.timezones.fields import TimeZoneField
 
 class UserProfile(models.Model):
     YES_NO_CHOICES = (('1', 'Yes'), ('0', 'No'),)
@@ -53,7 +54,7 @@ class UserProfile(models.Model):
     webpage = models.URLField(null=True)    
     
     language = models.CharField(max_length=10, choices=settings.LANGUAGES, default=settings.LANGUAGE_CODE)
-    timezone = models.CharField(max_length=50, choices=TIMEZONE_CHOICES, default=settings.TIME_ZONE)
+    timezone = TimeZoneField()
     
     is_account_owner = models.BooleanField(default=False)
     
