@@ -24,11 +24,13 @@ from rancho.file.models import File
 from rancho.tagging.fields import TagField
 from rancho import djangosearch
 
+import datetime
+
 class Message(models.Model):    
     creator = models.ForeignKey(User, related_name='messagecreator')
     project = models.ForeignKey(Project)
 
-    creation_date = models.DateTimeField(auto_now_add=True)
+    creation_date = models.DateTimeField(default = datetime.datetime.now())
     title = models.CharField(max_length=50)
     body = models.TextField()
     

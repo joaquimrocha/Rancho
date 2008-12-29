@@ -20,8 +20,9 @@ from django.db import models
 from django.contrib.auth.models import User
 
 from rancho.project.models import Project
-    
 from rancho import djangosearch    
+
+import datetime
      
 class Wiki(models.Model):
     creator = models.ForeignKey(User)
@@ -40,9 +41,7 @@ class WikiEntry(models.Model):
     wiki = models.ForeignKey(Wiki)
         
     content = models.TextField(blank=True)
-    creation_date = models.DateTimeField(auto_now_add=True)
-    
+    creation_date = models.DateTimeField(default = datetime.datetime.now())    
      
     index = djangosearch.ModelIndex(text=['content'])
-    
     

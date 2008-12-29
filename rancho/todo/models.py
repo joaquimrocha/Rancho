@@ -21,6 +21,7 @@ from django.contrib.auth.models import User
 
 from rancho.project.models import Project
 
+import datetime
 
 class ToDoList(models.Model):        
     creator = models.ForeignKey(User)
@@ -38,14 +39,12 @@ class ToDoList(models.Model):
 
 class ToDo(models.Model):
     
-    SEND_EMAIL_CHOICES = (('1', 'Yes'), ('0', 'No'),)
-    
     creator = models.ForeignKey(User, related_name='todocreator')
     responsible = models.ForeignKey(User, related_name='todoresponsible', null=True)
     
     description = models.CharField(max_length=500)
     completion_date = models.DateTimeField(null=True)
-    creation_date = models.DateTimeField(auto_now_add=True)
+    creation_date = models.DateTimeField(default = datetime.datetime.now())
     def get_todo_list(self):
         return ToDo_in_ToDoList.objects.get(todo = self).todolist
 

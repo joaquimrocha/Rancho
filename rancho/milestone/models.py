@@ -21,7 +21,7 @@ from django.contrib.auth.models import User
 
 from rancho.project.models import Project
 
-from datetime import date
+from datetime import date, datetime
 
 
 class MilestoneManager(models.Manager):    
@@ -55,7 +55,7 @@ class Milestone(models.Model):
     #Se null e o projecto todo o responsavel
     responsible = models.ForeignKey(User, related_name='responsible', null=True)
     title = models.CharField(max_length=500)
-    creation_date = models.DateTimeField(auto_now_add = True)
+    creation_date = models.DateTimeField(default = datetime.now())
     due_date = models.DateTimeField()
     send_notification_email = models.BooleanField()
     completion_date = models.DateTimeField(null=True)
