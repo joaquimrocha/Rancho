@@ -17,7 +17,9 @@
 ########################################################################
 
 from django import template
+from django.utils.translation import ugettext_lazy as _ 
 from django.utils.safestring import mark_safe
+
 
 register = template.Library()
 
@@ -27,8 +29,10 @@ def iconformessage(message, user):
     icons_folder = '/media/basepage/images/icons/'
     if message.read_by.filter(id = user.id):
         icon = icons_folder + 'comment_red.png'
+        str = _("Read")
     else:
-        icon = icons_folder + 'comment.png'
-    return mark_safe('<img src="%s" alt="" class="textcenter" title="To Read"/>' % icon)
+        icon = icons_folder + 'comment.png'        
+        str = _("Unread")
+    return mark_safe(u'<img src="%s" alt="%s" class="textcenter" title="%s"/>' % (icon, str, str))
     
 register.simple_tag(iconformessage)
