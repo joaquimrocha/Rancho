@@ -7,23 +7,16 @@ from rancho.user.models import UserProfile
 
 
 def create_data(app, created_models, verbosity, **kwargs):
-    c = Company()
-    c.short_name = "Company"
-    c.long_name = "My Company Name"
-    c.main_company = True
-    c.save()
     
-    print "Created initial company"
+    c, val = Company.objects.get_or_create(short_name = "Company", long_name = "My Company Name", main_company = True)
+    if val:        
+        print "Created initial Company successfully."
     
     try:
-        user = User.objects.get(id=1)    
-        up = UserProfile()
-        up.is_account_owner = True
-        up.user = user         
-        up.company = c  
-        up.save()
-        
-        print "Created initial profile"
+        user = User.objects.get(id=1)
+        up, val = UserProfile.objects.get_or_create(is_account_owner = True, user = user, company = c)    
+        if val:        
+            print "Created initial profile successfully."
     except:
         pass
 
