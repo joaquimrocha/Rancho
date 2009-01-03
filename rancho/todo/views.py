@@ -26,7 +26,7 @@ from django.template.context import RequestContext
 from django.core import urlresolvers
 from django.template import loader, Context
 
-from rancho.todo.models import ToDoList, ToDo, ToDo_in_ToDoList
+from rancho.todo.models import ToDoList, ToDo
 from rancho.project.models import Project
 from rancho.todo.forms import NewToDoListForm, EditToDoListForm, EditToDoForm
 from rancho.user.models import User
@@ -143,14 +143,12 @@ def add_todo(request, p_id, todo_list):
         if todo_responsible != 0:
             todo.responsible = todo_responsible
         todo.description = todo_desc
+        todo.todo_list = todo_list
         todo.save()
         todo_list.number_of_todos+=1
         todo_list.save()
-        todo_in_list = ToDo_in_ToDoList()
-        todo_in_list.todo = todo
-        todo_in_list.todolist = todo_list
-        todo_in_list.position = todo_list.number_of_todos + 1
-        todo_in_list.save()
+        todo.position = todo_list.number_of_todos + 1
+        todo.save()
         
         #notify all users with perm
         link_url = u"http://%s%s" % ( unicode(Site.objects.get_current()), urlresolvers.reverse('rancho.todo.views.view_todo_list', kwargs={'p_id': project.id, 'todo_list_id': todo_list.id}),)
@@ -192,7 +190,7 @@ def edit_todo(request, p_id, todo_id):
     user = request.user
     project = get_object_or_404(Project, id = p_id)
     todo = get_object_or_404(ToDo, id = todo_id)
-    todo_list = ToDo_in_ToDoList.objects.filter(todo = todo)[0].todolist
+    todo_list = todo.todo_list
     
     if not checkperm(PERMISSIONS_TODO_EDITDELETE, user, project, todo) or todo_list.project != project:
         return HttpResponseForbidden(_('Forbidden Access'))
@@ -229,7 +227,7 @@ def save_changes(request, p_id):
     
     if request.method == 'POST':
         todo = get_object_or_404(ToDo, id = int(request.POST.get('todo')))
-        todo_list = ToDo_in_ToDoList.objects.filter(todo = todo)[0].todolist
+        todo_list = todo.todo_list
         
         if not checkperm(PERMISSIONS_TODO_EDITDELETE, user, project, todo) or todo_list.project != project:
             return HttpResponseForbidden(_('Forbidden Access'))
@@ -272,7 +270,7 @@ def delete_todo(request, p_id):
     project = get_object_or_404(Project, id = p_id)
     if request.method == 'GET':
         todo_item = get_object_or_404(ToDo, id = int(request.GET.get('todo')))
-        todo_list = ToDo_in_ToDoList.objects.filter(todo = todo_item)[0].todolist
+        todo_list = todo_item.todo_list
         
         if not checkperm(PERMISSIONS_TODO_EDITDELETE, user, project, todo_item) or todo_list.project != project:
             return HttpResponseForbidden(_('Forbidden Access'))

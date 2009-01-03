@@ -1,10 +1,14 @@
+.. image:: rancho_logo.png
+	:align: center
+
 ==================================================
 Rancho: Open Source Group/Project Management Tool
 ==================================================
 
+
 :Author: The Rancho Team
 :Contact: info@getrancho.com
-:Date: $Date: 2008-11-18 18:45:30 +0200 (Mon, 18 Dec 2008) $
+:Date: 2008-12-24
 :Web site: http://www.getrancho.com
 :License: Rancho is published under the GNU AGPL v3 license.
 
@@ -107,6 +111,28 @@ If everything went okay, you can now visit http://localhost:8000 in your web bro
 
 **Important**: Note that it is not advisable to use this server for production. 
 
+Upgrading Rancho
+=================
+
+If you have a Rancho version installed and upgrade it, there might be changes to the 
+database that must be solved in order, for example, to preserve data.
+
+**Important**: It is advisable to back up all your data before upgrading Rancho.
+
+The first thing to do after having upgraded Rancho is to synchronize the database 
+using the following command:
+
+	$ python manage.py syncdb
+
+If there are changes to the database, a message will be returned warning that an 
+evolution is needed.
+
+To perform the evolution, run the command:
+
+	$ python manage.py evolve --execute
+
+If all went well, Rancho will be ready to be run.
+
 Important Configuration
 =======================
 
@@ -194,5 +220,3 @@ Create a new site configuration for apache with::
             PythonPath "['RANCHO_INSTALL_DIR', 'RANCHO_INSTALL_DIR/rancho' ] + sys.path"
         </Location>
     </VirtualHost>
-
-

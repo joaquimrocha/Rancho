@@ -35,26 +35,15 @@ class ToDoList(models.Model):
     number_of_todos = models.IntegerField(default=0)
         
     def get_todos(self):
-        return [todo_in_todolist.todo for todo_in_todolist in ToDo_in_ToDoList.objects.filter(todolist = self)]
+        return ToDo.objects.filter(todo_list = self)
 
 class ToDo(models.Model):
     
     creator = models.ForeignKey(User, related_name='todocreator')
     responsible = models.ForeignKey(User, related_name='todoresponsible', null=True)
-    
+
+    todo_list = models.ForeignKey(ToDoList)
     description = models.CharField(max_length=500)
     completion_date = models.DateTimeField(null=True)
     creation_date = models.DateTimeField(default = datetime.datetime.now())
-    def get_todo_list(self):
-        return ToDo_in_ToDoList.objects.get(todo = self).todolist
-
-class ToDo_in_ToDoList(models.Model):
-    
-    todo = models.ForeignKey(ToDo)
-    todolist = models.ForeignKey(ToDoList)
-    
-    position = models.CharField(max_length=3)
-    
-    class Meta:
-        
-        unique_together = (('todo', 'todolist'),)
+    position = models.IntegerField(default = 0)        

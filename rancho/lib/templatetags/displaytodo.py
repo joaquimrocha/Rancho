@@ -23,7 +23,7 @@ def displaytodo(context, todo, user = None):
     image = 'notcheck.png'
     if todo.completion_date:
         image = 'check.png'
-    project = todo.get_todo_list().project
+    project = todo.todo_list.project
     result = {'todo': todo, 'image': image, 'project': project, 'user': user}
     return result
 

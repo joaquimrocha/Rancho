@@ -32,7 +32,7 @@ from rancho.lib.templatetags.usernamegen import usernamegen
 from rancho.message.models import Message
 from rancho.milestone.models import Milestone
 from rancho.tagging.models import Tag
-from rancho.todo.models import ToDo, ToDo_in_ToDoList
+from rancho.todo.models import ToDo
 from rancho.wikiboard.models import WikiEntry
 from random import Random
 import mimetypes
@@ -95,7 +95,7 @@ def get_object_overview_info(object):
         return (_('Milestone'), icons_folder + 'clock.png', object.title, object.responsible, action, complete, url)
     elif isinstance(object, ToDo):
         action = _('Assigned to')
-        todolist = ToDo_in_ToDoList.objects.filter(todo = object)[0].todolist
+        todolist = object.todo_list
         url = urlresolvers.reverse('rancho.todo.views.view_todo_list', kwargs = {'p_id': todolist.project.id, 'todo_list_id': todolist.id})
         if object.completion_date:
             action = _('Completed by')
@@ -143,15 +143,11 @@ def get_overview(user, project):
         files_ids = []
     
     if checkperm(PERMISSIONS_TODO_VIEW, user, project ):
-        todos_in_todolists = ToDo_in_ToDoList.objects.filter(todolist__project = project, todolist__project__status='A', todo__completion_date__isnull = True).order_by('-todo__creation_date')
-        todos_ids_list = [todo_in_todolist.todo.id for todo_in_todolist in todos_in_todolists]
-        todos = ToDo.objects.filter(id__in=todos_ids_list)
-        todos_ids = [(todo_object.creation_date, 'todos_%s' % todo_object.id) for todo_object in todos[:50]]
+        todos = ToDo.objects.filter(todo_list__project = project, todo_list__project__status='A', completion_date__isnull = True).order_by('-creation_date')
+        todos_ids = [(todo.creation_date, 'todos_%s' % todo.id) for todo in todos[:50]]
         
-        completetodos_in_todolists = ToDo_in_ToDoList.objects.filter(todolist__project = project, todolist__project__status='A', todo__completion_date__isnull = False).order_by('-todo__completion_date')
-        completetodos_ids_list = [todo_in_todolist.todo.id for todo_in_todolist in completetodos_in_todolists]
-        completetodos = ToDo.objects.filter(id__in=completetodos_ids_list)
-        completetodos_ids = [(todo_object.completion_date, 'completetodos_%s' % todo_object.id) for todo_object in completetodos[:50]]
+        completetodos = ToDo.objects.filter(todo_list__project = project, todo_list__project__status='A', completion_date__isnull = False).order_by('-completion_date')
+        completetodos_ids = [(todo.completion_date, 'completetodos_%s' % todo.id) for todo in completetodos[:50]]
     else:
         todos_ids = completetodos_ids = []        
     
