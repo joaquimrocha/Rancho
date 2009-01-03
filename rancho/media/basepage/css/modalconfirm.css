@@ -1,15 +1,11 @@
 /* For simpleModal */
-#modalOverlay {
+#simplemodal-overlay {
   background-color:#000;
   cursor:wait;
 }
 
-#modalContainer {
-	margin-top: 50px;
+#simplemodal-container {
 	width:300px;
-	left:50%;
-	top:15%;
-	margin-left: -150px;
 	background :#fff;
 	border:3px solid #006cc8;
 	padding: 10px 10px 10px 10px;
@@ -17,7 +13,6 @@
 /* endFor simpleModal */
 
 .yes_no_dialog p{
-
 	font-size: 14px;
 }
 

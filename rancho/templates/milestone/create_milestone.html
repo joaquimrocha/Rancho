@@ -4,17 +4,26 @@
 
 {% block pagetitle %} {{ project.name }} | {% trans "New Milestone" %} {% endblock %}
       
-{% block jquerypluginloader %}       
-<script src="/media/js/jquery/ui.datepicker.js" type="text/javascript" charset="utf-8"></script>   
-<link rel="stylesheet" href="/media/js/jquery/ui.datepicker.css" type="text/css" media="screen" title="core css file" charset="utf-8" />  
+{% block jquerypluginloader %}
+<script src="/media/js/jquery/jquery.ui.js" type="text/javascript" charset="utf-8"></script>
+<script src="/media/js/jquery/ui/i18n/ui.datepicker-{{LANGUAGE_CODE}}.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="/media/js/jquery/ui.theme.css" type="text/css" media="screen" title="core css file" charset="utf-8" />
+ <link rel="stylesheet" href="/media/js/jquery/ui.datepicker.css" type="text/css" media="screen" title="core css file" charset="utf-8" />  
 {% endblock %}
 
 {% block jquerycode %}    
-    $(document).ready(function(){        
-        $('#id_due_date').attachDatepicker({showOn: 'both', buttonImage: '/media/basepage/images/date.png', buttonImageOnly: true ,buttonText: 'Calendar',yearRange: '2008:2020',dateFormat: 'yy-mm-dd'});
-    });
+     $(document).ready(function(){        
+        $('#id_due_date').datepicker({
+        nextText: '',
+        prevText: '',
+        showOn: 'both', 
+        buttonImage: '/media/basepage/images/icons/date_add.png', 
+        buttonImageOnly: true ,
+        buttonText: 'Calendar',
+        yearRange: '2008:2020',
+        dateFormat: 'yy-mm-dd'});
+     });
 {% endblock %}
-
 {% block area_name %}
     <p>{% trans "Add a new milestone" %}</p>
 {% endblock %}

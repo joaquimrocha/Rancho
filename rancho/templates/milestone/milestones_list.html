@@ -4,20 +4,6 @@
 
 {% block pagetitle %} {{ project.name }} | {% trans "View Milestones" %} {% endblock %}
 
-{% block scripts%}
-<!-- Because IE sucks big time-->
-    <!--[if lt IE 7]>
-    <style type='text/css'>
-      
-      #modalContainer {
-        top: expression((document.documentElement.scrollTop
-            || document.body.scrollTop) + Math.round(15 *
-            (document.documentElement.offsetHeight
-            || document.body.clientHeight) / 100) + 'px');
-      }
-    </style>
-    <![endif]-->
-{% endblock %}
 
 {% block jquerypluginloader %}
 <script type="text/javascript" src="/media/js/jquery/simplemodal.js"></script>
