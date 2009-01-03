@@ -168,7 +168,7 @@ def get_overview(user, project):
     return sorted_events
 
 
-def send_file(filename, size=0):    
+def send_file(file, filename):    
     class FileIterWrapper(object):
         def __init__(self, flo, chunk_size = 1024**2):
             self.flo = flo
@@ -183,20 +183,24 @@ def send_file(filename, size=0):
     
         def __iter__(self):
             return self
-
-    content_type, encoding = mimetypes.guess_type(filename) 
+        
+    filepath = os.path.join(settings.MEDIA_ROOT,file.name)
+    
+    content_type, encoding = mimetypes.guess_type(filepath) 
     if not content_type: content_type = 'application/octet-stream'
     #should add here more ways to serve files... (ngix, lighttpd., etc)
     if settings.HOW_SEND_FILE == 'apache-modsendfile':    
         response = HttpResponse() 
-        response['X-Sendfile'] =  filename
+        response['X-Sendfile'] =  filepath
         response['Content-Type'] = content_type 
-        response['Content-Length'] = size
-        #response['Content-Disposition'] = 'attachment; filename="%s"' % filename 
-        response['Content-Disposition'] = 'inline; filename="%s"' % os.path.basename(filename)
+        response['Content-Length'] = file.file_size
+        response['Content-Disposition'] = 'attachment; filename="%s"' % filepath 
         return response
     else:
-        return HttpResponse(FileIterWrapper(open( filename )), content_type=content_type)
+        response = HttpResponse(FileIterWrapper(open( filepath )))
+        response['Content-Type'] = content_type 
+        response['Content-Disposition'] = 'attachment; filename="%s"' % os.path.basename(filename)
+        return response
 
 def gen_random_pass():
     return ''.join( Random().sample(string.letters+string.digits, 12) )            
