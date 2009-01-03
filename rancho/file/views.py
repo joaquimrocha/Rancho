@@ -262,7 +262,7 @@ def send_file(request, p_id, v_id):
         return HttpResponseForbidden(_('Forbidden Access'))
          
     filepath = os.path.join(settings.MEDIA_ROOT,file_version.file_location.name)
-    realfilename = file_version.file_location.name.rsplit('_', 1)[-1]
+    realfilename = file_version.file_location.name.split('_', 2)[-1]
     return utils.send_file(filepath, realfilename ) 
 
     
