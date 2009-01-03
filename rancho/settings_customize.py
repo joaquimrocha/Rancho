@@ -122,6 +122,7 @@ INSTALLED_APPS = (
     'granular_permissions',
     'tinymce',
     'timezones',
+    'django_evolution',
 
     'rancho.user',
     'rancho.project',
