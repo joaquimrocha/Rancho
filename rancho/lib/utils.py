@@ -168,7 +168,7 @@ def get_overview(user, project):
     return sorted_events
 
 
-def send_file(file, filename):    
+def send_file(filepath, filename):    
     class FileIterWrapper(object):
         def __init__(self, flo, chunk_size = 1024**2):
             self.flo = flo
@@ -183,9 +183,7 @@ def send_file(file, filename):
     
         def __iter__(self):
             return self
-        
-    filepath = os.path.join(settings.MEDIA_ROOT,file.name)
-    
+     
     content_type, encoding = mimetypes.guess_type(filepath) 
     if not content_type: content_type = 'application/octet-stream'
     #should add here more ways to serve files... (ngix, lighttpd., etc)
@@ -193,7 +191,7 @@ def send_file(file, filename):
         response = HttpResponse() 
         response['X-Sendfile'] =  filepath
         response['Content-Type'] = content_type 
-        response['Content-Length'] = file.file_size
+#        response['Content-Length'] = file.file_size
         response['Content-Disposition'] = 'attachment; filename="%s"' % filepath 
         return response
     else:

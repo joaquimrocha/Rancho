@@ -261,8 +261,9 @@ def send_file(request, p_id, v_id):
     if not checkperm(PERMISSIONS_FILE_VIEW, user, project ) or file_version.file.project != project:
         return HttpResponseForbidden(_('Forbidden Access'))
          
+    filepath = os.path.join(settings.MEDIA_ROOT,file_version.file_location.name)
     realfilename = file_version.file_location.name.rsplit('_', 1)[-1]
-    return utils.send_file( file_version.file_location, realfilename ) 
+    return utils.send_file(filepath, realfilename ) 
 
     
     
