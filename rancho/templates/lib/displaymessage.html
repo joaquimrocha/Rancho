@@ -16,7 +16,7 @@
 	<div class="item_bottom">
 		<div class="responsible_and_date" style="overflow: hidden; margin-left: 5px;">
 			<div style="float: left; with: 50px;">
-				{% displayuserphoto user %}
+				{% displayuserphoto message.creator %}
 			</div>
 			<div style="float: left; width: 500px; margin-left: 5px;">
 				<p>{{ message.body|truncatewords:10 }}</p>
