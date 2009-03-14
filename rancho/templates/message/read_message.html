@@ -52,7 +52,7 @@
 			<p><span class="gray">{% trans "Date" %}:</span> {% formatdate user message.creation_date %}</p>
 		</div>
 	</div>
-	<p style="margin: 5px 0 5px 5px;">{{ original_message.body }}</p>
+	<p style="margin: 5px 0 5px 5px;">{{ original_message.body|linebreaksbr }}</p>
 	</p>
     {% displaynotification messages %}
 	<div class="blue_section" style="margin: 15px 0 5px 0;">
