@@ -59,5 +59,5 @@ class UserProfile(models.Model):
     is_account_owner = models.BooleanField(default=False)
     
     def __unicode__(self):
-        return str(self.user.login_name)
+        return str(self.user.username)
     
