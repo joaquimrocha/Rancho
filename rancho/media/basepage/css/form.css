@@ -2,7 +2,7 @@ input.big_entry{
 	height: 25px;
 	font-size: 20px;
 	font-weight: bold;
-	width: 500px;
+	width: 100%;
 }
 
 input.submit {

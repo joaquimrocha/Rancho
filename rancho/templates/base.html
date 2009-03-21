@@ -84,19 +84,8 @@
         </div>
         </div>
         <div id="header">
-            
-            {% ifequal company.display_logo_name "0" %}
             <div id="logo">
-            {% else %}
-            <div id="logo" style="background: #FFF;">
-            {% endifequal %}
-                {% ifequal company.display_logo_name "0" %}
-                    <p>{{ company.short_name }}</p>
-                {% else %}
-                    {% displaycompanylogo company %}
-                {% endifequal %}
-
-                
+                {% displaycompanylogo company %}<div id="gradient"></div>
             </div>
 
             <div id="menus">
@@ -104,82 +93,72 @@
                     {% genmenu "root" "dashboard" %}
                 {% endblock %}
 		
-		<div id="menus_nav_right">
+		        <div id="menus_nav_right">
                     {% block menus_right %}
                         {% if user.is_superuser %}
                             <img class="textcenter" src="/media/basepage/images/icons/users.png" border="0" alt=""/>&nbsp;<a href="{% url user.views.all_people %}" title="{% trans "Manage people and companies" %}">{% trans "People and Companies" %}</a>&nbsp;
                         {% endif %}
                             <img class="textcenter" src="/media/basepage/images/icons/calendar.png" border="0" alt=""/>&nbsp;<a href="/calendar" title="{% trans "Go to general calendar" %}">{% trans "Calendar" %}</a>
-		    {% endblock %}
+		            {% endblock %}
+                </div>
             </div>
-            </div>            
-
-
             
+            <div id="bottom">
+                <div id="left"></div>
+                <div id="center"></div>
+                <div id="right"></div>
+            </div>
         </div>
-        <div id="main_fix">
-            <div id="main">
-            
-                <div id="main_top">
-                    
-                    <div id="left_top">
-                    
-                        <div id="left">
-                            
-                            {% block area_name %}
-                                <p>  </p>
-                            {% endblock %}
-                        </div>
-                        
-                        <div id="right">
-                            {% block mini_menu %}
-                                
-                            {% endblock %}
-                        </div>
-                        
+        <div id="main">
+        
+            <div id="main_center_right">
+                <div id="main_center_right_top">
+                    {% block static_menu%}
+                    <div id="top_menu">
+                        <form id="search" enctype="multipart/form-data" action="{% url search_search_general %}" method="post">
+                            {{generalsearchform.query}}
+                            <input type="image" src="/media/basepage/images/search.png" />
+                        </form>
                     </div>
-                    
-                    <div id="right_top">
-                    
-                                                    
-                        {% block static_menu%}
-                        <div id="top_menu">
-                            <form id="search" enctype="multipart/form-data" action="{% url search_search_general %}" method="post">
-                                {{generalsearchform.query}}
-                                <input type="image" src="/media/basepage/images/search.png" />
-                            </form>
-                        </div>
-                        {% endblock %}
-                        
-                        
-                        {% block project_name %}
-                        
-                        {% endblock %}
-                    </div>
-                    
-                </div>
-                <div id="main_center_right">
-                    
-                    {% block project_logo %}
-                    
                     {% endblock %}
                     
-                    {% block right_content %}
+                    {% block project_name %}
                     
                     {% endblock %}
                 </div>
-                <div id="main_center">
-                    {% block outter_main_content %}
-                        <div style="margin: 0 20px 0 20px;">
-                            {% block main_content %}
-                                
-                            {% endblock %}
-                        </div>
-                    {% endblock %}
-                </div>
-                <div id="main_center_footer"><div id="innerleft"></div></div>       
-            
+                
+                {% block project_logo %}
+                
+                {% endblock %}
+                
+                {% block right_content %}
+                
+                {% endblock %}
             </div>
+            
+            <div id="main_center">
+                <div id="main_center_top">
+                    <div id="left">
+                        {% block area_name %}
+                            <p></p>
+                        {% endblock %}    
+                    </div>
+                    <div id="right">
+                        {% block mini_menu %}
+                            
+                        {% endblock %}
+                    </div>
+                </div>
+                {% block outter_main_content %}
+                    <div style="margin: 20px 20px 0 20px;">
+                        {% block main_content %}
+                            
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+            </div>
+            <div id="main_center_footer"><div id="innerleft"></div></div>       
+        
         </div>
         <div id="main_footer">
             <div id="inside">
@@ -193,7 +172,5 @@
 	      <a href="{% url legal_notice %}" class="gray" >{% trans "Rancho Legal Notices" %}</a>
 	    </div>
         </div>
-
-    
     </body>
 </html>

@@ -29,7 +29,7 @@ def displaycompanylogo(company):
     """
     
     if company.logo and os.path.exists(os.path.join(settings.MEDIA_URL, company.logo.path)) and company.display_logo_name:
-        return mark_safe('<img src="/media/%s" alt="%s"/><div id="gradient"></div>' % (company.logo, company.short_name))
+        return mark_safe('<img src="/media/%s" alt="%s"/>' % (company.logo, company.short_name))
     else:
         return mark_safe('<p style="margin-right: 20px;">%s</p>' % company.short_name)
     

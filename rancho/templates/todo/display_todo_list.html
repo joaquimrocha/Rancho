@@ -32,8 +32,8 @@
 			<div id="empty_todo_error{{ todo_list.id }}" class="red_msg" style="margin-bottom: 5px; display: none;">
 				{% trans "Please insert the name for this ToDo item" %}
 			</div>
-			<input type="text" id="todo_desc{{todo_list.id}}" name="todo_desc" class="xlarge" maxlength="500"/><br/><br/>
-			<label>{% trans "Choose a responsible:"%}</label><select id="todo_responsible{{todo_list.id}}">
+			<input type="text" id="todo_desc{{todo_list.id}}" name="todo_desc" class="fillx" maxlength="500"/><br/><br/>
+			<label>{% trans "Choose a responsible:"%}</label><select id="todo_responsible{{todo_list.id}}" style="margin-bottom: 5px;">
 			{% for user_id, user_name in users_in_project %}
 				<option value="{{user_id}}">{{user_name}}</option>
 			{% endfor %}
