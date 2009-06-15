@@ -192,7 +192,7 @@ def send_file(filepath, filename):
         response['X-Sendfile'] =  filepath
         response['Content-Type'] = content_type 
 #        response['Content-Length'] = file.file_size
-        response['Content-Disposition'] = 'attachment; filename="%s"' % filepath 
+        response['Content-Disposition'] = 'attachment; filename="%s"' % os.path.basename(filename)
         return response
     else:
         response = HttpResponse(FileIterWrapper(open( filepath )))
