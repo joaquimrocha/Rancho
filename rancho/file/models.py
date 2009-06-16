@@ -21,10 +21,8 @@ from django.contrib.auth.models import User
 
 from rancho.project.models import Project
 from rancho.tagging.fields import TagField
-from rancho.company.models import Company
 from rancho import djangosearch
 from rancho import settings
-import datetime
 
 class File(models.Model):
     creator = models.ForeignKey(User)
@@ -44,7 +42,7 @@ class FileVersion(models.Model):
     file = models.ForeignKey(File)
     file_location = models.FileField(upload_to=settings.UPLOAD_DIR)
     file_size= models.CharField(max_length=30)
-    creation_date = models.DateTimeField(default=datetime.datetime.now())
+    creation_date = models.DateTimeField(auto_now_add=True)
     description = models.CharField(max_length=500, null=True)
     creator = models.ForeignKey(User, related_name='uploader')    
     file_type= models.CharField(max_length=50)
