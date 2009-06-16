@@ -38,7 +38,7 @@
 	<div style="margin-left: 10px;">
 		{% for number, name, version, icon in versions %}
 			<div style="float: left; width: 75%;">
-				<p>#{{ number }}: <img class="textcenter" src="/media/icons/16/{{ icon }}" alt=""/><a class="blue" href="{% url file.views.send_file p_id=project.id,v_id=version.id%}">{{ name }}</a> ({{ version.file_size|filesizeformat }}) - {% formatdate user last_version.creation_date %}</p>
+                <p>#{{ number }}: <img class="textcenter" src="/media/icons/16/{{ icon }}" alt=""/><a class="blue" href="{% url file.views.send_file p_id=project.id,v_id=version.id%}">{{ name }}</a> ({{ version.file_size|filesizeformat }}) - {% formatdate user version.creation_date %}</p>
 				<p style="margin-left: 30px;">{% trans "By" %} {% usernamegen version.creator %}</p>
 			</div>
 			{% ifhasperm "PERMISSIONS_FILE_EDITDELETE" user project version %}
