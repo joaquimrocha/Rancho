@@ -34,7 +34,7 @@ from rancho import settings
 
 
 @login_required
-@user_passes_test(lambda u: u.get_profile().is_account_owner)
+@user_passes_test(lambda u: u.is_superuser)
 def company_settings(request):
     
     user = request.user        
@@ -84,7 +84,7 @@ def company_settings(request):
 
 
 @login_required
-@user_passes_test(lambda u: u.get_profile().is_account_owner)
+@user_passes_test(lambda u: u.is_superuser)
 def delete_logo(request, c_id=None):    
     if c_id:
         company = get_object_or_404(Company, id=c_id)
@@ -99,7 +99,7 @@ def delete_logo(request, c_id=None):
     return HttpResponse('')
 
 @login_required
-@user_passes_test(lambda u: u.get_profile().is_account_owner)
+@user_passes_test(lambda u: u.is_superuser)
 def create_company(request):
     
     if request.method == 'POST':
