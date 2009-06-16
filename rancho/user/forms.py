@@ -33,12 +33,12 @@ def company_choices( ):
     companies = [(c.id, c.short_name) for c in Company.objects.all()]
     return tuple(companies)
         
-class NewUserForm(forms.Form):
+        
+class UserForm(forms.Form):
     YES_NO_CHOICES = ((True, _('Yes')),
                       (False, _('No')),
                       )
     
-    username = forms.CharField(error_messages={'required': _('The username cannot be empty.')}, widget=forms.TextInput(attrs={'class':'large'}), label=_("Username"))
     email = forms.EmailField(error_messages={'required': _('The user email cannot be empty.'), 'invalid': _('Please insert a valid email.')},widget=forms.TextInput(attrs={'class':'large'}),label=_("E-Mail"))
     company = forms.ChoiceField(choices=company_choices(), label=_('Company'))
     language = forms.ChoiceField(choices=settings.LANGUAGES, label=_('Language'))
@@ -61,18 +61,30 @@ class NewUserForm(forms.Form):
     webpage = forms.CharField(required=False, widget=forms.TextInput(attrs={'class':'large'}),label=_("Webpage"))
     
     personal_note = forms.CharField(required=False, widget=forms.Textarea(attrs={'class':'small_wide'}),label=_("Personal Note"))
+
     
+class NewUserForm(UserForm):
+    
+    username = forms.CharField(error_messages={'required': _('The username cannot be empty.')}, widget=forms.TextInput(attrs={'class':'large'}), label=_("Username"))
+        
+    def __init__(self, *args, **kwargs):
+        super(NewUserForm, self).__init__(*args, **kwargs)
+                        
+        self.fields['company'].choices = company_choices()
+        
     def clean_username(self):        
         try:
             user = User.objects.get(username=self.data['username'])
-            raise forms.ValidationError(_('There is already a user with the name you inserted, please choose another username.'))
+            raise forms.ValidationError(_('There is already a user with the username you inserted, please choose another username.'))
         except User.DoesNotExist:
             return self.cleaned_data.get('username')
-        
-    def __init__(self, request=None, *args, **kwargs):
-        super(NewUserForm, self).__init__(request,*args, **kwargs)
-                        
-        self.fields['company'].choices = company_choices()
+     
+    def clean_email(self):        
+        try:
+            user = User.objects.get(email=self.data['email'])
+            raise forms.ValidationError(_('There is already a user with the email you inserted, please choose another email.'))
+        except User.DoesNotExist:
+            return self.cleaned_data.get('email')
     
     
     def save(self):
@@ -110,13 +122,18 @@ class NewUserForm(forms.Form):
         return user, password, self.cleaned_data['personal_note']
         
     
-class EditUserForm(NewUserForm):
+class EditUserForm(UserForm):
         
     new_password1 = forms.CharField(label=_("New password"), widget=forms.PasswordInput, required=False)
     new_password2 = forms.CharField(label=_("New password confirmation"), widget=forms.PasswordInput, required=False)
     
     small_photo = forms.ImageField(label=_('Small Photo'), widget=forms.FileInput(attrs={'size':30, 'class': 'project_upload_photo'}), required=False, error_messages={'invalid': _('The file you uploaded was either not an image or a corrupted image. Please choose a valid image file.')})
     large_photo = forms.ImageField(label=_('Large Photo'), widget=forms.FileInput(attrs={'size':30, 'class': 'project_upload_photo'}), required=False, error_messages={'invalid': _('The file you uploaded was either not an image or a corrupted image. Please choose a valid image file.')})
+    
+    def __init__(self, edit_user, *args, **kwargs):
+        super(EditUserForm, self).__init__(*args, **kwargs)
+                        
+        self.edit_user = edit_user
     
     def clean_small_photo(self):
         if self.files.has_key('small_photo'):
@@ -139,9 +156,16 @@ class EditUserForm(NewUserForm):
             if password1 != password2:
                 raise forms.ValidationError(_("The two password fields didn't match."))
         return password2
-
-    def clean_username(self):        
-        pass
+    
+    def clean_email(self):        
+        try:
+            user = User.objects.get(email=self.data['email'])
+            if user != self.edit_user:
+                raise forms.ValidationError(_('There is already a user with the email you inserted, please choose another email.'))
+        except User.DoesNotExist:
+            pass
+        
+        return self.cleaned_data.get('email')
     
     def save(self, edit_user, edit_user_profile):
                         

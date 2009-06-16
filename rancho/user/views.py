@@ -218,13 +218,11 @@ def edituser(request, user_id):
     else:
         context['headermsg'] = _('Choose this person\'s email to which they will receive every notification from Rancho.')            
          
-    if request.method == 'POST':
-        data = request.POST.copy()
-        data.update({u'username':edit_user.username})
-        editUserForm = EditUserForm(data, request.FILES)
+    if request.method == 'POST':        
+        form = EditUserForm(edit_user, request.POST, request.FILES)
              
-        if editUserForm.is_valid():
-            editUserForm.save( edit_user, edit_user_profile)
+        if form.is_valid():
+            form.save( edit_user, edit_user_profile)
              
             if edit_user == user:
                 msg = _('Your settings have been successfully edited.')
@@ -244,9 +242,9 @@ def edituser(request, user_id):
         'im_service': edit_user.get_profile().im_service, 
         'mailing_address': edit_user.get_profile().mailing_address, 'webpage': edit_user.get_profile().webpage
         }
-        editUserForm = EditUserForm(data)
+        form = EditUserForm(edit_user, initial=data)
          
-    context['editUserForm'] = editUserForm
+    context['editUserForm'] = form
     return render_to_response('people/edit_user.html', 
                               context,
                               context_instance=RequestContext(request))
