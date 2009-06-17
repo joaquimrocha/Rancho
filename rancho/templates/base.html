@@ -115,7 +115,7 @@
                 <div id="main_center_right_top">
                     {% block static_menu%}
                     <div id="top_menu">
-                        <form id="search" enctype="multipart/form-data" action="{% url search_search_general %}" method="post">
+                        <form id="search" enctype="multipart/form-data" action="{% url search_search_general %}" method="get">
                             {{generalsearchform.query}}
                             <input type="image" src="/media/basepage/images/search.png" />
                         </form>

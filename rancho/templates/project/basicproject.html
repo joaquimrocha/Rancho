@@ -30,7 +30,7 @@
 
 {% block static_menu%}
 <div id="top_menu">
-    <form id="search" enctype="multipart/form-data" action="{% url search_search_project p_id=project.id %}" method="post">
+    <form id="search" enctype="multipart/form-data" action="{% url search_search_project p_id=project.id %}" method="get">
     	{{generalsearchform.query}}
 		<input type="image" src="/media/basepage/images/search.png" />
     </form>

@@ -21,8 +21,22 @@ from django.contrib.auth.models import User
 
 from rancho.project.models import Project
 from rancho.tagging.fields import TagField
+from rancho.company.models import Company
 from rancho import djangosearch
 from rancho import settings
+import datetime
+
+class FileManager(models.Manager):
+
+    def search(self, user, query, project = None):
+        files = FileVersion.index.search(query)
+        if not user.is_superuser: #restrict to projects with perm
+            perm = user.get_rows_with_permission(Project, PERMISSIONS_FILE_VIEW)
+            project_ids = perm.values_list('object_id', flat=True)
+            files = files.filter(file__project__in=project_ids)
+        if project: #restrict to given project
+            files = files.filter(file__project=project)
+        return files
 
 class File(models.Model):
     creator = models.ForeignKey(User)
@@ -34,6 +48,12 @@ class File(models.Model):
     tags = TagField()
         
     index = djangosearch.ModelIndex(text=['title'])
+    
+    objects = FileManager()
+    
+    @models.permalink
+    def get_absolute_url(self):
+        return ('rancho.file.views.view_file', [], {'p_id': self.project.id, 'file_id':self.id})
     
 
     
@@ -49,4 +69,7 @@ class FileVersion(models.Model):
         
     index = djangosearch.ModelIndex(text=['description'])
     
+    def get_version_number(self): 
+        versions = FileVersion.objects.filter(file = self.file).order_by('creation_date').values_list('id', flat = True)
+        return list(versions).index(self.id)
 

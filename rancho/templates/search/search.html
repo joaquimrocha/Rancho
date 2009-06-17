@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load i18n form_tags usernamegen formatdate %}
+{% load i18n form_tags usernamegen formatdate displayevent displaymilestone displaymessage pagination_tags %}
 
 {% block pagetitle %} {{ company.short_name }} | {% trans "Search" %} {% endblock %}
 	
@@ -12,12 +12,33 @@
 	{% endif %}
 {% endblock %}
 
+{% block right_content %}
+{% if results %}
+    <div class="widget">
+        <p>{% trans "Results" %}</p>
+    </div>
+        <p style="margin-top: 10px;" {% if not select %}class="light_blue_bg"{% endif %}><a href="{% url rancho.search.views.search %}?query={{ query }}">{% trans "All" %} ({{results|length}})</a></p>
+    {% if messages %}
+        <p {% ifequal select "messages" %}class="light_blue_bg"{% endifequal %}><a href="{% url rancho.search.views.search %}?select=messages&query={{ query }}">{% trans "Messages" %} ({{messages|length}})</a></p>
+    {% endif %}
+    {% if milestones %}
+        <p {% ifequal select "milestones" %}class="light_blue_bg"{% endifequal %}><a href="{% url rancho.search.views.search %}?select=milestones&query={{ query }}">{% trans "Milestone" %} ({{milestones|length}})</a></p>
+    {% endif %}
+    {% if wikiboards %}
+        <p {% ifequal select "wikiboards" %}class="light_blue_bg"{% endifequal %}><a href="{% url rancho.search.views.search %}?select=wikiboards&query={{ query }}">{% trans "Wikiboards" %} ({{wikiboards|length}})</a></p>
+    {% endif %}
+    {% if files %}
+        <p {% ifequal select "files" %}class="light_blue_bg"{% endifequal %}><a href="{% url rancho.search.views.search %}?select=files&query={{ query }}">{% trans "Files" %} ({{files|length}})</a></p>
+    {% endif %}
+{% endif %}
+{% endblock %}
+
 {% block main_content %}
 
 {% if project %}
-	<form id="search" enctype="multipart/form-data" action="{% url search_search_project p_id=project.id %}" method="post">
+	<form id="search" enctype="multipart/form-data" action="{% url search_search_project p_id=project.id %}" method="get">
 {% else %}
-	<form id="search" enctype="multipart/form-data" action="{% url search_search_general %}" method="post">
+	<form id="search" enctype="multipart/form-data" action="{% url search_search_general %}" method="get">
 {% endif %}
 	<div class="blue_section_obl">
 		<p><strong>{% trans "Search" %}</strong></p>
@@ -27,31 +48,55 @@
 	</div>
 </form>
 
-{% if messages %}
-<div style="border-bottom: 1px solid #afafaf; padding-bottom: 10px;">
-	<p style="margin: 15px 0 10px 0;"><span class="smallcaps_title blue_bg">{% trans "messages" %}</span></p>
-	<ul>
-	{% for msg in messages %}
-		<li style="margin: 10px 0 0 10px;">
-			<div class="blue_item"><a class="blue" href="{% url message.views.read_add_comment p_id=msg.project.id,m_id=msg.id %}">{{ msg.title|truncatewords:8 }}</a></div>
-			<div style="margin-left: 5px;">
-				<p>{{ msg.body|truncatewords:8 }}</p>
-				<p><span class="gray">{% trans "Posted by" %}</span> {% usernamegen msg.creator %} <span class="gray">, {% formatdate user msg.creation_date %}</span></p>
-			</div>
-		</li>
-	{% endfor %}
-	</ul>
-	<div>
-		<p style="text-align: right;">
-			{% blocktrans %}<a href="">See all message results</a>{% endblocktrans %}
-		</p>
+{% if results and not select %}
+    <div style="border-bottom: 1px solid #afafaf; padding-bottom: 10px;">
+	    <p style="margin: 15px 0 10px 0;"><span class="smallcaps_title blue_bg">{% trans "All" %}</span></p>
+	    {% autopaginate results 10 %}
+	    {% paginate %}
+		    {% for result in results %}
+		        {% displayevent result %}
+		    {% endfor %}
+		{% paginate %}
 	</div>
-</div>
 {% endif %}
 
-{% if files %}
+{% ifequal select "messages" %}
+<div style="border-bottom: 1px solid #afafaf; padding-bottom: 10px;">
+	<p style="margin: 15px 0 10px 0;"><span class="smallcaps_title blue_bg">{% trans "messages" %}</span></p>
+	{% autopaginate messages 5 %}
+    {% paginate %}
+	{% for message in messages %}
+		{% displaymessage message user %}
+	{% endfor %}
+	{% paginate %}
+</div>
+{% endifequal %}
+
+{% ifequal select "milestones" %}
+<div style="border-bottom: 1px solid #afafaf; padding-bottom: 10px;">
+    <p style="margin: 15px 0 10px 0;"><span class="smallcaps_title blue_bg">{% trans "milestones" %}</span></p>
+    {% autopaginate milestones 5 %}
+    {% paginate %}
+    {% for milestone in milestones %}
+        {% if milestone.is_complete %}
+            {% displaymilestone milestone "green" user %}
+        {% endif %}
+        {% if milestone.is_upcoming %}
+            {% displaymilestone milestone "blue" user %}
+        {% endif %}
+        {% if milestone.is_late %}
+            {% displaymilestone milestone "red" user %}
+        {% endif %}
+    {% endfor %}
+    {% paginate %}
+</div>
+{% endifequal %}
+
+{% ifequal select "files" %}
 <div style="border-bottom: 1px solid #afafaf; padding-bottom: 10px;">
 	<p style="margin: 15px 0 10px 0;"><span class="smallcaps_title blue_bg">{% trans "files" %}</span></p>
+	{% autopaginate files 5 %}
+    {% paginate %}
 	{% regroup files by file as groupedfiles %}
 	<ul>
 	    {% for group in groupedfiles %}
@@ -59,25 +104,23 @@
 			   <div class="blue_item"><a class="blue" href="{% url file.views.view_file p_id=group.grouper.project.id,file_id=group.grouper.id %}">{{ group.grouper.title|truncatewords:8 }}</a></div>
 			   <div style="margin-left: 5px;">
 					{% for item in group.list %}
-						<p><strong>{% trans "Version"%} #NUMBER_OF_VERSION:</strong> {{ item.description|truncatewords:4 }}</p>
+						<p><strong>{% trans "Version"%} #{{ item.get_version_number|add:"1" }}:</strong> {{ item.description|truncatewords:4 }}</p>
 						<p><span class="gray">{% trans "Uploaded by" %}</span> {% usernamegen item.creator %} <span class="gray">, {% formatdate user item.creation_date %}</span></p>
 					{% endfor %}
 				</div>
 			</li>
 	    {% endfor %}
 	</ul>
-	<div>
-		<p style="text-align: right;">
-			{% blocktrans %}<a href="">See all file results</a>{% endblocktrans %}
-		</p>
-	</div>
+	{% paginate %}
 </div>
-{% endif %}
+{% endifequal %}
 
 
-{% if wikiboards %}
+{% ifequal select "wikiboards" %}
 <div style="border-bottom: 1px solid #afafaf; padding-bottom: 10px;">
 	<p style="margin: 15px 0 10px 0;"><span class="smallcaps_title blue_bg">{% trans "wikiboards" %}</span></p>
+	{% autopaginate wikiboards 5 %}
+    {% paginate %}
 	{% regroup wikiboards by wiki as groupedwiki %}
 	<ul>
 	    {% for group in groupedwiki %}
@@ -85,7 +128,7 @@
 			   <div class="blue_item"><a class="blue" href="{% url wikiboard.views.view_page p_id=group.grouper.project.id,entry_id=group.grouper.id,entry_version=group.grouper.last_version.id %}">{{ group.grouper.name|truncatewords:8 }}</a></div>
 			   <div style="margin-left: 5px;">
 					{% for item in group.list %}
-						<p><strong>{% trans "Version"%} #NUMBER_OF_VERSION:</strong> {{ item.content|striptags|truncatewords:4 }}</p>
+						<p><strong>{% trans "Version"%} #{{ item.get_version_number|add:"1" }}:</strong> {{ item.content|striptags|truncatewords:4 }}</p>
 						<p><span class="gray">{% trans "By" %}</span> {% usernamegen item.author %} <span class="gray">, {% formatdate user item.creation_date %}</span></p>
 					{% endfor %}
 				</div>
@@ -97,24 +140,13 @@
 			{% blocktrans %}<a href="">See all wikiboard results</a>{% endblocktrans %}
 		</p>
 	</div>
+	{% paginate %}
 </div>
-{% endif %}
+{% endifequal %}
+
 {% endblock %}
 
 
 
 {% block static_menu%}                           
-{% endblock %}
-    
-{% block right_content %}	
-	<div class="widget">
-		<p>{% trans "Your Projects" %}</p>
-	</div>
-	<div id="projects">
-	<ul>
-	{% for project in projects %}
-		<li><a href="{% url project.views.overview project.id %}">{{project.name}}</a></li>
-	{% endfor %}
-	</ul>
-	</div>	
 {% endblock %}

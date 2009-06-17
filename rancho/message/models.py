@@ -26,6 +26,19 @@ from rancho import djangosearch
 
 import datetime
 
+class MessageManager(models.Manager):
+    
+    def search(self, user, query, project = None):
+        messages = Message.index.search(query)
+        if not user.is_superuser: #restrict to projects with perm                
+            perm = user.get_rows_with_permission(Project, PERMISSIONS_MESSAGE_VIEW)
+            projs_ids = perm.values_list('object_id', flat=True)
+            messages = messages.filter(project__in=projs_ids)    
+        if project: #restrict to given project        
+            messages = messages.filter(project=project)
+        
+        return messages
+
 class Message(models.Model):    
     creator = models.ForeignKey(User, related_name='messagecreator')
     project = models.ForeignKey(Project)
@@ -42,7 +55,8 @@ class Message(models.Model):
     read_by = models.ManyToManyField(User,null=True, related_name='message_read_by')
     
     index = djangosearch.ModelIndex(text=['title', 'body'])
-        
+    
+    objects = MessageManager()
     
     def __unicode__(self):
         return 'Subject: '+self.title + ' creator: '+self.creator.first_name + ' '+ self.creator.last_name
