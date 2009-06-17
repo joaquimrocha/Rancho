@@ -48,6 +48,15 @@
 	</div>
 </form>
 
+{% if not results %}
+    {% if query %}
+    <p style="margin-top: 30px;">{% blocktrans %}No results found for the search terms: <strong>{{ query }}</strong>{% endblocktrans %}</p>
+    {% else %}
+    <p style="margin-top: 30px;">{% blocktrans %}The search terms were empty, please enter the search terms and try again.{% endblocktrans %}</p>
+    {% endif %}
+{% endif %}
+
+
 {% if results and not select %}
     <div style="border-bottom: 1px solid #afafaf; padding-bottom: 10px;">
 	    <p style="margin: 15px 0 10px 0;"><span class="smallcaps_title blue_bg">{% trans "All" %}</span></p>
