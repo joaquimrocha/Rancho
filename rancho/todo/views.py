@@ -34,6 +34,7 @@ from rancho.lib import utils
 from rancho.notification import models as notification
 from rancho.granular_permissions.permissions import PERMISSIONS_TODO_VIEW, PERMISSIONS_TODO_CREATE, PERMISSIONS_TODO_EDITDELETE
 from rancho.granular_permissions.permissions import checkperm
+from rancho.lib.utils import events_log
 
 import datetime
 
@@ -108,6 +109,7 @@ def create(request, p_id):
             todo_list.description = newTDLform.cleaned_data['todolist_description']
             todo_list.save()
             
+            events_log(user, 'A', todo_list.title, todo_list)
             request.user.message_set.create(message=_('ToDo list "%(todo_list_name)s" successfully created.') % {'todo_list_name': todo_list.title})
             return HttpResponseRedirect(urlresolvers.reverse('rancho.todo.views.list', args = [p_id]))
     context['newTDLform'] = newTDLform
@@ -149,6 +151,8 @@ def add_todo(request, p_id, todo_list):
         todo_list.save()
         todo.position = todo_list.number_of_todos + 1
         todo.save()
+        
+        events_log(user, 'A', todo.description, todo)
         
         #notify all users with perm
         link_url = u"http://%s%s" % ( unicode(Site.objects.get_current()), urlresolvers.reverse('rancho.todo.views.view_todo_list', kwargs={'p_id': project.id, 'todo_list_id': todo_list.id}),)
@@ -208,6 +212,8 @@ def edit_todo(request, p_id, todo_id):
                 todo.responsible = None
             todo.description = edit_todo_form.cleaned_data['title']
             todo.save()
+            
+            events_log(user, 'U', todo.description, todo)
             request.user.message_set.create(message=_('ToDo item successfully updated.'))
         return render_to_response('todo/edit_todo.html', context,
                       context_instance=RequestContext(request))
@@ -242,6 +248,9 @@ def save_changes(request, p_id):
         if description:
             todo.description = description
         todo.save()
+        
+        events_log(user, 'U', todo.description, todo)
+        
         result = loader.get_template('todo/display_todo.html').render(Context({'todo': todo}))
         return HttpResponse(result, mimetype='text/xml')
     return HttpResponseRedirect(urlresolvers.reverse('rancho.todo.views.list', args = [p_id]))
@@ -260,6 +269,8 @@ def delete_todo_list(request, p_id):
         
         request.user.message_set.create(message=_('ToDo list "%(todo_list_name)s" deleted.') % {'todo_list_name': todo_list.title})
         todo_list.delete()
+        
+        events_log(user, 'D', todo_list.title, todo_list)
     return HttpResponseRedirect(urlresolvers.reverse('rancho.todo.views.list', args = [p_id]))
 
 @login_required
@@ -276,6 +287,8 @@ def delete_todo(request, p_id):
             return HttpResponseForbidden(_('Forbidden Access'))
         
         todo_item.delete()
+        events_log(user, 'D', todo_item.description, todo_item)
+        
         return HttpResponseRedirect(urlresolvers.reverse('rancho.todo.views.list', args = [p_id]))
     else:
         return HttpResponseRedirect(urlresolvers.reverse('rancho.todo.views.list', args = [p_id]))
@@ -293,9 +306,14 @@ def switch_todo_status(request, p_id):
         
         if todo.completion_date != None:
             todo.completion_date = None
+            
+            events_log(user, 'ICOMP', todo.description, todo)
         else:
             todo.completion_date = datetime.datetime.now()
             todo.responsible = user
+            
+            events_log(user, 'COMP', todo.description, todo)
+            
         todo.save()
         result = loader.get_template('todo/display_todo.html').render(Context({'todo':todo}))
         return HttpResponse(result, mimetype='text/xml')
@@ -321,7 +339,10 @@ def edit_todo_list(request, p_id, todo_list_id):
             edit_todo_list.title = edit_todo_list_form.cleaned_data['todolist_name']
             edit_todo_list.description = edit_todo_list_form.cleaned_data['todolist_description']
             edit_todo_list.save()
+            
+            events_log(user, 'U', edit_todo_list.title, edit_todo_list)
             request.user.message_set.create(message=_('ToDo list successfully updated.'))
+
         return render_to_response('todo/edit_todo_list.html', 
                                   context,
                                   context_instance=RequestContext(request))

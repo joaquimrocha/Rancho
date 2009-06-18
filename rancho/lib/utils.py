@@ -34,6 +34,7 @@ from rancho.milestone.models import Milestone
 from rancho.tagging.models import Tag
 from rancho.todo.models import ToDo
 from rancho.wikiboard.models import WikiEntry
+from rancho.company.models import EventsHistory
 from random import Random
 import mimetypes
 import os
@@ -207,3 +208,14 @@ def get_users_to_notify(project, perm):
     users_with_perm = granular_permissions.get_users_with_permission(project, perm)
     superuser = User.objects.filter(is_active=True, is_superuser=True)
     return (users_with_perm | superuser ).distinct().order_by('userprofile__company')
+    
+def events_log(user, event, title, object):
+    """
+    logs a event on the correct table so admin can view what happens
+    """
+    eh = EventsHistory()
+    eh.user = user
+    eh.content_object = object
+    eh.type = event
+    eh.title = title
+    eh.save()

@@ -28,7 +28,7 @@ from django.core import urlresolvers
 from rancho.lib import utils
 from rancho.project.models import Project
 from rancho.company.forms import EditCompanySettingsForm, CreateCompanyForm
-from rancho.company.models import Company
+from rancho.company.models import Company, EventsHistory
 
 from rancho import settings
 
@@ -171,3 +171,12 @@ def delete_company(request):
         
     return HttpResponseRedirect(urlresolvers.reverse('rancho.user.views.all_people'))
 
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def show_logs(request):
+    
+    ev = EventsHistory.objects.all().order_by('-date')
+        
+    return render_to_response("company/show_logs.html",
+                              {'events': ev}, 
+                              context_instance = RequestContext(request))    

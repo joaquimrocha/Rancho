@@ -24,8 +24,12 @@ from lib import utils
 
 register = template.Library()
 def displayevent(context, event):
-    name, icon, description, user_info, action, complete, url = utils.get_object_overview_info(event)
-    
+    name, icon, description, user_info, action, complete, url = utils.get_object_overview_info(event)    
     return {'event': event, 'name': name, 'icon': icon, 'description': description, 'user_info': user_info, 'action': action, 'complete': complete, 'url': url}
-    
+
 register.inclusion_tag("lib/displayevent.html", takes_context=True)(displayevent)
+
+def displayeventlog(context, event):    
+    return {'event': event, 'user': context['user']}
+
+register.inclusion_tag("lib/displayeventlog.html", takes_context=True)(displayeventlog)

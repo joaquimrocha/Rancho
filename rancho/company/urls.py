@@ -24,4 +24,6 @@ urlpatterns = patterns('rancho.company.views',
     url(r'^edit/(?P<c_id>\d+)/$', 'edit_company', name='company_settings_def'),
     (r'^delete/$', 'delete_company'),
     (r'^delete_logo/$', 'delete_logo'),
+    
+    (r'^show_logs/$', 'show_logs'),
 )

@@ -62,3 +62,8 @@ class WikiEntry(models.Model):
     def get_version_number(self):
         versions = WikiEntry.objects.filter(wiki = self.wiki).order_by('creation_date').values_list('id', flat = True)
         return list(versions).index(self.id)
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('rancho.wikiboard.views.view_page', [], {'p_id': self.wiki.project.id, 'entry_id':self.wiki.id, 'entry_version': self.id})
+        

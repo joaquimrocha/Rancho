@@ -36,6 +36,7 @@ from rancho.granular_permissions.permissions import PERMISSIONS_FILE_CREATE, PER
 from rancho.notification import models as notification
 from rancho.lib import utils
 from rancho.tagging.models import TaggedItem, Tag
+from rancho.lib.utils import events_log
 
 import os
 from rancho import settings
@@ -236,7 +237,9 @@ def new_upload(request,p_id,f_id):
             link_url = u"http://%s%s" % ( unicode(Site.objects.get_current()), urlresolvers.reverse('rancho.file.views.view_file', kwargs={'p_id': project.id, 'file_id':file.id}),)
             notification.send(file.notify_to.all(), "fileversion_new", {'link_url': link_url, 'file': file, 'file_name': os.path.basename(file.last_file_version.file_location.path)})
            
+            events_log(user, 'U', file.title, file)
             request.user.message_set.create(message=_("New file revision created"))
+
             return HttpResponseRedirect(urlresolvers.reverse('rancho.file.views.list', args=[project.id]))                
     else:
         form = UploadFileForm(tags)

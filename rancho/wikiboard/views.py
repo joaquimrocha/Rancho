@@ -33,6 +33,7 @@ from rancho.granular_permissions.permissions import checkperm
 
 import ho.pisa as pisa
 from StringIO import StringIO
+from rancho.lib.utils import events_log
 
 
 
@@ -74,7 +75,9 @@ def create(request, p_id):
      
     if request.method=='POST':        
         form = NewWikiEntryForm(request.POST)                   
-        if form.is_valid():  
+        if form.is_valid():
+            
+            #TODO: put in form save  
             wiki = Wiki()
             wiki.project = project
             wiki.creator = user
@@ -89,6 +92,7 @@ def create(request, p_id):
             wiki.last_version = wikientry
             wiki.save()
             
+            events_log(user, 'A', wiki.name, wikientry)
             request.user.message_set.create(message=_('Wikiboard "%s" was successfully created.') % wiki.name)
                         
             kw = {'p_id': project.id, 'entry_id': wiki.id, 'entry_version': wikientry.id}
@@ -130,6 +134,8 @@ def edit(request, p_id,entry_id=None,entry_version=None):
             wiki.last_version = wikientry
             wiki.save()
             
+            events_log(user, 'U', wiki.name, wikientry)
+            
             request.user.message_set.create(message=_('Wikiboard "%s" was successfully updated.') % wiki.name)
             kw = {'p_id': project.id, 'entry_id': wiki.id, 'entry_version': wikientry.id}
             return HttpResponseRedirect(urlresolvers.reverse('rancho.wikiboard.views.view_page', kwargs=kw))
@@ -163,9 +169,11 @@ def delete(request,p_id,entry_id):
     
     if not checkperm(PERMISSIONS_WIKIBOARD_EDITDELETE, user, project, wiki ) or wiki.project != project:
         return HttpResponseForbidden(_('Forbidden Access'))        
-
+    
+    events_log(user, 'D', wiki.name, wiki)
     user.message_set.create(message = _('The Wikiboard "%s" has been successfully deleted.') % wiki.name)
     wiki.delete()
+
     return HttpResponseRedirect(urlresolvers.reverse('rancho.wikiboard.views.list', args=[p_id]))
     
     
@@ -183,7 +191,6 @@ def view_page(request, p_id,entry_id,entry_version):
     if not checkperm(PERMISSIONS_WIKIBOARD_VIEW, user, project, None ):
         return HttpResponseForbidden(_('Forbidden Access'))
         
-    
 
     wiki = get_object_or_404(Wiki, id=entry_id)
     wikicurentry = get_object_or_404(WikiEntry, id=entry_version)

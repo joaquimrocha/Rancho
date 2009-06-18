@@ -36,6 +36,10 @@ class ToDoList(models.Model):
         
     def get_todos(self):
         return ToDo.objects.filter(todo_list = self)
+    
+    @models.permalink
+    def get_absolute_url(self):
+        return ('rancho.todo.views.view_todo_list', [], {'p_id': self.project.id, 'todo_list_id':self.id})
 
 class ToDo(models.Model):
     
@@ -46,4 +50,8 @@ class ToDo(models.Model):
     description = models.CharField(max_length=500)
     completion_date = models.DateTimeField(null=True)
     creation_date = models.DateTimeField(default = datetime.datetime.now())
-    position = models.IntegerField(default = 0)        
+    position = models.IntegerField(default = 0)
+    
+    @models.permalink
+    def get_absolute_url(self):
+        return ('rancho.todo.views.edit_todo', [], {'p_id': self.todo_list.project.id, 'todo_id':self.id})        

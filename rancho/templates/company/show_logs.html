@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% load i18n usernamegen modalconfirm pagination_tags displaynotification genmenu sidewidget displayevent %}
+ 
+{% block pagetitle %} {{ company.short_name }} | {% trans "System Logs" %} {% endblock %}
+
+{% block menu %}
+    {% genmenu "root" "" %}
+{% endblock %}
+    
+{% block area_name %}
+    <p>{% trans "System Logs" %}</p>
+{% endblock %}
+    
+{% block right_content %}
+    {% sidewidget _("Information") "information"%}
+    <p>{% blocktrans %}Here you a list of all the events that happened in the platform ordered by date.{% endblocktrans %}</p>
+{% endblock %}
+
+{% block main_content %}
+    {% autopaginate events 20 %}            
+    {% paginate %}  
+    <ul>
+        {% for event in events %}
+        <li class="{% cycle "light_blue_bg" "" %}">
+           {% displayeventlog event %}
+        </li>
+        {% endfor %}
+    </ul>
+    {% paginate %}
+{% endblock %}

@@ -34,6 +34,7 @@ from rancho.granular_permissions.permissions import checkperm
 from rancho.tagging.models import TaggedItem, Tag
 from rancho.lib import utils
 from rancho.notification import models as notification
+from rancho.lib.utils import events_log
 
 # Basic operations for this app
 ####################################################################################
@@ -97,6 +98,7 @@ def create(request,p_id):
             notification.send(msg.notify_to.all(), "message_new", {'link_url': link_url, 'message': msg })
                         
             request.user.message_set.create(message=_("Message Created"))            
+            events_log(user, 'A', msg.title, msg)
             return HttpResponseRedirect(urlresolvers.reverse('rancho.message.views.list', args=[project.id]))
     else:
         form = MessageForm(users_to_notify, tags)
@@ -130,7 +132,8 @@ def edit(request,p_id,m_id):
              
         if form.is_valid():   
             form.save(user, project, message)            
-                        
+            events_log(user, 'U', message.title, message)            
+            
             if message.initial_message == message:
                 return HttpResponseRedirect(urlresolvers.reverse('rancho.message.views.list', args=[project.id]))
             else:
@@ -170,6 +173,8 @@ def delete(request,p_id,m_id):
     
     kw = {'m_id': message.initial_message.id, 'p_id': project.id}
 
+    events_log(user, 'D', message.title, message)
+    
     if message.initial_message == message: #delete main thread
         Message.objects.filter(initial_message=message.initial_message).delete()
     else:

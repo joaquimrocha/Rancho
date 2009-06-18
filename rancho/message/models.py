@@ -60,3 +60,8 @@ class Message(models.Model):
     
     def __unicode__(self):
         return 'Subject: '+self.title + ' creator: '+self.creator.first_name + ' '+ self.creator.last_name
+    
+    @models.permalink
+    def get_absolute_url(self):
+        return ('rancho.message.views.read_add_comment', [], {'p_id': self.project.id, 'm_id':self.id})
+        

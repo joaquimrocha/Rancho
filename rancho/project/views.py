@@ -35,6 +35,7 @@ from rancho.granular_permissions import permissions
 from rancho.lib.templatetags.usernamegen import usernamegen
 from rancho.project.models import UserInProject
 from rancho.lib import utils
+from rancho.lib.utils import events_log
 
 import datetime
 
@@ -46,7 +47,10 @@ def new_project(request):
     if request.method=='POST':        
         form = NewProjectForm(request.POST, request.FILES)        
         if form.is_valid():            
-            project = form.save( user )          
+            project = form.save( user )   
+            
+            events_log(user, 'A', project.name, project)
+                   
             return HttpResponseRedirect(urlresolvers.reverse('rancho.project.views.overview', args=[project.id]))                   
     else:        
         form = NewProjectForm()
@@ -199,9 +203,12 @@ def delete_logo(request, p_id):
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def delete_project(request, p_id):
-
+    user = request.user
+    
     project = get_object_or_404(Project, id = p_id)
+    events_log(user, 'D', project.name, project) 
     request.user.message_set.create(message=_("Project %s Deleted."%project.name))    
-    project.delete()    
+    project.delete()   
+    
     
     return HttpResponseRedirect(urlresolvers.reverse('rancho.user.views.dashboard'))

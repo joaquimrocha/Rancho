@@ -16,14 +16,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ########################################################################
 
+from django.contrib.auth.models import User
+from django.contrib.contenttypes import generic
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
-
+from django.utils.translation import ugettext_lazy as _
 from rancho import settings
 
 
-class Company(models.Model):
-    YES_NO_CHOICES = (('1', 'Yes'), ('0', 'No'),)
-        
+class Company(models.Model):       
     short_name = models.CharField(max_length=20)
     long_name = models.CharField(max_length=100)
     
@@ -40,3 +41,19 @@ class Company(models.Model):
     
     main_company = models.BooleanField(default=False)
         
+class EventsHistory(models.Model):
+    EVENT_TYPE = (#general
+                  ('D', _('Delete')), ('A', _('Add')), ('U', _('Update')),
+                  #milestone and todo based
+                  ('ICOMP', _('Set as Incomplete')), ('COMP', _('Set as Complete')),
+                  )
+    
+    user = models.ForeignKey(User, related_name='huser') 
+    date = models.DateTimeField(auto_now =True)
+    type = models.CharField(max_length=5, choices=EVENT_TYPE)
+    title = models.CharField(max_length=200)
+    
+    
+    content_type = models.ForeignKey(ContentType)
+    object_id = models.PositiveIntegerField()
+    content_object = generic.GenericForeignKey('content_type', 'object_id')         

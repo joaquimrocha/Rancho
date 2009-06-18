@@ -1,0 +1,35 @@
+{% load i18n formatdate %}
+<div style="overflow: hidden; padding: 2px 5px 2px 5px; width: 100%;">
+    <div style="float: left; width: 20%;">
+        <p>{% formatdate user event.date %}</p>        
+    </div>
+	<div style="float: left; width: 10%;">
+		<p>{{event.get_type_display}}</p>
+	</div>
+	<div style="float: left; width: 20%;">
+        <p><strong>{% trans "Type" %}:</strong> {{event.content_type}}</p>
+    </div>
+{% if event.content_object %}
+    {% ifnotequal event.content_type.name "project" %}
+    <div style="float: left; width: 25%;">
+    {% else %}
+    <div style="float: left; width: 50%;">
+    {% endifnotequal %}
+{% else %}
+    <div style="float: left; width: 50%;">
+{% endif %}
+        <p><strong>{{event.title}}</strong> </p>
+    </div>
+{% if event.content_object %}
+    {% ifnotequal event.content_type.name "project" %}
+    <div style="float: left; width: 20%;">
+        <p><strong>{% trans "Project" %}:</strong> {{event.content_object.project}}</p>
+    </div>
+    {% endifnotequal %}
+{% endif %}
+    <div style="float: left; width: 5%;">
+        {% if event.content_object %}
+            <p><a href="{{event.content_object.get_absolute_url}}">{% trans "View" %}</a></p>
+        {% endif %}
+    </div>	
+</div>

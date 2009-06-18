@@ -66,7 +66,11 @@ class Project(models.Model):
     
     
     def __unicode__(self):
-        return 'Project: id-' + str(self.id) + ' name-' +self.name
+        return self.name
+    
+    @models.permalink
+    def get_absolute_url(self):
+        return ('rancho.project.views.overview', [], {'p_id': self.id})
     
 class UserInProject(models.Model):    
     STATE_CHOICES = (('a','Active'), ('r', 'Removed'), ('m', 'Readmited'),)

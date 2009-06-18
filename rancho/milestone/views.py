@@ -35,6 +35,7 @@ from rancho.lib import utils
 from rancho.notification import models as notification
 
 from datetime import date
+from rancho.lib.utils import events_log
 
 
 # Basic operations for this app
@@ -92,7 +93,8 @@ def create(request, p_id):
                     notification.send([mstone.responsible], "milestone_new", {'link_url': link_url, 'milestone': mstone })
                 else: #notify all users with perm
                     notification.send(users_to_notify, "milestone_new", {'link_url': link_url, 'milestone': mstone })
-                
+             
+            events_log(user, 'A', mstone.title, mstone)   
             request.user.message_set.create(message=_('Milestone "%s" successfully created.') % mstone.title)
             return HttpResponseRedirect(urlresolvers.reverse('rancho.milestone.views.list', args = [p_id]))
 
@@ -144,7 +146,7 @@ def edit(request, p_id, milestone_id):
                 else: #notify entire project
                     notification.send(users_to_notify, "milestone_updated", {'link_url': link_url, 'milestone': milestone, 'old_milestone_title': old_milestone_title })
 
-
+            events_log(user, 'U', milestone.title, milestone)
             request.user.message_set.create(message=_('Milestone successfully edited.'))
     else:
         responsible_index = 0
@@ -175,6 +177,7 @@ def complete(request, p_id, milestone_id):
         milestone.responsible = user
         # PERMISSIONS
         milestone.save()
+        events_log(user, 'COMP', milestone.title, milestone)
     return HttpResponseRedirect(urlresolvers.reverse('rancho.milestone.views.list', args = [p_id]))
           
 @login_required        
@@ -188,6 +191,7 @@ def incomplete(request, p_id, milestone_id):
         milestone.completion_date = None
         # PERMISSIONS
         milestone.save()
+        events_log(user, 'ICOMP', milestone.title, milestone)
     return HttpResponseRedirect(urlresolvers.reverse('rancho.milestone.views.list', args = [p_id]))
 
 @login_required    
@@ -200,5 +204,6 @@ def delete(request, p_id, milestone_id):
         return HttpResponseForbidden(_('Forbidden Access'))
     
     request.user.message_set.create(message=_('Milestone "%s" successfully deleted.') % milestone.title)
+    events_log(user, 'D', milestone.title, milestone)
     milestone.delete()
     return HttpResponseRedirect(urlresolvers.reverse('rancho.milestone.views.list', args = [p_id]))
