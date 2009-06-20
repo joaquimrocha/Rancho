@@ -576,3 +576,7 @@ a.white:hover {
 * div.separate_text p {
     margin-bottom: 15px;
 }
+
+div.scrollable {
+    overflow: auto;
+}

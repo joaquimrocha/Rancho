@@ -34,6 +34,7 @@ MENUS = {'root': (#caption, url, id, perm
         'inproject': (
                   (_('Overview'), '/project/%s/overview', 'overview', None),
                   (_('Messages'), '/project/%s/message', 'message', PERMISSIONS_MESSAGE_VIEW),
+                  (_('Chat'), '/project/%s/chat', 'chat', None),
                   (_('ToDos'), '/project/%s/todos', 'todos', PERMISSIONS_TODO_VIEW),
                   (_('Milestones'), '/project/%s/milestones', 'milestones', PERMISSIONS_MILESTONE_VIEW),
                   (_('Wikiboards'), '/project/%s/wikiboards', 'wikiboards', PERMISSIONS_WIKIBOARD_VIEW),

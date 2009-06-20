@@ -18,21 +18,11 @@
 
 from django.conf.urls.defaults import *
 
-urlpatterns = patterns('rancho.project.views',
-    (r'^new/$', 'new_project'),
-    (r'^(?P<p_id>\d+)/$', 'overview'),
-    (r'^(?P<p_id>\d+)/overview/$', 'overview'),
-    (r'^(?P<p_id>\d+)/settings/$', 'settings'),
-    (r'^(?P<p_id>\d+)/delete_logo/$', 'delete_logo'),    
-    (r'^(?P<p_id>\d+)/message/', include('message.urls')),
-    (r'^(?P<p_id>\d+)/chat/', include('chat.urls')),
-    (r'^(?P<p_id>\d+)/wikiboards/', include('wikiboard.urls')),
-    (r'^(?P<p_id>\d+)/todos/', include('todo.urls')),
-    (r'^(?P<p_id>\d+)/people/(?P<user_id>\d+)/permissions$', 'edit_permissions'),
-    (r'^(?P<p_id>\d+)/people/$', 'show_people_project'),
-    (r'^(?P<p_id>\d+)/people/add/', 'add_people_to_project'),
-    (r'^(?P<p_id>\d+)/people/remove/', 'remove_user'),
-    (r'^(?P<p_id>\d+)/milestones/', include('milestone.urls')),
-    (r'^(?P<p_id>\d+)/files/', include('file.urls')),
-    (r'^(?P<p_id>\d+)/delete/', 'delete_project'),
+urlpatterns = patterns('rancho.chat.views',
+    (r'^$','general_chat'),
+    (r'^logs/$','logs'),
+    (r'^create/$','send_message'),
+    (r'^get_messages/$','get_and_display_messages'),
+    (r'^disconnect/$','disconnect'),
+    (r'^get_online_users/$','display_online_users'),
 )

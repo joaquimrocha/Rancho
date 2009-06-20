@@ -1,0 +1,105 @@
+{% extends "project/basicproject.html" %}
+
+{% load i18n pagination_tags usernamegen genmenu permissions_tags form_tags displayuserphoto displaychatline %}
+
+{% block pagetitle %} {{ project.name }} | {% trans "Overview" %} {% endblock %}
+
+
+{% block jquerypluginloader %}
+<script type="text/javascript" src="/media/js/jquery/simplemodal.js"></script>
+<script type="text/javascript" src="/media/js/jquery/taconite.js"></script>
+{% endblock %}
+		
+{% block jquerycode %}
+    function send_message() {
+       var message = $("#message").val();
+       $.post("/project/{{project.id}}/chat/create/", {message: message});
+       $("#message").val("");
+	   return false;
+    }
+    
+    function get_messages() {
+       var chat_div = "#chat";
+       $.get("/project/{{project.id}}/chat/get_messages/");
+       $(chat_div).attr({ scrollTop: $(chat_div).attr("scrollHeight") });
+       return false;
+    }
+    
+    var getMessagesRefreshId = setInterval(function()
+    {
+        get_messages();
+    }, 1000);
+    
+    var getUsersRefreshId = setInterval(function()
+    {
+        $.get("/project/{{project.id}}/chat/get_online_users/");
+    }, 15000);
+    
+    $(document).ready(
+        function () {
+		    $('#message').bind("keypress", function (event){
+		        if (event.keyCode == 13 && !event.shiftKey)
+		        {
+		          send_message();
+		          return false;
+		        }
+		        return true;
+		    });
+		    
+		    $('#message').focus();
+		    
+		    $(window).unload(
+		        function () { 
+                    $.get("/project/{{project.id}}/chat/disconnect/");
+                } 
+            );
+            
+            $.get("/project/{{project.id}}/chat/get_online_users/");
+		}
+    );
+{% endblock %}
+
+{% block menu %}
+	{% genmenu "inproject" "chat" project.id %}
+{% endblock %}
+
+{% block area_name %}
+    <p>{% trans "Chat" %}</p>
+{% endblock %}
+
+{% block mini_menu %}
+    <br/>
+    <a href="{% url rancho.chat.views.logs project.id %}">{% trans "View Chat Logs" %}</a>
+{% endblock %}
+
+{% block right_content %}
+    <div class="widget"><p>{% trans "Users Online" %}</p></div>
+    <div id="users_online">
+    </div>
+{% endblock %}
+
+{% block main_content %}
+    <div class="blue_section">
+	    <div id="chat" style="height: 200px; background: #fff;" class="scrollable fillx">
+	       {% if recent_log %}
+		       {% for post in recent_log %}
+		           {% displaychatline post "True" %}
+		       {% endfor %}
+	       <p style="text-align: center;"> -- {% trans "Recent conversation" %} --</p>
+	       <br/><br/>
+	       {% endif %}
+	    </div>
+	</div>
+	
+	<form action="" method="post">
+      {% beginrequestbox "required" "" "" %}
+        {% printfield  chat_form.message "none" %}
+      {% endrequestbox %}
+    </form>
+    <br/>
+    <div class="add_button">
+        <a href="#" onClick="send_message(); $('#message').focus(); return false;">{% trans "Send" %}</a>
+    </div>
+    <div class="add_button_right"></div>
+    <br/><br/>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "project/basicproject.html" %}
+
+{% load i18n pagination_tags usernamegen genmenu permissions_tags form_tags displayuserphoto displaychatline sidewidget %}
+
+{% block pagetitle %} {{ project.name }} | {% trans "Overview" %} {% endblock %}
+
+
+{% block jquerypluginloader %}
+<script src="/media/js/jquery/jquery.ui.js" type="text/javascript" charset="utf-8"></script>
+<script src="/media/js/jquery/ui/i18n/ui.datepicker-{{LANGUAGE_CODE}}.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="/media/js/jquery/ui.theme.css" type="text/css" media="screen" title="core css file" charset="utf-8" />
+<link rel="stylesheet" href="/media/js/jquery/ui.datepicker.css" type="text/css" media="screen" title="core css file" charset="utf-8" />  
+{% endblock %}
+		
+{% block jquerycode %}
+
+     function attach_datepicker(id) {
+        $(id).datepicker({
+        nextText: '',
+        prevText: '',
+        showOn: 'both', 
+        buttonImage: '/media/basepage/images/icons/date_add.png', 
+        buttonImageOnly: true ,
+        buttonText: 'Calendar',
+        yearRange: '2008:2020',
+        dateFormat: 'yy-mm-dd'});
+     }
+    
+     $(document).ready(function(){        
+        attach_datepicker('#id_from_date');
+        attach_datepicker('#id_to_date');
+     });
+{% endblock %}
+
+{% block menu %}
+	{% genmenu "inproject" "chat" project.id %}
+{% endblock %}
+
+{% block area_name %}
+    <p>{% trans "View Chat Logs" %}</p>
+{% endblock %}
+
+{% block right_content %}
+    {% sidewidget _("Information") "information"%}
+    <p>{% trans "Here you can see the chat logs and get them from a date interval." %}</p>
+    <p>{% trans "By setting no dates, all logs will be displayed." %}</p>
+{% endblock %}
+
+{% block main_content %}
+
+    <form action="{% url rancho.chat.views.logs project.id %}" method="get">
+      {% beginrequestbox "required" _("Choose dates") _("Choose the dates between which you'd like to view the logs or leave them blank to view all logs.") %}
+        {% printfield  form.from_date "left" %}
+        {% printfield  form.to_date "left" %}
+      {% endrequestbox %}
+      <input type="submit" value="{% trans "View Logs" %}"/>
+    </form>
+    <br/>
+    
+    {% if logs %}
+    <h4>{% trans "Chat Logs:" %}</h4>
+    <div style="margin: 5px 0 0 25px;">
+	    {% autopaginate logs 20 %}
+	    {% paginate %}
+	           {% for log in logs %}
+	               {% displaychatline log "True" %}
+	           {% endfor %}
+	       <br/><br/>
+	    {% paginate %}
+    </div>
+    {% else %}
+        <h4>{% trans "No logs found!" %}</h4>
+    {% endif %}
+{% endblock %}

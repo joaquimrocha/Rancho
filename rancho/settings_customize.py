@@ -134,6 +134,7 @@ INSTALLED_APPS = (
     'rancho.wikiboard',    
     'rancho.todo',
     'rancho.cal',    
+    'rancho.chat',
     
 )
 
