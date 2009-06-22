@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% load i18n usernamegen modalconfirm form_tags displaynotification genmenu sidewidget %}
+ 
+{% block pagetitle %} {{ company.short_name }} | {% trans "Import / Export" %} {% endblock %}
+
+{% block jquerypluginloader %}
+<script type="text/javascript" src="/media/js/jquery/simplemodal.js"></script>
+<script type="text/javascript" src="/media/js/jquery/taconite.js"></script>
+{% endblock %}
+    
+{% block jquerycode %}
+function delete_logo(){            
+    $.get("{% url company.views.delete_logo %}");
+	$("#company_logo").fadeOut();            
+    return false;
+}    
+{% endblock %}
+
+{% block menu %}
+    {% genmenu "root" "" %}
+{% endblock %}
+
+{% block mini_menu %}
+    <br/>
+    <p><a href="{% url import_account %}">{% trans "Import" %}</a></p>
+{% endblock %}
+    
+{% block area_name %}
+    <p>{% trans "Account Exportation" %}</p>
+{% endblock %}
+    
+{% block right_content %}
+
+	{% sidewidget _("Information") "information"%}
+	<p>{% blocktrans %}Here you can export all the account data to XML format.{% endblocktrans %}</p>
+	<p>{% blocktrans %}The exportation to XML allows you to extract the data in a standard format that can be processed later to retrieve its information.{% endblocktrans %}</p>
+{% endblock %}
+
+{% block main_content %}
+
+	<p>{% blocktrans %}The exportation XML file will include all the data about users, companies and projects.{% endblocktrans %}</p>
+	
+    <form action="{% url export_account %}" method="post" enctype="multipart/form-data">
+    
+	{% displaynotification messages %}
+	
+	{% beginrequestbox "notrequired" _("Components in every project") _("Choose the optional components you want to include in the exportation file.")  %}
+          {% printfield  form.components "none" %}
+    {% endrequestbox %} 
+
+	{% printformfooter _("Export") _("Cancel") "company_settings_main" %}
+</form>
+{% endblock %}

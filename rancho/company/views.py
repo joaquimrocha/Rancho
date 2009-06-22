@@ -16,8 +16,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ########################################################################
 
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.core import urlresolvers
+from django.db import transaction
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render_to_response
 from django.template.context import RequestContext
-from django.shortcuts import render_to_response
 from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
@@ -31,7 +35,11 @@ from rancho.company.forms import EditCompanySettingsForm, CreateCompanyForm
 from rancho.company.models import Company, EventsHistory
 
 from rancho import settings
-
+from rancho.company.forms import EditCompanySettingsForm, CreateCompanyForm, \
+    EditCompanySettingsForm, CreateCompanyForm, ExportAccountForm, ImportAccountForm
+from rancho.company.models import Company, EventsHistory
+from rancho.lib import serializer, utils
+from rancho.project.models import Project
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
@@ -180,3 +188,55 @@ def show_logs(request):
     return render_to_response("company/show_logs.html",
                               {'events': ev}, 
                               context_instance = RequestContext(request))    
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def export_account(request):
+    
+    user = request.user
+    company = Company.objects.get(main_company=True)
+    
+    if request.method == 'POST':
+        form = ExportAccountForm(request.POST)
+        if form.is_valid():
+            return serializer.export_account(user.get_profile().company.short_name, form.cleaned_data['components'])
+    else:
+        form = ExportAccountForm()
+    
+    return render_to_response("company/export.html",
+                              {'form': form,
+                               'company': company}, 
+                                context_instance = RequestContext(request))
+
+@login_required
+@transaction.commit_manually
+@user_passes_test(lambda u: u.is_superuser)
+def import_account(request):
+    
+    user = request.user
+    company = Company.objects.get(main_company=True)
+    
+    if request.method == 'POST':
+        form = ImportAccountForm(request.POST, request.FILES)
+        if form.is_valid():
+            system = None
+            if form.cleaned_data['importation_type'] == 'B':
+                system = 'BASECAMP'
+            try:
+                serializer.import_account(form.cleaned_data['importation_file'], system)
+            except:
+                import traceback
+                transaction.rollback()
+                traceback.print_exc()
+                request.user.message_set.create(message = _('Error performing importation'))
+            else:
+                transaction.commit()
+                request.user.message_set.create(message = _('Importation successful'))
+                return HttpResponseRedirect(urlresolvers.reverse('rancho.user.views.dashboard'))
+    else:
+        form = ImportAccountForm()
+    
+    return render_to_response("company/import.html",
+                              {'form': form,
+                               'company': company}, 
+                              context_instance = RequestContext(request))

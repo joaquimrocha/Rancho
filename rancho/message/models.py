@@ -39,6 +39,12 @@ class MessageManager(models.Manager):
         
         return messages
 
+    def get_messages(self, project = None):
+        messages = Message.objects.all().extra(where = ['message_message.initial_message_id = message_message.id'])
+        if project:
+            messages = messages.filter(project = project)
+        return messages
+
 class Message(models.Model):    
     creator = models.ForeignKey(User, related_name='messagecreator')
     project = models.ForeignKey(Project)
@@ -65,3 +71,5 @@ class Message(models.Model):
     def get_absolute_url(self):
         return ('rancho.message.views.read_add_comment', [], {'p_id': self.project.id, 'm_id':self.id})
         
+    def get_comments(self):
+        return Message.objects.filter(initial_message = self).exclude(id = self.id)

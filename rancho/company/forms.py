@@ -18,7 +18,7 @@
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-
+from django.forms.widgets import CheckboxSelectMultiple, Select
 from rancho import settings
 
 
@@ -54,3 +54,26 @@ class EditCompanySettingsForm(CreateCompanyForm):
                 raise forms.ValidationError(_('The image file you tried to upload is too large. Please upload an image of less than 1 Mb.'))
         return self.cleaned_data.get('logo')
         
+class ExportAccountForm(forms.Form):
+    
+    EXPORTATION_CHOICES = (('M', _('Messages')),
+                           ('T', _('ToDos')),
+                           ('S', _('Milestones')),
+                           ('W', _('Wikiboards')),
+                           ('F', _('Files')),
+                           )
+    
+    components = forms.MultipleChoiceField(required = False, widget = CheckboxSelectMultiple(), 
+                      choices = EXPORTATION_CHOICES, label = _('Components'), initial = ('M', 'T', 'S', 'W', 'F'))
+
+class ImportAccountForm(forms.Form):
+    
+    IMPORTATION_TYPE_CHOICES = (('R', _('Rancho')),
+                                ('B', _('Basecamp')),
+                                )
+    importation_type = forms.ChoiceField(required = False, widget = Select(),
+                                         choices = IMPORTATION_TYPE_CHOICES, label = _('System'))
+    
+    importation_file = forms.FileField(required = True, widget=forms.FileInput(attrs={'class':'fillx'}),
+                                       error_messages={'required': 'Please insert a file'}, label = _('File'))
+    

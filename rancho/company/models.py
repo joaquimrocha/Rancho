@@ -25,8 +25,8 @@ from rancho import settings
 
 
 class Company(models.Model):       
-    short_name = models.CharField(max_length=20)
-    long_name = models.CharField(max_length=100)
+    short_name = models.CharField(max_length=100)
+    long_name = models.CharField(max_length=200)
     
     description = models.CharField(max_length=500, null=True)
     

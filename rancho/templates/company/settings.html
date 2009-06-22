@@ -20,6 +20,11 @@ function delete_logo(){
 {% block menu %}
     {% genmenu "root" "" %}
 {% endblock %}
+
+{% block mini_menu %}
+    <br/>
+    <p><a href="{% url import_account%}">{% trans "Import" %}</a> | <a href="{% url export_account%}">{% trans "Export" %}</a></p>
+{% endblock %}
     
 {% block area_name %}
     <p>{% trans "Company Settings" %}</p>

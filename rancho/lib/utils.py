@@ -40,6 +40,7 @@ import mimetypes
 import os
 import sys
 import string
+from zipfile import ZipFile
 
 def save_image(dbclass, name, image, image_size, dbclass_image_attribute = 'picture', format = 'JPEG'):
     
@@ -169,7 +170,8 @@ def get_overview(user, project):
     return sorted_events
 
 
-def send_file(filepath, filename):    
+def send_file(filepath, filename = None):
+    filename = filename or os.path.basename(filepath) 
     class FileIterWrapper(object):
         def __init__(self, flo, chunk_size = 1024**2):
             self.flo = flo
@@ -219,3 +221,39 @@ def events_log(user, event, title, object):
     eh.type = event
     eh.title = title
     eh.save()
+
+def create_archive(path, name):
+    zip_file = ZipFile(name, 'w')
+    old_path = os.path.abspath(os.curdir)
+    base_path = os.path.basename(path)
+    os.chdir(os.path.dirname(path))
+    def addFile(zip, directory, files):
+        for file in files:
+            file_path = os.path.join(directory, file)
+            if not os.path.isdir(file_path):
+                zip.write(str(file_path))
+    os.path.walk(base_path, addFile, zip_file)
+    zip_file.close()
+    os.chdir(old_path)
+    return zip_file
+
+def extract_archive(file):
+        base_name = os.path.basename(file)
+        dir_name = os.path.dirname(file)
+        export_dir = os.path.join(dir_name, os.path.splitext(base_name)[0])
+        if not os.path.exists(export_dir):
+            os.mkdir(export_dir)
+        project_zip = ZipFile(file)
+        for name in project_zip.namelist():
+            if name.endswith(os.path.sep):
+                os.mkdir(os.path.join(export_dir, name))
+            else:
+                dir_name = os.path.dirname(name)
+                dir_name_path = os.path.join(export_dir, dir_name)
+                if dir_name:
+                    if not os.path.exists(dir_name_path):
+                        os.makedirs(dir_name_path)
+                outfile = open(os.path.join(export_dir, name), 'wb')
+                outfile.write(project_zip.read(name))
+                outfile.close()
+        return export_dir

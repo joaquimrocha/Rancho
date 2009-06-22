@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% load i18n usernamegen modalconfirm form_tags displaynotification genmenu sidewidget %}
+ 
+{% block pagetitle %} {{ company.short_name }} | {% trans "Import / Export" %} {% endblock %}
+
+{% block jquerypluginloader %}
+<script type="text/javascript" src="/media/js/jquery/simplemodal.js"></script>
+<script type="text/javascript" src="/media/js/jquery/taconite.js"></script>
+{% endblock %}
+    
+{% block jquerycode %}
+function delete_logo(){            
+    $.get("{% url company.views.delete_logo %}");
+	$("#company_logo").fadeOut();            
+    return false;
+}    
+{% endblock %}
+
+{% block menu %}
+    {% genmenu "root" "" %}
+{% endblock %}
+
+{% block mini_menu %}
+    <br/>
+    <p><a href="{% url export_account %}">{% trans "Export" %}</a></p>
+{% endblock %}
+    
+{% block area_name %}
+    <p>{% trans "Account Importation" %}</p>
+{% endblock %}
+    
+{% block right_content %}
+
+	{% sidewidget _("Information") "information"%}
+	<p>{% blocktrans %}Here you can import the data. The file to import should be zipped and its structure should be according to the system type you choose.{% endblocktrans %}</p>
+	<p><img src="/media/basepage/images/important.png" class="textcenter"/>
+        {% blocktrans %}<strong>Please note:</strong><br/>The importation feature is still <strong>not stable</strong> and might fail. However, when on failure,
+ all your data is supposed to be restored.{% endblocktrans %}
+    </p>
+{% endblock %}
+
+{% block main_content %}
+
+	<form action="{% url import_account %}" method="post" enctype="multipart/form-data">
+    
+	{% displaynotification messages "red" %}
+	
+	{% beginrequestbox "required" _("Importation") _("Choose which type of system you want to import and upload the exportation file.")  %}
+		  {% printfield  form.importation_type "left" %}
+		  
+          {% printfield  form.importation_file "left" %}
+    {% endrequestbox %} 
+
+	{% printformfooter _("Import") _("Cancel") "company_settings_main" %}
+</form>
+{% endblock %}
