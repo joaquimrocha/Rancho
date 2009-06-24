@@ -46,9 +46,9 @@ Rancho's latest release can be downloaded from:
 
     http://www.getrancho.com/download
 
-The SVN version of Rancho can be checked out using the following command:
+The GIT version of Rancho can be checked out using the following command:
 
-    $ svn co http://svn.getrancho.com/trunk ranchoproject
+    $ git clone http://git.getrancho.com/rancho.git
 
 Configuration
 ==============
