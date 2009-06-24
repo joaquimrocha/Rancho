@@ -1,0 +1,9 @@
+settings.py
+*.pyc
+pagination/
+tagging/
+mailer/
+tinymce/
+timezones/
+notification/
+
