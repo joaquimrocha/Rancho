@@ -81,7 +81,7 @@ class NewUserForm(UserForm):
      
     def clean_email(self):        
         try:
-            user = User.objects.get(email=self.data['email'])
+            user = User.objects.get(email__iexact=self.data['email'])
             raise forms.ValidationError(_('There is already a user with the email you inserted, please choose another email.'))
         except User.DoesNotExist:
             return self.cleaned_data.get('email')
