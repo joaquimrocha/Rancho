@@ -82,7 +82,6 @@ def get_and_display_messages(request, p_id):
         
         project.check_user_in_project_or_404(user)
         
-        date = datetime.now()
         try:
             chat_data = ChatData.objects.get(user = user, project = project)
         except ChatData.DoesNotExist:
@@ -93,7 +92,10 @@ def get_and_display_messages(request, p_id):
             posts = Post.objects.filter(project = project, id__gt = chat_data.last_request).order_by('date')
         else:
             posts = Post.objects.filter(project = project).order_by('-date')[-SUMMARY_NUMBER:]
-        chat_data.last_request = posts[len(posts)-1].id
+         
+        if posts:           
+            chat_data.last_request = posts[len(posts)-1].id
+                    
         chat_data.is_connected = True 
         chat_data.save()
         return posts
