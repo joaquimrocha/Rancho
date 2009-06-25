@@ -8,7 +8,7 @@ Rancho: Open Source Group/Project Management Tool
 
 :Author: The Rancho Team
 :Contact: info@getrancho.com
-:Date: 2008-12-24
+:Date: 2009-06-25
 :Web site: http://www.getrancho.com
 :License: Rancho is published under the GNU AGPL v3 license.
 
@@ -55,6 +55,13 @@ Configuration
 ==============
 
 Once the system requirements are met and the code is downloaded, the first thing to do is to edit the settings_customize.py file found on the project's root folder. This file already contains several strings that give hints on how to configure it.
+
+External Modules
+=================
+
+Rancho uses some external Django appls. There is a script to easily get those apps called *get_externals.sh*. To run the script you can do as follows:
+
+    $ ./get_externals.sh
 
 Installation on Debian
 =======================
