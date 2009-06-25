@@ -61,6 +61,13 @@ class UserForm(forms.Form):
     webpage = forms.CharField(required=False, widget=forms.TextInput(attrs={'class':'large'}),label=_("Webpage"))
     
     personal_note = forms.CharField(required=False, widget=forms.Textarea(attrs={'class':'small_wide'}),label=_("Personal Note"))
+    
+    def clean_email(self):        
+        if User.objects.filter(email__iexact=self.data['email']):
+            raise forms.ValidationError(_('There is already a user with the email you inserted, please choose another email.'))
+        else:
+            return self.cleaned_data.get('email')
+    
 
     
 class NewUserForm(UserForm):
@@ -77,15 +84,7 @@ class NewUserForm(UserForm):
             user = User.objects.get(username=self.data['username'])
             raise forms.ValidationError(_('There is already a user with the username you inserted, please choose another username.'))
         except User.DoesNotExist:
-            return self.cleaned_data.get('username')
-     
-    def clean_email(self):        
-        try:
-            user = User.objects.get(email__iexact=self.data['email'])
-            raise forms.ValidationError(_('There is already a user with the email you inserted, please choose another email.'))
-        except User.DoesNotExist:
-            return self.cleaned_data.get('email')
-    
+            return self.cleaned_data.get('username')        
     
     def save(self):
         user = User()  
@@ -156,17 +155,7 @@ class EditUserForm(UserForm):
             if password1 != password2:
                 raise forms.ValidationError(_("The two password fields didn't match."))
         return password2
-    
-    def clean_email(self):        
-        try:
-            user = User.objects.get(email=self.data['email'])
-            if user != self.edit_user:
-                raise forms.ValidationError(_('There is already a user with the email you inserted, please choose another email.'))
-        except User.DoesNotExist:
-            pass
         
-        return self.cleaned_data.get('email')
-    
     def save(self, edit_user, edit_user_profile):
                         
         edit_user.email = self.cleaned_data['email']
