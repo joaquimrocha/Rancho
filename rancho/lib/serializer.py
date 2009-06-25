@@ -44,9 +44,9 @@ import os
 import shutil
 import tempfile
 import zipfile
-try: #support python<=2.4
+try: #support python>=2.5
     from xml.etree import ElementTree as ET
-except: #python 2.5
+except: #python <=2.4
     from elementtree import ElementTree as ET
 
 # Important element names to make it easier 

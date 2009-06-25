@@ -38,6 +38,7 @@ Here are the system requirements to run Rancho.
   * ReportLab>=2.2 (http://www.reportlab.org/downloads.html);
   * html5lib - Library for working with HTML5 documents (http://code.google.com/p/html5lib/);
   * XHTML2PDF - HTML to PDF converter (http://www.xhtml2pdf.com/)
+  * ElementTree - A container object, designed to store hierarchical data structures. THIS IS ONLINE NEEDED IN PYTHON<=2.4 (http://effbot.org/zone/element-index.htm)
 
 Getting the Code
 =================
