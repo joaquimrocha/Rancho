@@ -238,22 +238,22 @@ def create_archive(path, name):
     return zip_file
 
 def extract_archive(file):
-        base_name = os.path.basename(file)
-        dir_name = os.path.dirname(file)
-        export_dir = os.path.join(dir_name, os.path.splitext(base_name)[0])
-        if not os.path.exists(export_dir):
-            os.mkdir(export_dir)
-        project_zip = ZipFile(file)
-        for name in project_zip.namelist():
-            if name.endswith(os.path.sep):
-                os.mkdir(os.path.join(export_dir, name))
-            else:
-                dir_name = os.path.dirname(name)
-                dir_name_path = os.path.join(export_dir, dir_name)
-                if dir_name:
-                    if not os.path.exists(dir_name_path):
-                        os.makedirs(dir_name_path)
-                outfile = open(os.path.join(export_dir, name), 'wb')
-                outfile.write(project_zip.read(name))
-                outfile.close()
-        return export_dir
+    base_name = os.path.basename(file)
+    dir_name = os.path.dirname(file)
+    export_dir = os.path.join(dir_name, os.path.splitext(base_name)[0])
+    if not os.path.exists(export_dir):
+        os.mkdir(export_dir)
+    project_zip = ZipFile(file)
+    for name in project_zip.namelist():
+        if name.endswith(os.path.sep):
+            os.mkdir(os.path.join(export_dir, name))
+        else:
+            dir_name = os.path.dirname(name)
+            dir_name_path = os.path.join(export_dir, dir_name)
+            if dir_name:
+                if not os.path.exists(dir_name_path):
+                    os.makedirs(dir_name_path)
+            outfile = open(os.path.join(export_dir, name), 'wb')
+            outfile.write(project_zip.read(name))
+            outfile.close()
+    return export_dir
