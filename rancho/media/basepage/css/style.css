@@ -61,6 +61,13 @@ div#change_place_comand #company_settings{
 	padding: 0 5px 0 20px;
 }
 
+div#change_place_comand #system_logs{
+        float: left;
+        background: url('/media/icons/16/txt.png') no-repeat;
+        height: 20px;
+        padding: 0 5px 0 20px;
+}
+
 div#change_place_comand #change_project{
 	float: left;
 	background: url('/media/basepage/images/change.png') no-repeat;
