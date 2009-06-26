@@ -47,7 +47,7 @@ Rancho's latest release can be downloaded from:
 
     http://www.getrancho.com/download
 
-The GIT version of Rancho can be checked out using the following command:
+The GIT version of Rancho can be checked out using the following command::
 
     $ git clone http://git.getrancho.com/rancho.git
 
@@ -59,7 +59,7 @@ Once the system requirements are met and the code is downloaded, the first thing
 External Modules
 =================
 
-Rancho uses some external Django appls. There is a script to easily get those apps called *get_externals.sh*. To run the script you can do as follows:
+Rancho uses some external Django appls. There is a script to easily get those apps called *get_externals.sh*. To run the script you can do as follows::
 
     $ ./get_externals.sh
 
@@ -68,12 +68,12 @@ Installation on Debian
 
 This section covers the installation of Django on a Debian system (or Debian based like Ubuntu). The database used for this example is PostgreSQL which is assumed to be already installed locally as well as Rancho. For this example, the database user is assumed be 'jsmith' with the password 'qwerty'.
 
-Run the following command as superuser to install the other requirements:
+Run the following command as superuser to install the other requirements::
 
     # apt-get install python-psycopg python-tz python-imaging python-reportlab python-html5lib
     # easy_install pisa
 
-Once the packages finish being installed, create a database to be used by Rancho:
+Once the packages finish being installed, create a database to be used by Rancho::
 
     $ createdb ranchodb
 
@@ -128,14 +128,14 @@ database that must be solved in order, for example, to preserve data.
 **Important**: It is advisable to back up all your data before upgrading Rancho.
 
 The first thing to do after having upgraded Rancho is to synchronize the database 
-using the following command:
+using the following command::
 
 	$ python manage.py syncdb
 
 If there are changes to the database, a message will be returned warning that an 
 evolution is needed.
 
-To perform the evolution, run the command:
+To perform the evolution, run the command::
 
 	$ python manage.py evolve --execute
 
@@ -152,7 +152,7 @@ HOW_SEND_FILE='apache-modsendfile'
 
 You should also define a value for SECRET_KEY since this is used to provide a seed in secret-key hashing algorithms. Set this to a random string -- the longer, the better.
 
-Finally you should setup the cron:
+Finally you should setup the cron::
 
     # crontab -e
 
