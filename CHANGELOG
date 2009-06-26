@@ -8,7 +8,7 @@ Version 9.06 2009-06-25
     * Added exportation and importation of Rancho Exportation Files
     * Improved PDF exportation of wikiboards
     * Fixed the displaying of messages with newline characters
-    * Replaced the date picker buy an improved one
+    * Replaced the date picker by an improved one
     * Base page layout is now fluid, adapting itself to the browser's width
     * Improved password reset
     * New "show logs" feature allows admins to see the system's activity
