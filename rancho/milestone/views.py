@@ -16,27 +16,23 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ########################################################################
 
-from django.contrib.sites.models import Site
-from django.shortcuts import render_to_response, get_object_or_404
-from django.http import HttpResponseRedirect
-from rancho.milestone.forms import NewMilestoneForm
-from django.utils.translation import ugettext as _
-from django.contrib.auth.decorators import login_required
-from django.template.context import RequestContext
-from django.core import urlresolvers
-from django.contrib.auth.models import User
-from django.http import HttpResponseForbidden
-
-from rancho.project.models import Project
-from rancho.milestone.models import Milestone
-from rancho.granular_permissions.permissions import PERMISSIONS_MILESTONE_VIEW, PERMISSIONS_MILESTONE_CREATE, PERMISSIONS_MILESTONE_EDITDELETE
-from rancho.granular_permissions.permissions import checkperm
-from rancho.lib import utils
-from rancho.notification import models as notification
-
 from datetime import date
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib.sites.models import Site
+from django.core import urlresolvers
+from django.http import HttpResponseForbidden, HttpResponseRedirect
+from django.shortcuts import render_to_response, get_object_or_404
+from django.template.context import RequestContext
+from django.utils.translation import ugettext as _
+from rancho.granular_permissions.permissions import PERMISSIONS_MILESTONE_VIEW, \
+    PERMISSIONS_MILESTONE_CREATE, PERMISSIONS_MILESTONE_EDITDELETE, checkperm
+from rancho.lib import utils
 from rancho.lib.utils import events_log
-
+from rancho.milestone.forms import NewMilestoneForm
+from rancho.milestone.models import Milestone
+from rancho.notification import models as notification
+from rancho.project.models import Project
 
 # Basic operations for this app
 ####################################################################################

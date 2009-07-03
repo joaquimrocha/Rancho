@@ -17,8 +17,8 @@
 ########################################################################
 
 from django import forms
-from django.utils.translation import ugettext_lazy as _
 from django.forms.widgets import CheckboxSelectMultiple, Select
+from django.utils.translation import ugettext_lazy as _
 from rancho import settings
 
 

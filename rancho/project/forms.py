@@ -17,17 +17,24 @@
 ########################################################################
 
 from django import forms
-from django.utils.translation import ugettext_lazy as _
-from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
-
-from rancho.lib.custom_widgets import ShowAndSelectMultipleProject, PermissionsField, MyRadioFieldRenderer
-from rancho.lib import utils
-from rancho.project.models import Project, UserInProject
-from rancho.company.models import Company
-from rancho.granular_permissions.permissions import PERMISSIONS_TODO_EDITDELETE, PERMISSIONS_TODO_CREATE, PERMISSIONS_TODO_VIEW, PERMISSIONS_MILESTONE_EDITDELETE, PERMISSIONS_MILESTONE_CREATE, PERMISSIONS_MILESTONE_VIEW, PERMISSIONS_WIKIBOARD_EDITDELETE, PERMISSIONS_WIKIBOARD_CREATE, PERMISSIONS_WIKIBOARD_VIEW, PERMISSIONS_FILE_EDITDELETE, PERMISSIONS_FILE_CREATE, PERMISSIONS_FILE_VIEW, PERMISSIONS_MESSAGE_EDITDELETE, PERMISSIONS_MESSAGE_CREATE, PERMISSIONS_MESSAGE_VIEW
- 
+from django.shortcuts import get_object_or_404
+from django.utils.translation import ugettext_lazy as _
 from rancho import settings
+from rancho.company.models import Company
+from rancho.granular_permissions.permissions import PERMISSIONS_TODO_EDITDELETE, \
+    PERMISSIONS_TODO_CREATE, PERMISSIONS_TODO_VIEW, PERMISSIONS_MILESTONE_EDITDELETE, \
+    PERMISSIONS_MILESTONE_CREATE, PERMISSIONS_MILESTONE_VIEW, \
+    PERMISSIONS_WIKIBOARD_EDITDELETE, PERMISSIONS_WIKIBOARD_CREATE, \
+    PERMISSIONS_WIKIBOARD_VIEW, PERMISSIONS_FILE_EDITDELETE, PERMISSIONS_FILE_CREATE, \
+    PERMISSIONS_FILE_VIEW, PERMISSIONS_MESSAGE_EDITDELETE, \
+    PERMISSIONS_MESSAGE_CREATE, PERMISSIONS_MESSAGE_VIEW
+from rancho.lib import utils
+from rancho.lib.custom_widgets import ShowAndSelectMultipleProject, \
+    PermissionsField, MyRadioFieldRenderer
+from rancho.project.models import Project, UserInProject
+
+ 
 
 class NewProjectForm(forms.Form):
     project_name = forms.CharField(label=_('Name'), widget=forms.TextInput(attrs={'size':40, 'class': 'big_entry'}))

@@ -16,25 +16,23 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ########################################################################
 
-from django.shortcuts import render_to_response
-from django.template.context import RequestContext
-from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404
-from django.core import urlresolvers
-from django.utils.translation import ugettext as _
-from django.http import HttpResponseForbidden
 from django.contrib.sites.models import Site
-
+from django.core import urlresolvers
+from django.http import HttpResponseForbidden, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render_to_response
+from django.template.context import RequestContext
+from django.utils.translation import ugettext as _
+from rancho.granular_permissions.permissions import PERMISSIONS_MESSAGE_CREATE, \
+    PERMISSIONS_MESSAGE_VIEW, PERMISSIONS_MESSAGE_EDITDELETE, checkperm
+from rancho.lib import utils
+from rancho.lib.utils import events_log
 from rancho.message.forms import MessageForm, CommentForm
 from rancho.message.models import Message
-from rancho.project.models import Project
-from rancho.granular_permissions.permissions import PERMISSIONS_MESSAGE_CREATE, PERMISSIONS_MESSAGE_VIEW, PERMISSIONS_MESSAGE_EDITDELETE
-from rancho.granular_permissions.permissions import checkperm
-from rancho.tagging.models import TaggedItem, Tag
-from rancho.lib import utils
 from rancho.notification import models as notification
-from rancho.lib.utils import events_log
+from rancho.project.models import Project
+from rancho.tagging.models import TaggedItem, Tag
+
 
 # Basic operations for this app
 ####################################################################################

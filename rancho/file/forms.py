@@ -18,11 +18,12 @@
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-
-from rancho.tagging.forms import TagField
-from rancho.lib.custom_widgets import AjaxTags, ShowAndSelectMultipleNotification
-from rancho.file.models import File, FileVersion
 from rancho.company.models import Company
+from rancho.file.models import File, FileVersion
+from rancho.lib.custom_widgets import AjaxTags, \
+    ShowAndSelectMultipleNotification
+from rancho.tagging.forms import TagField
+
 
 
 class FileVersionForm(forms.Form):

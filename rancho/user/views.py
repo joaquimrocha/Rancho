@@ -16,31 +16,28 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ########################################################################
 
-from django.shortcuts import render_to_response
-from django.http import HttpResponseRedirect
-from django.template.context import RequestContext
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404
-from django.template import loader
-from django.template.context import Context
-from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
-from django.utils.translation import ugettext as _
 from django.core import urlresolvers
-from django.contrib.auth.decorators import user_passes_test
-from django.http import Http404
+from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render_to_response
+from django.template import loader
+from django.template.context import Context, RequestContext
 from django.template.loader import render_to_string
-
-from rancho.user.forms import NewUserForm, EditUserForm 
-from rancho.project.models import Project
+from django.utils.translation import ugettext as _
+from rancho import settings
 from rancho.company.models import Company
+from rancho.granular_permissions.permissions import checkperm, \
+    PERMISSIONS_MILESTONE_VIEW, PERMISSIONS_TODO_VIEW, PERMISSIONS_MESSAGE_VIEW, \
+    PERMISSIONS_WIKIBOARD_VIEW, PERMISSIONS_FILE_VIEW
+from rancho.lib import utils
 from rancho.lib.templatetags.usernamegen import usernamegen
 from rancho.milestone.models import Milestone
-from rancho.granular_permissions.permissions import checkperm, PERMISSIONS_MILESTONE_VIEW, PERMISSIONS_TODO_VIEW, PERMISSIONS_MESSAGE_VIEW, PERMISSIONS_WIKIBOARD_VIEW, PERMISSIONS_FILE_VIEW
-from rancho.lib import utils
+from rancho.project.models import Project
+from rancho.user.forms import NewUserForm, EditUserForm
 
-from rancho import settings
+
 
 # favour django-mailer but fall back to django.core.mail
 try:

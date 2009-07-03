@@ -16,14 +16,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ########################################################################
 
-from django.db import models
-from django.contrib.auth.models import User
-
-from rancho.project.models import Project
-from rancho import djangosearch
-
 from datetime import date, datetime
-
+from django.contrib.auth.models import User
+from django.db import models
+from rancho.granular_permissions.permissions import PERMISSIONS_MESSAGE_VIEW
+from rancho.project.models import Project
 
 class MilestoneManager(models.Manager):    
     def get_late_milestones(self, project = None, order = '-due_date', user = None):
@@ -72,7 +69,7 @@ class Milestone(models.Model):
     send_notification_email = models.BooleanField()
     completion_date = models.DateTimeField(null=True)
     sent_notification = models.BooleanField(default=False)
-    index = djangosearch.ModelIndex(text=['title'])
+
     objects = MilestoneManager()
     
     @models.permalink

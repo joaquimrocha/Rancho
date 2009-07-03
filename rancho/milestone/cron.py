@@ -16,15 +16,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ########################################################################
 
-from django.core import urlresolvers
+from datetime import date, timedelta
 from django.contrib.sites.models import Site
- 
-from rancho.milestone.models import Milestone
-from rancho.notification import models as notification
+from django.core import urlresolvers
 from rancho.granular_permissions.permissions import PERMISSIONS_MILESTONE_VIEW
 from rancho.lib import utils
+from rancho.milestone.models import Milestone
+from rancho.notification import models as notification
+ 
 
-from datetime import date, timedelta
 
 def run_milestone_cron():
     """

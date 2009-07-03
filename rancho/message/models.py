@@ -16,14 +16,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ########################################################################
 
-from django.db import models
 from django.contrib.auth.models import User
-
-from rancho.project.models import Project
+from django.db import models
 from rancho.file.models import File
+from rancho.granular_permissions.permissions import PERMISSIONS_MESSAGE_VIEW
+from rancho.project.models import Project
 from rancho.tagging.fields import TagField
-from rancho import djangosearch
-
 import datetime
 
 class MessageManager(models.Manager):
@@ -59,9 +57,7 @@ class Message(models.Model):
     
     notify_to = models.ManyToManyField(User,null=True, related_name='message_notify_to')
     read_by = models.ManyToManyField(User,null=True, related_name='message_read_by')
-    
-    index = djangosearch.ModelIndex(text=['title', 'body'])
-    
+        
     objects = MessageManager()
     
     def __unicode__(self):
@@ -73,3 +69,6 @@ class Message(models.Model):
         
     def get_comments(self):
         return Message.objects.filter(initial_message = self).exclude(id = self.id)
+    
+
+

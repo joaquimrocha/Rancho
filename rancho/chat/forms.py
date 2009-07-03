@@ -18,10 +18,10 @@
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-
 from rancho.chat.models import Post
-
 import datetime
+
+
 
 class ChatForm(forms.Form):
 

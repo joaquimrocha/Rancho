@@ -17,17 +17,17 @@
 ########################################################################
 
 from django import forms
-from django.utils.translation import ugettext_lazy as _
-from django.forms.widgets import RadioSelect
 from django.contrib.auth.models import User
-
-from rancho.user.models import UserProfile
+from django.forms.widgets import RadioSelect
+from django.utils.translation import ugettext_lazy as _
+from rancho import settings
 from rancho.company.models import Company
 from rancho.lib import utils
-from rancho.timezones.forms import TimeZoneField
 from rancho.lib.custom_widgets import MyRadioFieldRenderer
+from rancho.timezones.forms import TimeZoneField
+from rancho.user.models import UserProfile
 
-from rancho import settings
+
 
 def company_choices( ):
     companies = [(c.id, c.short_name) for c in Company.objects.all()]

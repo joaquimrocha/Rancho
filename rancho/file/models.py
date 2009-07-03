@@ -16,15 +16,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ########################################################################
 
-from django.db import models
 from django.contrib.auth.models import User
-
+from django.db import models
+from rancho import settings
+from rancho.company.models import Company
+from rancho.granular_permissions.permissions import PERMISSIONS_FILE_VIEW
 from rancho.project.models import Project
 from rancho.tagging.fields import TagField
-from rancho.company.models import Company
-from rancho import djangosearch
-from rancho import settings
 import datetime
+
 
 class FileManager(models.Manager):
 
@@ -46,9 +46,7 @@ class File(models.Model):
     last_file_version = models.ForeignKey('FileVersion', related_name='lastversion', null=True)    
     notify_to = models.ManyToManyField(User, null=True, related_name='file_notify_to')
     tags = TagField()
-        
-    index = djangosearch.ModelIndex(text=['title'])
-    
+            
     objects = FileManager()
     
     @models.permalink
@@ -66,9 +64,7 @@ class FileVersion(models.Model):
     description = models.CharField(max_length=500, null=True)
     creator = models.ForeignKey(User, related_name='uploader')    
     file_type= models.CharField(max_length=50)
-        
-    index = djangosearch.ModelIndex(text=['description'])
-    
+            
     def get_version_number(self): 
         versions = FileVersion.objects.filter(file = self.file).order_by('creation_date').values_list('id', flat = True)
         return list(versions).index(self.id)
