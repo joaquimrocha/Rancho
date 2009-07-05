@@ -17,17 +17,17 @@
 ########################################################################
 
 from django import forms
-from django.utils.translation import ugettext_lazy as _
-from django.forms.widgets import RadioSelect
 from django.contrib.auth.models import User
-
-from rancho.user.models import UserProfile
+from django.forms.widgets import RadioSelect
+from django.utils.translation import ugettext_lazy as _
+from rancho import settings
 from rancho.company.models import Company
 from rancho.lib import utils
-from rancho.timezones.forms import TimeZoneField
 from rancho.lib.custom_widgets import MyRadioFieldRenderer
+from rancho.timezones.forms import TimeZoneField
+from rancho.user.models import UserProfile
 
-from rancho import settings
+
 
 def company_choices( ):
     companies = [(c.id, c.short_name) for c in Company.objects.all()]
@@ -62,13 +62,6 @@ class UserForm(forms.Form):
     
     personal_note = forms.CharField(required=False, widget=forms.Textarea(attrs={'class':'small_wide'}),label=_("Personal Note"))
     
-    def clean_email(self):        
-        if User.objects.filter(email__iexact=self.data['email']):
-            raise forms.ValidationError(_('There is already a user with the email you inserted, please choose another email.'))
-        else:
-            return self.cleaned_data.get('email')
-    
-
     
 class NewUserForm(UserForm):
     
@@ -84,7 +77,13 @@ class NewUserForm(UserForm):
             user = User.objects.get(username=self.data['username'])
             raise forms.ValidationError(_('There is already a user with the username you inserted, please choose another username.'))
         except User.DoesNotExist:
-            return self.cleaned_data.get('username')        
+            return self.cleaned_data.get('username')
+        
+    def clean_email(self):        
+        if User.objects.filter(email__iexact=self.data['email']):
+            raise forms.ValidationError(_('There is already a user with the email you inserted, please choose another email.'))
+        else:
+            return self.cleaned_data.get('email')        
     
     def save(self):
         user = User()  
@@ -155,6 +154,17 @@ class EditUserForm(UserForm):
             if password1 != password2:
                 raise forms.ValidationError(_("The two password fields didn't match."))
         return password2
+    
+    def clean_email(self):
+        try:        
+            u = User.objects.get(email__iexact=self.data['email'])
+        except User.DoesNotExist:
+            return self.cleaned_data.get('email')
+        
+        if u != self.edit_user:  
+            raise forms.ValidationError(_('There is already a user with the email you inserted, please choose another email.'))
+        else:
+            return self.cleaned_data.get('email')
         
     def save(self, edit_user, edit_user_profile):
                         
