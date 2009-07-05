@@ -24,19 +24,7 @@ from rancho.project.models import Project
 from rancho.tagging.fields import TagField
 import datetime
 
-class MessageManager(models.Manager):
-    
-    def search(self, user, query, project = None):
-        messages = Message.index.search(query)
-        if not user.is_superuser: #restrict to projects with perm                
-            perm = user.get_rows_with_permission(Project, PERMISSIONS_MESSAGE_VIEW)
-            projs_ids = perm.values_list('object_id', flat=True)
-            messages = messages.filter(project__in=projs_ids)    
-        if project: #restrict to given project        
-            messages = messages.filter(project=project)
-        
-        return messages
-
+class MessageManager(models.Manager):    
     def get_messages(self, project = None):
         messages = Message.objects.all().extra(where = ['message_message.initial_message_id = message_message.id'])
         if project:

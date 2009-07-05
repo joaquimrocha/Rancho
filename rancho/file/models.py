@@ -64,6 +64,10 @@ class FileVersion(models.Model):
     description = models.CharField(max_length=500, null=True)
     creator = models.ForeignKey(User, related_name='uploader')    
     file_type= models.CharField(max_length=50)
+    
+    @property
+    def project(self):
+        return self.file.project
             
     def get_version_number(self): 
         versions = FileVersion.objects.filter(file = self.file).order_by('creation_date').values_list('id', flat = True)

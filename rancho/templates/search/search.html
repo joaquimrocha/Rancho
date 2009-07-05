@@ -1,8 +1,16 @@
 {% extends "base.html" %}
 
-{% load i18n form_tags usernamegen formatdate displayevent displaymilestone displaymessage pagination_tags %}
+{% load i18n form_tags usernamegen formatdate displayevent displaymilestone displaymessage displaytodo pagination_tags genmenu %}
 
 {% block pagetitle %} {{ company.short_name }} | {% trans "Search" %} {% endblock %}
+
+{% block menu %}
+	{% if project %}
+		{% genmenu "inproject" "overview" project.id %}	   
+	{% else %}
+	   {% genmenu "root" "dashboard" %}
+	{% endif %}	
+{% endblock %}
 	
 {% block area_name %}
     {% if project %}
@@ -20,6 +28,9 @@
         <p style="margin-top: 10px;" {% if not select %}class="light_blue_bg"{% endif %}><a href="{% url rancho.search.views.search %}?query={{ query }}">{% trans "All" %} ({{results|length}})</a></p>
     {% if messages %}
         <p {% ifequal select "messages" %}class="light_blue_bg"{% endifequal %}><a href="{% url rancho.search.views.search %}?select=messages&query={{ query }}">{% trans "Messages" %} ({{messages|length}})</a></p>
+    {% endif %}
+	{% if todos %}
+        <p {% ifequal select "todos" %}class="light_blue_bg"{% endifequal %}><a href="{% url rancho.search.views.search %}?select=todos&query={{ query }}">{% trans "ToDos" %} ({{todos|length}})</a></p>
     {% endif %}
     {% if milestones %}
         <p {% ifequal select "milestones" %}class="light_blue_bg"{% endifequal %}><a href="{% url rancho.search.views.search %}?select=milestones&query={{ query }}">{% trans "Milestone" %} ({{milestones|length}})</a></p>
@@ -76,6 +87,18 @@
     {% paginate %}
 	{% for message in messages %}
 		{% displaymessage message user %}
+	{% endfor %}
+	{% paginate %}
+</div>
+{% endifequal %}
+
+{% ifequal select "todos" %}
+<div style="border-bottom: 1px solid #afafaf; padding-bottom: 10px;">
+	<p style="margin: 15px 0 10px 0;"><span class="smallcaps_title blue_bg">{% trans "todos" %}</span></p>
+	{% autopaginate todos 5 %}
+    {% paginate %}
+	{% for todo in todos %}
+		{% displaytodo todo user %}
 	{% endfor %}
 	{% paginate %}
 </div>

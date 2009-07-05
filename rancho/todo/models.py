@@ -52,6 +52,10 @@ class ToDo(models.Model):
     creation_date = models.DateTimeField(default = datetime.datetime.now())
     position = models.IntegerField(default = 0)
     
+#    @property
+#    def project(self):
+#        return self.todo_list.project
+    
     @models.permalink
     def get_absolute_url(self):
         return ('rancho.todo.views.edit_todo', [], {'p_id': self.todo_list.project.id, 'todo_id':self.id})        

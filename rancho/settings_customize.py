@@ -155,6 +155,10 @@ PROFILE_LARGE_PICTURE_SIZE = (450, 500)
 EXPORTATION_PREFIX = 'export_temp_dir_'
 IMPORTATION_PREFIX = 'import_temp_dir_'
 
+#HAYSTACK conf
+HAYSTACK_SEARCH_ENGINE = 'whoosh'
+HAYSTACK_WHOOSH_PATH = os.path.join(DIRNAME, 'rancho_index')
+
 #how to send a file back to the user (django builtin code is very bad)
 #use of the following: apache-modsendfile , django
 HOW_SEND_FILE='django' 
