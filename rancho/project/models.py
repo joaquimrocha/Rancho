@@ -16,15 +16,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ########################################################################
 
-from django.db import models
 from django.contrib.auth.models import User
-from django.http import Http404
+from django.db import models
 from django.db.models import Q
-
-from rancho.company.models import Company
+from django.http import Http404
 from rancho import settings
-
+from rancho.company.models import Company
 import datetime
+
+
 
 class ProjectManager(models.Manager):    
     

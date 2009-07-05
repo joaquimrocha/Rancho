@@ -16,12 +16,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ########################################################################
 
-from django.db import models
 from django.contrib.auth.models import User
-
-from rancho.timezones.forms import TIMEZONE_CHOICES
-from rancho import  settings
+from django.db import models
+from rancho import settings
 from rancho.timezones.fields import TimeZoneField
+from rancho.timezones.forms import TIMEZONE_CHOICES
+
 
 class UserProfile(models.Model):
     YES_NO_CHOICES = (('1', 'Yes'), ('0', 'No'),)

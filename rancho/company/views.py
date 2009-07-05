@@ -23,23 +23,14 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template.context import RequestContext
 from django.utils.translation import ugettext as _
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404
-from django.contrib.auth.decorators import user_passes_test
-from django.core import urlresolvers
-
-from rancho.lib import utils
-from rancho.project.models import Project
-from rancho.company.forms import EditCompanySettingsForm, CreateCompanyForm
-from rancho.company.models import Company, EventsHistory
-
 from rancho import settings
-from rancho.company.forms import EditCompanySettingsForm, CreateCompanyForm, \
-    EditCompanySettingsForm, CreateCompanyForm, ExportAccountForm, ImportAccountForm
+from rancho.company.forms import CreateCompanyForm, ExportAccountForm, \
+    ImportAccountForm, EditCompanySettingsForm
 from rancho.company.models import Company, EventsHistory
 from rancho.lib import serializer, utils
 from rancho.project.models import Project
+
+
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)

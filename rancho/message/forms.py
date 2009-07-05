@@ -18,13 +18,13 @@
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-
-from rancho.tagging.forms import TagField
+from rancho.lib.custom_widgets import AjaxTags, \
+    ShowAndSelectMultipleNotification
 from rancho.message.models import Message
-from rancho.lib.custom_widgets import AjaxTags
-from rancho.lib.custom_widgets import ShowAndSelectMultipleNotification
-
+from rancho.tagging.forms import TagField
 import datetime
+
+
 
 class MessageForm(forms.Form):
     

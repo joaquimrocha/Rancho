@@ -1,0 +1,2 @@
+{{ object.file.title }}
+{{ object.description }}

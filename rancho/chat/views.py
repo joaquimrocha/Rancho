@@ -22,9 +22,9 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import loader, Context
 from django.template.context import RequestContext
-from rancho.project.models import Project
 from rancho.chat.forms import ChatForm, LogForm
 from rancho.chat.models import Post, ChatData
+from rancho.project.models import Project
 
 @login_required
 def general_chat(request, p_id):

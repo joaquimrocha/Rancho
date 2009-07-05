@@ -16,12 +16,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ########################################################################
 
-from django.db import models
 from django.contrib.auth.models import User
-
+from django.db import models
 from rancho.project.models import Project
-
 import datetime
+
+
 
 class ToDoList(models.Model):        
     creator = models.ForeignKey(User)
@@ -51,6 +51,10 @@ class ToDo(models.Model):
     completion_date = models.DateTimeField(null=True)
     creation_date = models.DateTimeField(default = datetime.datetime.now())
     position = models.IntegerField(default = 0)
+    
+#    @property
+#    def project(self):
+#        return self.todo_list.project
     
     @models.permalink
     def get_absolute_url(self):

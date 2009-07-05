@@ -16,12 +16,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ########################################################################
 
-from django.db import models
 from django.contrib.auth.models import User
-
+from django.db import models
+from rancho.granular_permissions.permissions import PERMISSIONS_MESSAGE_VIEW
 from rancho.project.models import Project
-from rancho import djangosearch    
-
 import datetime
 
 class WikiManager(models.Manager):
@@ -56,9 +54,7 @@ class WikiEntry(models.Model):
         
     content = models.TextField(blank=True)
     creation_date = models.DateTimeField(default = datetime.datetime.now())    
-     
-    index = djangosearch.ModelIndex(text=['content'])
-    
+         
     def get_version_number(self):
         versions = WikiEntry.objects.filter(wiki = self.wiki).order_by('creation_date').values_list('id', flat = True)
         return list(versions).index(self.id)

@@ -18,9 +18,9 @@
 
 from django import forms
 from django.utils.translation import ugettext as _
-
-from rancho.wikiboard.models import Wiki
 from rancho.tinymce.widgets import TinyMCE
+from rancho.wikiboard.models import Wiki
+
 
 class TinyMceForm(forms.Form):
     mceconf = {'theme':'advanced', 

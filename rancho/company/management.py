@@ -1,9 +1,9 @@
+from django.contrib.auth.models import User
 from django.db.models import signals
-
 from rancho.company import models as company_app
 from rancho.company.models import Company
-from django.contrib.auth.models import User
 from rancho.user.models import UserProfile
+
 
 
 def create_data(app, created_models, verbosity, **kwargs):

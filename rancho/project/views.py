@@ -16,27 +16,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ########################################################################
 
-from django.shortcuts import render_to_response
-from django.http import HttpResponseRedirect
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
-from django.utils.translation import ugettext as _
-
-from django.contrib.auth.decorators import login_required
 from django.core import urlresolvers
-from django.shortcuts import get_object_or_404
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render_to_response
 from django.template.context import RequestContext
-from django.http import HttpResponse
-
-from rancho.project.forms import NewProjectForm, AddPeopleForm, EditProjectSettingsForm
-from rancho.project.models import Project
-from rancho.project.forms import EditPermissionsForm
+from django.utils.translation import ugettext as _
 from rancho.granular_permissions import permissions
-from rancho.lib.templatetags.usernamegen import usernamegen
-from rancho.project.models import UserInProject
 from rancho.lib import utils
+from rancho.lib.templatetags.usernamegen import usernamegen
 from rancho.lib.utils import events_log
-
+from rancho.project.forms import EditPermissionsForm, NewProjectForm, \
+    AddPeopleForm, EditProjectSettingsForm
+from rancho.project.models import Project, UserInProject
 import datetime
 
 @login_required

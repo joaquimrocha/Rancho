@@ -17,12 +17,12 @@
 ########################################################################
 
 from django import forms
-from django.forms.widgets import Select
-from django.utils.translation import ugettext_lazy as _
-from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
-
+from django.forms.widgets import Select
+from django.shortcuts import get_object_or_404
+from django.utils.translation import ugettext_lazy as _
 from rancho.milestone.models import Milestone
+
 
 
 class NewMilestoneForm(forms.Form):

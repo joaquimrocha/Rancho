@@ -16,27 +16,27 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ########################################################################
 
-from django.shortcuts import render_to_response, get_object_or_404
-from django.http import HttpResponseRedirect, HttpResponse
-from django.utils.translation import ugettext as _
-from django.http import HttpResponseForbidden
-from django.contrib.sites.models import Site
 from django.contrib.auth.decorators import login_required
-from django.template.context import RequestContext
+from django.contrib.sites.models import Site
 from django.core import urlresolvers
+from django.http import HttpResponseForbidden, HttpResponseRedirect, \
+    HttpResponse
+from django.shortcuts import render_to_response, get_object_or_404
 from django.template import loader, Context
-
-from rancho.todo.models import ToDoList, ToDo
+from django.template.context import RequestContext
+from django.utils.translation import ugettext as _
+from rancho.granular_permissions.permissions import PERMISSIONS_TODO_VIEW, \
+    PERMISSIONS_TODO_CREATE, PERMISSIONS_TODO_EDITDELETE, checkperm
+from rancho.lib import utils
+from rancho.lib.utils import events_log
+from rancho.notification import models as notification
 from rancho.project.models import Project
 from rancho.todo.forms import NewToDoListForm, EditToDoListForm, EditToDoForm
+from rancho.todo.models import ToDoList, ToDo
 from rancho.user.models import User
-from rancho.lib import utils
-from rancho.notification import models as notification
-from rancho.granular_permissions.permissions import PERMISSIONS_TODO_VIEW, PERMISSIONS_TODO_CREATE, PERMISSIONS_TODO_EDITDELETE
-from rancho.granular_permissions.permissions import checkperm
-from rancho.lib.utils import events_log
-
 import datetime
+
+
 
 
 @login_required

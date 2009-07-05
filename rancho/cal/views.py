@@ -16,15 +16,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ########################################################################
 
-from django.template.context import RequestContext
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, Http404
-from django.contrib.auth.decorators import login_required
 from django.template import loader, Context
-
+from django.template.context import RequestContext
+from rancho.granular_permissions.permissions import PERMISSIONS_MILESTONE_VIEW, \
+    PERMISSIONS_MILESTONE_CREATE, PERMISSIONS_MILESTONE_EDITDELETE, checkperm
 from rancho.milestone.models import Milestone
-from rancho.granular_permissions.permissions import PERMISSIONS_MILESTONE_VIEW, PERMISSIONS_MILESTONE_CREATE, PERMISSIONS_MILESTONE_EDITDELETE
-from rancho.granular_permissions.permissions import checkperm
+
 
 
 @login_required

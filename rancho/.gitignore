@@ -6,4 +6,5 @@ mailer/
 tinymce/
 timezones/
 notification/
-
+whoosh/
+haystack/

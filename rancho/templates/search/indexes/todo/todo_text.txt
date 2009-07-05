@@ -1,0 +1,3 @@
+{{ object.todo_list.title }}
+{{ object.todo_list.description }}
+{{ object.description }}
