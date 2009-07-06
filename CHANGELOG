@@ -2,6 +2,10 @@
 Rancho Change Log
 ==================
 
+Version 9.06.1 2009-06-25
+------------------------
+	* Fixed regression in user edit/create form
+	
 Version 9.06 2009-06-25
 ------------------------
     * Now Rancho can import Basecamp accounts file
