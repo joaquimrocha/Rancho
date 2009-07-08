@@ -25,19 +25,6 @@ from rancho.project.models import Project
 from rancho.tagging.fields import TagField
 import datetime
 
-
-class FileManager(models.Manager):
-
-    def search(self, user, query, project = None):
-        files = FileVersion.index.search(query)
-        if not user.is_superuser: #restrict to projects with perm
-            perm = user.get_rows_with_permission(Project, PERMISSIONS_FILE_VIEW)
-            project_ids = perm.values_list('object_id', flat=True)
-            files = files.filter(file__project__in=project_ids)
-        if project: #restrict to given project
-            files = files.filter(file__project=project)
-        return files
-
 class File(models.Model):
     creator = models.ForeignKey(User)
     project = models.ForeignKey(Project)
@@ -46,14 +33,10 @@ class File(models.Model):
     last_file_version = models.ForeignKey('FileVersion', related_name='lastversion', null=True)    
     notify_to = models.ManyToManyField(User, null=True, related_name='file_notify_to')
     tags = TagField()
-            
-    objects = FileManager()
-    
+                
     @models.permalink
     def get_absolute_url(self):
         return ('rancho.file.views.view_file', [], {'p_id': self.project.id, 'file_id':self.id})
-    
-
     
 class FileVersion(models.Model):
     

@@ -19,10 +19,8 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-SEARCH_ENGINE=''               # Use 'mysql' or 'postgresql' according to the database you wish to use.
-
-DATABASE_ENGINE = ''           # Use 'postgresql' or 'mysql' according to the database you wish to use.
-DATABASE_NAME = ''             # The database name.
+DATABASE_ENGINE = ''           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+DATABASE_NAME = ''             # Or path to database file if using sqlite3.
 DATABASE_USER = ''             # The user name to access the database.
 DATABASE_PASSWORD = ''         # The user password to access the database.
 DATABASE_HOST = ''             # Set to empty string for localhost or otherwise use the host you wish.

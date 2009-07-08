@@ -22,28 +22,14 @@ from rancho.granular_permissions.permissions import PERMISSIONS_MESSAGE_VIEW
 from rancho.project.models import Project
 import datetime
 
-class WikiManager(models.Manager):
     
-    def search(self, user, query, project = None):
-        wikiboards = WikiEntry.index.search(query)
-        if not user.is_superuser: #restrict to projects with perm
-            perm = user.get_rows_with_permission(Project, PERMISSIONS_MESSAGE_VIEW)
-            projs_ids = perm.values_list('object_id', flat=True)
-            wikiboards = wikiboards.filter(wiki__project__in=projs_ids)    
-        if project: #restrict to given project        
-            wikiboards = wikiboards.filter(wiki__project=project)
-
-        return wikiboards
-     
 class Wiki(models.Model):
     creator = models.ForeignKey(User)
     project = models.ForeignKey(Project)
     
     name = models.CharField(max_length=100)
     last_version = models.ForeignKey('WikiEntry', related_name='last_version', null=True)
-    
-    objects = WikiManager()
-    
+        
     def __unicode__(self):
         return self.name
     
