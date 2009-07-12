@@ -66,7 +66,7 @@ def search(request, p_id=None):
     else:
         project=None
         
-    messages = milestones = wikiboards = files = []
+    messages = milestones = wikiboards = files = todos = []
     query = None
     select = None
 
