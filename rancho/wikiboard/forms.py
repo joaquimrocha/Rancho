@@ -36,9 +36,12 @@ class TinyMceForm(forms.Form):
 class NewWikiEntryForm(TinyMceForm):    
     wiki_name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'size':40,'class': 'big_entry'}),label=_("Wiki Name"))
     
+    def __init__(self, project, *args, **kwargs):
+        self.project = project
+        super(NewWikiEntryForm, self).__init__(*args, **kwargs)
+    
     def clean_wiki_name(self, *args, **kwargs):
-        wiki = Wiki.objects.filter(name=self.cleaned_data['wiki_name'] )            
-        if wiki :
+        if Wiki.objects.filter(name=self.cleaned_data['wiki_name'], project=self.project) :
             raise forms.ValidationError(_("Wiki name already exist, please choose other."))        
         return self.cleaned_data['wiki_name']        
     

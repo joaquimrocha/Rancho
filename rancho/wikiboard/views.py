@@ -70,7 +70,7 @@ def create(request, p_id):
 
      
     if request.method=='POST':        
-        form = NewWikiEntryForm(request.POST)                   
+        form = NewWikiEntryForm(project, request.POST)                   
         if form.is_valid():
             
             #TODO: put in form save  
@@ -94,7 +94,7 @@ def create(request, p_id):
             kw = {'p_id': project.id, 'entry_id': wiki.id, 'entry_version': wikientry.id}
             return HttpResponseRedirect(urlresolvers.reverse('rancho.wikiboard.views.view_page', kwargs=kw))                
     else:
-        form = NewWikiEntryForm()
+        form = NewWikiEntryForm(project)
     
     context = {'project': project,
                'users_in_project': users_in_project,
