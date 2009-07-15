@@ -8,8 +8,11 @@ from rancho.user.models import UserProfile
 
 def create_data(app, created_models, verbosity, **kwargs):
     
-    c, val = Company.objects.get_or_create(short_name = "Company", long_name = "My Company Name", main_company = True)
-    if val:        
+    c, val = Company.objects.get_or_create(main_company = True)
+    if val:
+        c.short_name = "Company"
+        c.long_name = "My Company Name"
+        c.save()
         print "Created initial Company successfully."
     
     try:
