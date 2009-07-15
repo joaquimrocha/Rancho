@@ -45,9 +45,6 @@ urlpatterns = urlpatterns + patterns('',
     (r'^search/', include('rancho.search.urls')),
     
     (r'^tinymce/', include('tinymce.urls')),
-    
-    (r'^luis/', include('haystack.urls')),
-
 )
 
 if getattr(settings, 'LOCAL_DEV', False):
