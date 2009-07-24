@@ -48,7 +48,7 @@
             <div id="change_place_comand">
                 
                 {% block top_left_actions %}
-                    {% if user.get_profile.is_account_owner %}              
+                    {% if user.is_superuser %}
                     <div id="left"></div>
                     <div id="action">
                         <div id="company_settings"><a href="{% url company.views.company_settings %}">{% trans "Company Settings" %}</a></div>
