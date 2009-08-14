@@ -35,7 +35,7 @@ class Message(models.Model):
     creator = models.ForeignKey(User, related_name='messagecreator')
     project = models.ForeignKey(Project)
 
-    creation_date = models.DateTimeField(default = datetime.datetime.now())
+    creation_date = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=50)
     body = models.TextField()
     

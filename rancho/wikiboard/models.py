@@ -39,7 +39,7 @@ class WikiEntry(models.Model):
     wiki = models.ForeignKey(Wiki)
         
     content = models.TextField(blank=True)
-    creation_date = models.DateTimeField(default = datetime.datetime.now())    
+    creation_date = models.DateTimeField(auto_now_add=True)
          
     def get_version_number(self):
         versions = WikiEntry.objects.filter(wiki = self.wiki).order_by('creation_date').values_list('id', flat = True)

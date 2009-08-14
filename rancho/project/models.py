@@ -40,7 +40,7 @@ class Project(models.Model):
     PROJECT_STATUS_CHOICES = (('A', 'Active'), ('Z','Frozen'), ('F','Finished'),)
     
     name = models.CharField(max_length=50)
-    creation_date = models.DateTimeField(default = datetime.datetime.now())
+    creation_date = models.DateTimeField(auto_now_add=True)
     finish_date = models.DateTimeField(null=True)
     
     logo = models.ImageField(upload_to=settings.PROJECT_DIR, blank=True, null=True)
@@ -77,7 +77,7 @@ class UserInProject(models.Model):
         
     user = models.ForeignKey(User)
     project = models.ForeignKey(Project)
-    added_date = models.DateTimeField(default = datetime.datetime.now())
+    added_date = models.DateTimeField(auto_now_add=True)
     state = models.CharField(max_length=1,choices=STATE_CHOICES)
     
     

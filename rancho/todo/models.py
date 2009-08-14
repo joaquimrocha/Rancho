@@ -49,7 +49,7 @@ class ToDo(models.Model):
     todo_list = models.ForeignKey(ToDoList)
     description = models.CharField(max_length=500)
     completion_date = models.DateTimeField(null=True)
-    creation_date = models.DateTimeField(default = datetime.datetime.now())
+    creation_date = models.DateTimeField(auto_now_add=True)
     position = models.IntegerField(default = 0)
     
 #    @property
