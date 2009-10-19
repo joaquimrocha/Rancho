@@ -60,6 +60,7 @@
                 {% endblock %}
                 
             </div>
+        {% if user.is_authenticated %}
         <div id="session_settings_command">
         
             <script type="text/javascript">
@@ -83,6 +84,7 @@
                 </p>
             </form>
         </div>
+        {% endif %}
         </div>
         <div id="header">
             <div id="logo">
