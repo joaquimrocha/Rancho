@@ -154,6 +154,7 @@ EXPORTATION_PREFIX = 'export_temp_dir_'
 IMPORTATION_PREFIX = 'import_temp_dir_'
 
 #HAYSTACK conf
+HAYSTACK_SITECONF = 'rancho.search_sites'
 HAYSTACK_SEARCH_ENGINE = 'whoosh'
 HAYSTACK_WHOOSH_PATH = os.path.join(DIRNAME, 'rancho_index')
 

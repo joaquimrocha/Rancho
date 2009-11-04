@@ -20,10 +20,6 @@ from django.conf.urls.defaults import *
 
 from rancho import settings
 
-import haystack
-haystack.autodiscover()
-
-
 urlpatterns = patterns('django.views.generic.simple',    
     (r'^$', 'redirect_to', {'url': 'dashboard/'}),
     (r'^legal_notice/$', 'direct_to_template', {'template': 'legal_notice.html'}, 'legal_notice'),
