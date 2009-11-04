@@ -74,8 +74,8 @@ def get_site_tags(project):
     gets the tags used on the site
     """    
     
-    a = set([str(name) for name in Tag.objects.usage_for_queryset( File.objects.filter(project=project) )])
-    b = set([str(name) for name in Tag.objects.usage_for_queryset( Message.objects.filter(project=project) )])
+    a = set([name for name in Tag.objects.usage_for_queryset( File.objects.filter(project=project) )])
+    b = set([name for name in Tag.objects.usage_for_queryset( Message.objects.filter(project=project) )])
     return a.union(b) 
 
 def get_object_overview_info(object):
