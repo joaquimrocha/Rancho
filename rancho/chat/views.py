@@ -63,7 +63,7 @@ def send_message(request, p_id):
     if request.method == 'POST':
         message = request.POST.get('message')
         if not message:
-            return
+            return HttpResponse('', mimetype='text/html')
         new_post = Post(author = user,
                         date = datetime.now(),
                         project = project,
