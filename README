@@ -8,7 +8,7 @@ Rancho: Open Source Group/Project Management Tool
 
 :Author: The Rancho Team
 :Contact: info@getrancho.com
-:Date: 2009-06-25
+:Date: 2009-11-15
 :Web site: http://www.getrancho.com
 :License: Rancho is published under the GNU AGPL v3 license.
 
@@ -108,6 +108,7 @@ After the database settings, the email settings need to be configured in order f
 After this, rename the file as settings.py and that's it with Rancho configuration. The next step is to create the database tables and Rancho's initial information like the account owner and the default company::
 
     $ python manage.py syncdb
+    $ python manage.py migrate
 
 Answer yes to the question to create a superuser and then supply the rest of the information asked.
 
@@ -127,17 +128,10 @@ database that must be solved in order, for example, to preserve data.
 
 **Important**: It is advisable to back up all your data before upgrading Rancho.
 
-The first thing to do after having upgraded Rancho is to synchronize the database 
+The first thing to do after having upgraded Rancho is to migrate the database 
 using the following command::
 
-	$ python manage.py syncdb
-
-If there are changes to the database, a message will be returned warning that an 
-evolution is needed.
-
-To perform the evolution, run the command::
-
-	$ python manage.py evolve --execute
+	$ python manage.py migrate
 
 If all went well, Rancho will be ready to be run.
 

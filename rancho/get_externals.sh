@@ -10,5 +10,5 @@ svn co -r 348 http://svn.whoosh.ca/projects/whoosh/trunk/src/whoosh/ whoosh
 
 #get django-haystack
 git clone git://github.com/toastdriven/django-haystack.git 
-mv django-haystack/haystack ./haystack
+mv django-haystack/haystack haystack
 rm -rf django-haystack
