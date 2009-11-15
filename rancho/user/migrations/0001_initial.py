@@ -5,6 +5,10 @@ from rancho.user.models import *
 
 class Migration:
     
+    depends_on = (
+        ("company", "0001_initial"),
+    )
+    
     def forwards(self, orm):
         
         # Adding model 'UserProfile'

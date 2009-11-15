@@ -5,6 +5,10 @@ from rancho.message.models import *
 
 class Migration:
     
+    depends_on = (
+        ("file", "0001_initial"),
+    )
+    
     def forwards(self, orm):
         
         # Adding model 'Message'
