@@ -19,15 +19,11 @@
 from django.db.models import signals
 from django.utils.translation import ugettext_noop as _
 
+from rancho.notification import models as notification
+from rancho.todo import models as todo_wikiboard
 
+def create_notice_types(app, created_models, verbosity, **kwargs):
+    notification.create_notice_type("wikiboard_new", _("New wikiboard"), _("A new wikiboard has been created"))
+    notification.create_notice_type("wikiboard_updated", _("Wikiboard updated"), _("A wikiboard has been updated"))
 
-try:
-    from notification import models as notification
-    
-    def create_notice_types(app, created_models, verbosity, **kwargs):
-        notification.create_notice_type("wikiboard_new", _("New wikiboard"), _("A new wikiboard has been created"))
-        notification.create_notice_type("wikiboard_updated", _("Wikiboard updated"), _("A wikiboard has been updated"))
-    
-    signals.post_syncdb.connect(create_notice_types, notification)
-except ImportError:
-    print "Skipping creation of NoticeTypes as notification app not found"
+signals.post_syncdb.connect(create_notice_types, todo_wikiboard)

@@ -19,14 +19,11 @@
 from django.db.models import signals
 from django.utils.translation import ugettext_noop as _
 
+from rancho.notification import models as notification
+from rancho.file import models as file_app
 
-try:
-    from notification import models as notification
-    
-    def create_notice_types(app, created_models, verbosity, **kwargs):
-        notification.create_notice_type("file_new", _("New file"), _("A new file has been uploaded"))
-        notification.create_notice_type("fileversion_new", _("New file version"), _("A new version of a file has been uploaded"))
-    
-    signals.post_syncdb.connect(create_notice_types, notification)
-except ImportError:
-    print "Skipping creation of NoticeTypes as notification app not found"
+def create_notice_types(app, created_models, verbosity, **kwargs):
+    notification.create_notice_type("file_new", _("New file"), _("A new file has been uploaded"))
+    notification.create_notice_type("fileversion_new", _("New file version"), _("A new version of a file has been uploaded"))
+
+signals.post_syncdb.connect(create_notice_types, file_app)

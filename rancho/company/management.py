@@ -4,8 +4,6 @@ from rancho.company import models as company_app
 from rancho.company.models import Company
 from rancho.user.models import UserProfile
 
-
-
 def create_data(app, created_models, verbosity, **kwargs):
     
     c, val = Company.objects.get_or_create(main_company = True)
@@ -22,7 +20,6 @@ def create_data(app, created_models, verbosity, **kwargs):
             print "Created initial profile successfully."
     except:
         pass
-
 
 signals.post_syncdb.connect(create_data, sender=company_app)
 
