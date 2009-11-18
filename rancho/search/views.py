@@ -19,17 +19,16 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template.context import RequestContext
-from rancho.file.models import File, FileVersion
+from rancho.file.models import FileVersion
 from rancho.message.models import Message
 from rancho.milestone.models import Milestone
 from rancho.project.models import Project
 from rancho.search.forms import SearchForm
-from rancho.wikiboard.models import Wiki, WikiEntry
+from rancho.wikiboard.models import WikiEntry
 from rancho.haystack.query import SearchQuerySet
 from rancho.granular_permissions.permissions import PERMISSIONS_MESSAGE_VIEW,\
     PERMISSIONS_WIKIBOARD_VIEW, PERMISSIONS_MILESTONE_VIEW,\
     PERMISSIONS_TODO_VIEW, PERMISSIONS_FILE_VIEW
-from rancho.search import searchutils
 from rancho.todo.models import ToDo
 
 WIKIBOARD = 'wikiboard'

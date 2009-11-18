@@ -47,17 +47,6 @@ class MilestoneManager(models.Manager):
             milestones = milestones.filter(models.Q(responsible = user) | models.Q(responsible = None)).order_by(order)
         return milestones
     
-    def search(self, user, query, project = None):
-        milestones = Milestone.index.search(query)
-        if not user.is_superuser: #restrict to projects with perm
-            perm = user.get_rows_with_permission(Project, PERMISSIONS_MESSAGE_VIEW)
-            projs_ids = perm.values_list('object_id', flat = True)
-            milestones = milestones.filter(project__in = projs_ids)    
-        if project: #restrict to given project        
-            milestones = milestones.filter(project = project)
-
-        return milestones
-
 class Milestone(models.Model):    
     creator = models.ForeignKey(User)
     project = models.ForeignKey(Project)

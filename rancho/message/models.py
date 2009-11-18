@@ -19,10 +19,8 @@
 from django.contrib.auth.models import User
 from django.db import models
 from rancho.file.models import File
-from rancho.granular_permissions.permissions import PERMISSIONS_MESSAGE_VIEW
 from rancho.project.models import Project
 from rancho.tagging.fields import TagField
-import datetime
 
 class MessageManager(models.Manager):    
     def get_messages(self, project = None):

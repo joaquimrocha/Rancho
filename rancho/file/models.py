@@ -19,11 +19,8 @@
 from django.contrib.auth.models import User
 from django.db import models
 from rancho import settings
-from rancho.company.models import Company
-from rancho.granular_permissions.permissions import PERMISSIONS_FILE_VIEW
 from rancho.project.models import Project
 from rancho.tagging.fields import TagField
-import datetime
 
 class File(models.Model):
     creator = models.ForeignKey(User)

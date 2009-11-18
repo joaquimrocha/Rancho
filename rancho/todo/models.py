@@ -19,9 +19,6 @@
 from django.contrib.auth.models import User
 from django.db import models
 from rancho.project.models import Project
-import datetime
-
-
 
 class ToDoList(models.Model):        
     creator = models.ForeignKey(User)
