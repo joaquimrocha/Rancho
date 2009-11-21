@@ -135,7 +135,7 @@ def create(request, p_id):
             file = form.save(user, project)   
                                      
             link_url = u"http://%s%s" % ( unicode(Site.objects.get_current()), urlresolvers.reverse('rancho.file.views.view_file', kwargs={'p_id': project.id, 'file_id':file.id}),)
-            notification.send(file.notify_to.all(), "file_new", {'link_url': link_url, 'file': file, 'file_name': os.path.basename(file.last_file_version.file_location.path)}) 
+            notification.send(file.notify_to.all(), "file_new", {'link_url': link_url, 'file': file, 'file_name': os.path.basename(file.last_file_version.file_location.path).split('_', 2)[-1]}) 
 
             events_log(user, 'A', file.title, file)
             request.user.message_set.create(message = _('File "%s" successfully uploaded') % file.title )            
@@ -231,7 +231,7 @@ def new_upload(request,p_id,f_id):
             form.save(user, file)
              
             link_url = u"http://%s%s" % ( unicode(Site.objects.get_current()), urlresolvers.reverse('rancho.file.views.view_file', kwargs={'p_id': project.id, 'file_id':file.id}),)
-            notification.send(file.notify_to.all(), "fileversion_new", {'link_url': link_url, 'file': file, 'file_name': os.path.basename(file.last_file_version.file_location.path)})
+            notification.send(file.notify_to.all(), "fileversion_new", {'link_url': link_url, 'file': file, 'file_name': os.path.basename(file.last_file_version.file_location.path).split('_', 2)[-1]})
            
             events_log(user, 'U', file.title, file)
             request.user.message_set.create(message=_("New file revision created"))

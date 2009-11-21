@@ -1,5 +1,2 @@
-{% load i18n %}
-You have received the following notice from {{ current_site }}:
-
 {{ message }}
 
