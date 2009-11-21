@@ -19,7 +19,6 @@
 from datetime import date, datetime
 from django.contrib.auth.models import User
 from django.db import models
-from rancho.granular_permissions.permissions import PERMISSIONS_MESSAGE_VIEW
 from rancho.project.models import Project
 
 class MilestoneManager(models.Manager):    
