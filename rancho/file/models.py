@@ -26,7 +26,7 @@ class File(models.Model):
     creator = models.ForeignKey(User)
     project = models.ForeignKey(Project)
     
-    title = models.CharField(max_length=50)    
+    title = models.CharField(max_length=500)    
     last_file_version = models.ForeignKey('FileVersion', related_name='lastversion', null=True)    
     notify_to = models.ManyToManyField(User, null=True, related_name='file_notify_to')
     tags = TagField()
@@ -38,7 +38,7 @@ class File(models.Model):
 class FileVersion(models.Model):
     
     file = models.ForeignKey(File)
-    file_location = models.FileField(upload_to=settings.UPLOAD_DIR)
+    file_location = models.FileField(upload_to=settings.UPLOAD_DIR, max_length=500)
     file_size= models.CharField(max_length=30)
     creation_date = models.DateTimeField(auto_now_add=True)
     description = models.CharField(max_length=500, null=True)
