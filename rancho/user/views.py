@@ -148,7 +148,6 @@ def enable_user(request):
 
 
 @login_required
-@user_passes_test(lambda u: u.is_superuser)
 def view_user(request, user_id):
     me = request.user
     user = get_object_or_404(User, id = user_id)
@@ -157,6 +156,9 @@ def view_user(request, user_id):
     can_edit = can_edit_user(me, user)
     if me != user and user.get_profile().is_account_owner:
         can_edit = False
+    if not can_see_user:
+        raise Http404()
+    userprojects = [project for project in userprojects if project.has_user(me)]
     context = {'view_user': user, 'projects': userprojects, 'can_edit': can_edit}
     return render_to_response('people/view_user.html', 
                               context,
@@ -249,14 +251,22 @@ def edituser(request, user_id):
             
             
 @login_required
-@user_passes_test(lambda u: u.is_superuser)
 def all_people(request):
-    companies = Company.objects.all().order_by('-main_company', 'short_name')
-    inactivepeople = User.objects.filter(is_active=False).order_by('userprofile__company')
-        
+    user = request.user
+    
+    people = User.objects.all()
+    allowedpeople = [person.get_profile() for person in people if can_see_user(user, person)]
+    
+    emptycompanies = Company.objects.filter(userprofile = None)
+    if user.is_superuser:
+        inactivepeople = User.objects.filter(is_active=False).order_by('userprofile__company')
+    else:
+        inactivepeople = []
+    
     return render_to_response('people/view_people.html', 
-                              {'companies': companies,
+                              {'emptycompanies': emptycompanies,
                                'inactivepeople': inactivepeople,
+                               'allowedpeople': allowedpeople,
                                },
                               context_instance=RequestContext(request))
 
@@ -339,3 +349,13 @@ def can_edit_user(user, edit_user):
         return False
     else:
         return True
+
+def can_see_user(user, user_to_see):
+    
+    userprojects = Project.objects.get_projects_for_user(user_to_see)
+    if user == user_to_see or \
+       user.is_superuser or user_to_see.is_superuser:
+        return True
+    if not [project for project in userprojects if project.has_user(user)]:
+        return False
+    return True
