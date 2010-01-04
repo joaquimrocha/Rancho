@@ -61,6 +61,11 @@ class Project(models.Model):
         if  (not self.users.filter(userinproject__user=user)) and (not user.is_superuser) :
             raise Http404('No %s matches the given query.'%self._meta.object_name)    
     
+    def has_user(self, user, status = 'a'):
+        if user.is_superuser and status == 'a':
+            return True
+        return self.users.filter(userinproject__user = user,
+                                 userinproject__state = status)
     
     def __unicode__(self):
         return self.name

@@ -98,11 +98,9 @@
 		
 		        <div id="menus_nav_right">
                     {% block menus_right %}
-                        {% if user.is_superuser %}
-                            <img class="textcenter" src="/media/basepage/images/icons/users.png" border="0" alt=""/>&nbsp;<a href="{% url user.views.all_people %}" title="{% trans "Manage people and companies" %}">{% trans "People and Companies" %}</a>&nbsp;
-                        {% endif %}
-                            <img class="textcenter" src="/media/basepage/images/icons/calendar.png" border="0" alt=""/>&nbsp;<a href="/calendar" title="{% trans "Go to general calendar" %}">{% trans "Calendar" %}</a>
-		            {% endblock %}
+                        <img class="textcenter" src="/media/basepage/images/icons/users.png" border="0" alt=""/>&nbsp;<a href="{% url user.views.all_people %}" title="{% trans "Manage people and companies" %}">{% trans "People and Companies" %}</a>&nbsp;
+                        <img class="textcenter" src="/media/basepage/images/icons/calendar.png" border="0" alt=""/>&nbsp;<a href="/calendar" title="{% trans "Go to general calendar" %}">{% trans "Calendar" %}</a>
+	            {% endblock %}
                 </div>
             </div>
             

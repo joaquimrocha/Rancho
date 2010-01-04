@@ -59,8 +59,10 @@
                         {% if person.is_superuser %}
                             <p style="font-size: 11px;">{% trans "Administrator" %}</p>
                         {% else %}
+						   {% if user.is_superuser %}
 	                       <p><a class="edit" href="{% url project.views.edit_permissions project.id,person.id %}">{% trans "Permissions" %}</a>&nbsp;<a class="delete" href="" id="remove{{person.id}}">{% trans "Remove" %}</a></p>
 						   {% modalconfirm "remove{{person.id}}" _("Are you sure you want to remove this user from the project?")  "remove_user(person.id)" %}
+						   {% endif %}
 					   {% endif %}
 					{% endif %}  
 	            

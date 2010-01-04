@@ -18,9 +18,7 @@
 {% block menu %}{% endblock %}
 
 {% block menus_right %}
-	{% if user.is_superuser %}
 		<img src="/media/basepage/images/icons/users.png" border="0" alt="" class="textbottom"/>&nbsp;<a href="{% url project.views.show_people_project project.id %}" title="{% trans "Manage people in project" %}">{% trans "People in Project" %}</a>
-	{% endif %}
 		<img src="/media/basepage/images/icons/calendar.png" border="0" alt="" class="textbottom"/>&nbsp;<a href="/calendar" title="{% trans "Go to general calendar" %}">{% trans "Calendar" %}</a>
 {% endblock %}
 
