@@ -11,6 +11,12 @@
 {% block area_name %}
     <p>{% trans "System Logs" %}</p>
 {% endblock %}
+
+{% block mini_menu %}
+    <br/>
+    <a href="{% url rancho.company.views.download_logs %}">{% trans "Download CSV" %}</a>
+{% endblock %}
+
     
 {% block right_content %}
     {% sidewidget _("Information") "information"%}

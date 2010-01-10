@@ -29,6 +29,7 @@ from rancho.company.forms import CreateCompanyForm, ExportAccountForm, \
 from rancho.company.models import Company, EventsHistory
 from rancho.lib import serializer, utils
 from rancho.project.models import Project
+from django.contrib.sites.models import Site
 
 
 
@@ -179,6 +180,29 @@ def show_logs(request):
     return render_to_response("company/show_logs.html",
                               {'events': ev}, 
                               context_instance = RequestContext(request))    
+    
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def download_logs(request):    
+    import cStringIO
+    output = cStringIO.StringIO()
+    output.write('"Date";"Action";"Type";"Title";"Project";"Link"\n')
+    for e in EventsHistory.objects.all().order_by('-date'):
+        if e.content_type and e.content_type.name != "project":
+            project = e.content_object.project
+        else:
+            project = ""
+            
+        str = '"%s";"%s";"%s";"%s";"%s";"%s"\n'%\
+            (e.date, e.get_type_display(), e.content_type, e.title, project, \
+             "http://%s%s"%(Site.objects.get_current(),e.content_object.get_absolute_url()))
+        output.write(str)
+        
+    output.seek(0)
+    response = HttpResponse(output)
+    response['Content-Type'] = 'text/comma-separated-values' 
+    response['Content-Disposition'] = 'attachment; filename="history.csv"'
+    return response
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
