@@ -17,11 +17,13 @@
 ########################################################################
 
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.sites.models import Site
 from django.core import urlresolvers
 from django.db import transaction
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template.context import RequestContext
+from django.utils.encoding import smart_str
 from django.utils.translation import ugettext as _
 from rancho import settings
 from rancho.company.forms import CreateCompanyForm, ExportAccountForm, \
@@ -29,9 +31,6 @@ from rancho.company.forms import CreateCompanyForm, ExportAccountForm, \
 from rancho.company.models import Company, EventsHistory
 from rancho.lib import serializer, utils
 from rancho.project.models import Project
-from django.contrib.sites.models import Site
-
-
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
@@ -188,19 +187,23 @@ def download_logs(request):
     output = cStringIO.StringIO()
     output.write('"Date";"Action";"Type";"Title";"Project";"Link"\n')
     for e in EventsHistory.objects.all().order_by('-date'):
-        if e.content_type and e.content_type.name != "project":
+        if e.content_type and e.content_type.name != "project" and hasattr(e.content_type, "project"):
             project = e.content_object.project
         else:
             project = ""
-            
+
+        if e.content_object and hasattr(e.content_object, "get_absolute_url"):
+            url = "http://%s%s"%(Site.objects.get_current(),e.content_object.get_absolute_url())
+        else:
+            url = ""
+
         str = '"%s";"%s";"%s";"%s";"%s";"%s"\n'%\
-            (e.date, e.get_type_display(), e.content_type, e.title, project, \
-             "http://%s%s"%(Site.objects.get_current(),e.content_object.get_absolute_url()))
-        output.write(str)
-        
+            (e.date, e.get_type_display(), e.content_type, e.title, project, url)
+        output.write(smart_str(str))
+
     output.seek(0)
     response = HttpResponse(output)
-    response['Content-Type'] = 'text/comma-separated-values' 
+    response['Content-Type'] = 'text/comma-separated-values'
     response['Content-Disposition'] = 'attachment; filename="history.csv"'
     return response
 
