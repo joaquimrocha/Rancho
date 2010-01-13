@@ -28,4 +28,5 @@ urlpatterns = patterns('rancho.company.views',
     (r'^delete_logo/$', 'delete_logo'),
     
     (r'^show_logs/$', 'show_logs'),
+    (r'^download_logs/$', 'download_logs'),
 )
