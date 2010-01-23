@@ -36,7 +36,7 @@ from rancho.lib.templatetags.usernamegen import usernamegen
 from rancho.milestone.models import Milestone
 from rancho.project.models import Project
 from rancho.user.forms import NewUserForm, EditUserForm
-
+from rancho.user.models import UserProfile
 
 
 # favour django-mailer but fall back to django.core.mail
@@ -254,8 +254,8 @@ def edituser(request, user_id):
 def all_people(request):
     user = request.user
     
-    people = User.objects.all()
-    allowedpeople = [person.get_profile() for person in people if can_see_user(user, person)]
+    people = UserProfile.objects.all().order_by('company')
+    allowedpeople = [person for person in people if can_see_user(user, person.user)]
     
     emptycompanies = Company.objects.filter(userprofile = None)
     if user.is_superuser:
