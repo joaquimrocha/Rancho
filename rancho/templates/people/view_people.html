@@ -64,7 +64,7 @@
 	{% for company in company_list %}
 	{% with company.grouper as c %}
 	   <p style="margin:20px 0 10px 0;">
-	   <span class="smallcaps_title blue_bg">{{ c.short_name }}</span>
+	   <a class="smallcaps_title blue_bg white" href="{% url view_company c.id %}" >{{ c.short_name }}</a>
 	   {% if user.is_superuser %}
 	       {% if c.main_company %}
 		      <a class="edit" href="{% url rancho.company.views.company_settings %}">{% trans "Edit" %}</a>

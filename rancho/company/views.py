@@ -20,7 +20,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.sites.models import Site
 from django.core import urlresolvers
 from django.db import transaction
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template.context import RequestContext
 from django.utils.encoding import smart_str
@@ -31,6 +31,8 @@ from rancho.company.forms import CreateCompanyForm, ExportAccountForm, \
 from rancho.company.models import Company, EventsHistory
 from rancho.lib import serializer, utils
 from rancho.project.models import Project
+from rancho.user.views import can_see_user
+from rancho.user.models import UserProfile
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
@@ -117,7 +119,7 @@ def create_company(request):
     return render_to_response("company/create.html",
                               {'form': form}, 
                               context_instance = RequestContext(request))    
-    
+
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
@@ -169,6 +171,19 @@ def delete_company(request):
             request.user.message_set.create(message=_("Company %s has been deleted."%company.short_name))
         
     return HttpResponseRedirect(urlresolvers.reverse('rancho.user.views.all_people'))
+
+@login_required
+def view_company(request, company_id):
+
+    user = request.user 
+    company = get_object_or_404(Company, id = company_id)
+
+    if not can_see_company(user, company):
+        raise Http404()
+
+    return render_to_response("company/view.html",
+                              {'c': company}, 
+                              context_instance = RequestContext(request))
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
@@ -258,3 +273,14 @@ def import_account(request):
                               {'form': form,
                                'company': company}, 
                               context_instance = RequestContext(request))
+
+def can_see_company(user, company):
+
+    users_in_company = [profile.user for profile in \
+                        UserProfile.objects.filter(company = company)]
+    if user in users_in_company:
+        return True
+    for user_in_company in users_in_company:
+        if can_see_user(user, user_in_company):
+            return True
+    return False

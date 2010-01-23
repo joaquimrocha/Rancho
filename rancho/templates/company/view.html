@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% load i18n usernamegen modalconfirm form_tags displaynotification genmenu %}
+
+{% block pagetitle %} {{ company.short_name }} | Dashboard {% endblock %}
+
+{% block menu %}
+    {% genmenu "root" "" %}
+{% endblock %}
+
+    
+{% block area_name %}
+    <p>{{ company.short_name }}</p>
+{% endblock %}
+
+{% block mini_menu %}
+{% if user.is_superuser %}
+    <br/>
+    <p><a href="{% url rancho.company.views.edit_company c.id %}">{% trans "Edit" %}</a></p>
+{% endif %}
+{% endblock %}
+    
+{% block right_content %}
+  
+{% endblock %}
+
+{% block main_content %}
+
+{% if c.logo %}
+<img src="/media/{{ c.logo }}" alt="{{ c.short_name }} Logo" />
+<br/><br/>
+{% endif %}
+
+<p><strong>{% trans "Full name:" %}</strong> {{ c.long_name }}</p>
+
+{% if c.webpage %}
+<br/>
+<p><strong>{% trans "Web Page:" %}</strong> <a href="{{ c.webpage }}">{{ c.webpage }}</a></p>
+{% endif  %}
+
+{% if c.description %}
+<br/>
+<p><strong>{% trans "Description:" %}</strong></p>
+<p>{{ c.description }}</p>
+{% endif  %}
+
+{% if c.phone %}
+<br/>
+<p><strong>{% trans "Phone:" %}</strong> {{ c.phone }}</p>
+{% endif  %}
+
+{% if c.mailing_address %}
+<br/>
+<p><strong>{% trans "Mailing Address:" %}</strong></p>
+<p>{{ c.mailing_address }}</p>
+{% endif  %}
+
+{% endblock %}
