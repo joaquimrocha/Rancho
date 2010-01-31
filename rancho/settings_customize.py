@@ -120,6 +120,7 @@ INSTALLED_APPS = (
     'granular_permissions',
     'tinymce',
     'timezones',
+    'haystack',
     'south',
 
     'rancho.user',

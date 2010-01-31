@@ -19,7 +19,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template.context import RequestContext
-from rancho.file.models import FileVersion
+from rancho.file.models import FileVersion, File
 from rancho.message.models import Message
 from rancho.milestone.models import Milestone
 from rancho.project.models import Project
@@ -30,6 +30,8 @@ from rancho.granular_permissions.permissions import PERMISSIONS_MESSAGE_VIEW,\
     PERMISSIONS_WIKIBOARD_VIEW, PERMISSIONS_MILESTONE_VIEW,\
     PERMISSIONS_TODO_VIEW, PERMISSIONS_FILE_VIEW
 from rancho.todo.models import ToDo
+from rancho.tagging.models import TaggedItem
+from django.db.models.query_utils import Q
 
 WIKIBOARD = 'wikiboard'
 MILESTONE = 'milestone'
@@ -75,10 +77,26 @@ def search(request, p_id=None):
             query = form.cleaned_data['query']
             select = request.GET.get('select', None)
 
+            messagetagged = TaggedItem.objects.get_by_model(Message, query)
+            ids1 =  list(messagetagged.values_list('id', flat=True))            
             messages = search_object(user, project, query, PERMISSIONS_MESSAGE_VIEW, Message)            
+            ids2 =  list(messages.values_list('id', flat=True))            
+            ids1.extend(ids2)
+            messages = Message.objects.filter(id__in=ids1)
+            
+            
+            filetagged = TaggedItem.objects.get_by_model(File, query)
+            ids1 = []
+            for f in filetagged:
+                ids1.append(f.last_file_version_id)            
+            files = search_object(user, project, query, PERMISSIONS_FILE_VIEW, FileVersion)
+            ids2 =  list(files.values_list('id', flat=True))            
+            ids1.extend(ids2)
+            files = FileVersion.objects.filter(id__in=ids1)
+
+                        
             todos = search_object(user, project, query, PERMISSIONS_TODO_VIEW, ToDo)            
             wikiboards = search_object(user, project, query, PERMISSIONS_WIKIBOARD_VIEW, WikiEntry)
-            files = search_object(user, project, query, PERMISSIONS_FILE_VIEW, FileVersion)
             milestones = search_object(user, project, query, PERMISSIONS_MILESTONE_VIEW, Milestone)
             
     else:
