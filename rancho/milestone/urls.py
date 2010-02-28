@@ -26,5 +26,6 @@ urlpatterns = patterns('rancho.milestone.views',
     (r'^edit/(?P<milestone_id>\d+)/$', 'edit'),
     (r'^complete/(?P<milestone_id>\d+)/$', 'complete'),
     (r'^incomplete/(?P<milestone_id>\d+)/$', 'incomplete'),
-    (r'^delete/(?P<milestone_id>\d+)/$', 'delete'),                
+    (r'^delete/(?P<milestone_id>\d+)/$', 'delete'),
+    (r'^list_same_status/(?P<milestone_id>\d+)/$', 'list_with_same_status'),
 )

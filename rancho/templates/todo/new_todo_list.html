@@ -42,6 +42,11 @@
 		{% beginrequestbox "required" _("Choose the name of the list") _("(for example &quot;Things for the meeting&quot;)")  %}
 			{% printfield  newTDLform.todolist_name "none" %}
 	  	{% endrequestbox %}
+
+		{% beginrequestbox "notrequired" _("Milestone") _("You can optionally link this list to a milestone. When the list of todos is completed, the milestone will also be completed.")  %}
+			{% printfield newTDLform.milestone "left" %}
+		{% endrequestbox %}
+
 		{% beginrequestbox "notrequired" _("Description") _("You can also set an optional description for this list.")  %}
 			{% printfield  newTDLform.todolist_description "none" %}
 		{% endrequestbox %}

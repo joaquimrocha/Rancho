@@ -76,7 +76,7 @@ div.item_list ,item_bottom {
 	overflow: hidden;
 }
 
-.blue_item .item_title a, .blue_item .item_title span{
+.blue_item .item_title a, .blue_item .item_title {
 	color: #0070C1;
 }
 

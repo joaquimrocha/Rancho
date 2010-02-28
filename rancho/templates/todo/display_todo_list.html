@@ -9,9 +9,13 @@
 {% ifhasperm "PERMISSIONS_TODO_EDITDELETE" user project todo_list %}
 	 <a class="edit" href="{% url todo.views.edit_todo_list p_id=project.id,todo_list_id=todo_list.id %}">{% trans "Edit" %}</a> | <a id="delete_todo_list{{todo_list.id}}" href="" class="delete">{% trans "Delete" %}</a>
 {% endifhasperm %}
-
 </p>
 {% modalconfirm "delete_todo_list{{todo_list.id}}" _("Are you sure you want to delete this ToDo list?")  "delete_todo_list(todo_list.id)" %}
+{% if todo_list.milestone %}
+{% ifhasperm "PERMISSIONS_MILESTONE_VIEW" user project todo_list.milestone %}
+	<p>{% trans "Milestone:" %} <span class="smallcaps_title"><strong><a href="{% url milestone.views.list_with_same_status project.id,todo_list.milestone.id %}">{{ todo_list.milestone.title }}</a></strong></span></p>
+{% endifhasperm %}
+{% endif %}
 <p class="todolist_desc">{{ todo_list.description }}</p>
 <div id="todos{{todo_list.id}}" class="display_todos">
 	{% for todo in todos %}

@@ -26,6 +26,10 @@
 			{% printfield edit_todo_list_form.todolist_name "none" %}
 		{% endrequestbox %}
 
+		{% beginrequestbox "notrequired" _("Milestone") _("You can optionally link this list to a milestone. When the list of todos is completed, the milestone will also be completed.")  %}
+			{% printfield edit_todo_list_form.milestone "left" %}
+		{% endrequestbox %}
+
 		{% beginrequestbox "notrequired" _("Description") _("You can add an optional description for this list.")  %}
 			{% printfield  edit_todo_list_form.todolist_description "none" %}
 	    {% endrequestbox %}

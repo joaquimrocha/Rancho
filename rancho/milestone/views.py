@@ -64,6 +64,13 @@ def list(request, p_id, status = ''):
                               context_instance=RequestContext(request))
 
 @login_required
+def list_with_same_status(request, p_id, milestone_id):
+    
+    milestone = get_object_or_404(Milestone, id = milestone_id)
+
+    return list(request, p_id, milestone.get_status_name())
+
+@login_required
 def create(request, p_id):
 
     user = request.user
@@ -171,6 +178,11 @@ def complete(request, p_id, milestone_id):
     if not milestone.completion_date:
         milestone.completion_date = date.today()
         milestone.responsible = user
+        if milestone.todolist:
+            for todo in milestone.todolist.get_todos():
+                todo.responsible = user
+                todo.completion_date = milestone.completion_date
+                todo.save()
         # PERMISSIONS
         milestone.save()
         events_log(user, 'COMP', milestone.title, milestone)
@@ -186,6 +198,11 @@ def incomplete(request, p_id, milestone_id):
     if milestone.completion_date:
         milestone.completion_date = None
         # PERMISSIONS
+        if milestone.todolist:
+            for todo in milestone.todolist.get_todos():
+                todo.responsible = user
+                todo.completion_date = None
+                todo.save()
         milestone.save()
         events_log(user, 'ICOMP', milestone.title, milestone)
     return HttpResponseRedirect(urlresolvers.reverse('rancho.milestone.views.list', args = [p_id]))

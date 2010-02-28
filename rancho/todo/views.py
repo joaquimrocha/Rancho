@@ -34,6 +34,7 @@ from rancho.project.models import Project
 from rancho.todo.forms import NewToDoListForm, EditToDoListForm, EditToDoForm
 from rancho.todo.models import ToDoList, ToDo
 from rancho.user.models import User
+from rancho.milestone.models import Milestone
 import datetime
 
 
@@ -95,20 +96,16 @@ def create(request, p_id):
     context['users_in_project'] = users_in_project
     context['project'] = project
     project.check_user_in_project_or_404(user)
-    newTDLform = NewToDoListForm()
+    milestones = Milestone.objects.filter(project = project)
+    milestones = [(milestone.id, milestone.title) for milestone \
+                  in milestones if milestone.todolist == None]
+    milestones = [(0, _("None"))] + milestones
+    newTDLform = NewToDoListForm(milestones)
     if request.method=='POST':
-        newTDLform = NewToDoListForm(request.POST)
+        newTDLform = NewToDoListForm(milestones, request.POST)
         if newTDLform.is_valid():
             context['project'] = project
-            #TODO: ROCHA: put this into a form method
-            todo_list = ToDoList()
-            todo_list.creator = user
-            todo_list.project = project
-            
-            todo_list.title = newTDLform.cleaned_data['todolist_name']
-            todo_list.description = newTDLform.cleaned_data['todolist_description']
-            todo_list.save()
-            
+            todo_list = newTDLform.save(user, project)
             events_log(user, 'A', todo_list.title, todo_list)
             request.user.message_set.create(message=_('ToDo list "%(todo_list_name)s" successfully created.') % {'todo_list_name': todo_list.title})
             return HttpResponseRedirect(urlresolvers.reverse('rancho.todo.views.list', args = [p_id]))
@@ -315,6 +312,14 @@ def switch_todo_status(request, p_id):
             events_log(user, 'COMP', todo.description, todo)
             
         todo.save()
+        milestone = todo.todo_list.milestone
+        if milestone:
+            if todo.todo_list.is_complete():
+                todo.todo_list.milestone.completion_date = todo.completion_date
+                todo.todo_list.milestone.responsible = user
+            else:
+                todo.todo_list.milestone.completion_date = None
+            todo.todo_list.milestone.save()
         result = loader.get_template('todo/display_todo.html').render(Context({'todo':todo}))
         return HttpResponse(result, mimetype='text/xml')
     else:
@@ -331,23 +336,28 @@ def edit_todo_list(request, p_id, todo_list_id):
             return HttpResponseForbidden(_('Forbidden Access'))
     
     context = {'todo_list': edit_todo_list, 'project': project}
+    milestones = [(milestone.id, milestone.title) for milestone \
+                  in edit_todo_list.get_free_milestones()]
+    milestones = [(0, _("None"))] + milestones
     if request.method == 'POST':
         data = request.POST.copy()
-        edit_todo_list_form = EditToDoListForm(data)
+        edit_todo_list_form = EditToDoListForm(milestones, data)
         context['edit_todo_list_form'] = edit_todo_list_form
         if edit_todo_list_form.is_valid():
-            edit_todo_list.title = edit_todo_list_form.cleaned_data['todolist_name']
-            edit_todo_list.description = edit_todo_list_form.cleaned_data['todolist_description']
-            edit_todo_list.save()
-            
+            edit_todo_list_form.save_with_form_data(edit_todo_list)
             events_log(user, 'U', edit_todo_list.title, edit_todo_list)
             request.user.message_set.create(message=_('ToDo list successfully updated.'))
 
         return render_to_response('todo/edit_todo_list.html', 
                                   context,
                                   context_instance=RequestContext(request))
-    data = {'todolist_name': edit_todo_list.title, 'todolist_description': edit_todo_list.description}
-    edit_todo_list_form = EditToDoListForm(data)
+    milestone_id = 0
+    if edit_todo_list.milestone:
+        milestone_id = edit_todo_list.milestone.id
+    data = {'todolist_name': edit_todo_list.title,
+            'todolist_description': edit_todo_list.description,
+            'milestone': milestone_id}
+    edit_todo_list_form = EditToDoListForm(milestones, data)
     context['edit_todo_list_form'] = edit_todo_list_form
     return render_to_response('todo/edit_todo_list.html', context,
                               context_instance=RequestContext(request))

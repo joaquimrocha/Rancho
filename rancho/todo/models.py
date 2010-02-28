@@ -19,12 +19,17 @@
 from django.contrib.auth.models import User
 from django.db import models
 from rancho.project.models import Project
+from rancho.milestone.models import Milestone
 
 class ToDoList(models.Model):        
     creator = models.ForeignKey(User)
     project = models.ForeignKey(Project)
     
     responsible = models.ForeignKey(User, related_name='todolistresponsible', null=True)
+
+    milestone = models.ForeignKey(Milestone,
+                                  related_name = 'todo_milestone',
+                                  null = True)
     
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=500, null=True)
@@ -33,6 +38,20 @@ class ToDoList(models.Model):
         
     def get_todos(self):
         return ToDo.objects.filter(todo_list = self)
+
+    def is_complete(self):
+        for todo in self.get_todos():
+            if not todo.completion_date:
+                return False
+        return True
+
+    def get_free_milestones(self):
+        milestones = Milestone.objects.filter(project = self.project)
+        milestones = [milestone for milestone in milestones \
+                      if milestone.todolist == None]
+        if self.milestone:
+            milestones = [self.milestone] + milestones
+        return milestones
     
     @models.permalink
     def get_absolute_url(self):

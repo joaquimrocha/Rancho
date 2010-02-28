@@ -65,10 +65,28 @@ class Milestone(models.Model):
         return ('rancho.milestone.views.edit', [], {'p_id': self.project.id, 'milestone_id':self.id})
     
     def is_late(self):
-        return self.due_date.date() <= date.today()
+        return self.due_date.date() <= date.today() and \
+               not self.completion_date
 
     def is_upcoming(self):
-        return self.due_date.date() > date.today()
+        return self.due_date.date() > date.today() and \
+               not self.completion_date
     
     def is_complete(self):
         return self.completion_date != None
+
+    def get_status_name(self):
+        if self.is_late():
+            return 'late'
+        elif self.is_upcoming():
+            return 'upcoming'
+        else:
+            return 'complete'
+
+    def _get_todolist(self):
+        todolist_set = self.todo_milestone.all()
+        if todolist_set:
+            return todolist_set[0]
+        return None
+
+    todolist = property(_get_todolist)

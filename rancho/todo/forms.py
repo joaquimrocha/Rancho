@@ -18,13 +18,40 @@
 
 from django import forms
 from django.forms.widgets import Select
+from django.shortcuts import render_to_response, get_object_or_404
 from django.utils.translation import ugettext_lazy as _
-
+from rancho.milestone.models import Milestone
+from rancho.todo.models import ToDoList
 
 class NewToDoListForm(forms.Form):
     
     todolist_name = forms.CharField(widget=forms.TextInput(attrs={'size':40, 'class': 'big_entry'}), max_length = 50, label=_("Name"))
     todolist_description = forms.CharField(widget=forms.Textarea(attrs={'class': 'fillx', 'rows':4}), required=False,label=_("Description"))
+
+    def __init__(self, milestones, *args, **kwargs):
+        super(NewToDoListForm, self).__init__(*args, **kwargs)
+        self.fields['milestone'] = forms.ChoiceField(widget = Select,
+                                                     label = _('Milestone:'),
+                                                     choices = milestones,
+                                                     required = False)
+
+    def save_with_form_data(self, todo_list):
+        todo_list.title = self.cleaned_data['todolist_name']
+        todo_list.description = self.cleaned_data['todolist_description']
+        milestone_id = int(self.cleaned_data['milestone'] or 0)
+        if milestone_id:
+            milestone = get_object_or_404(Milestone, id = milestone_id)
+        else:
+            milestone = None
+        todo_list.milestone = milestone
+        todo_list.save()
+
+    def save(self, creator, project):
+        todo_list = ToDoList()
+        todo_list.creator = creator
+        todo_list.project = project
+        self.save_with_form_data(todo_list)
+        return todo_list
 
 class EditToDoListForm(NewToDoListForm):
     pass

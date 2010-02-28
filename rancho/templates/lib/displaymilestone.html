@@ -8,6 +8,12 @@
 			{% else %}
 				<span class="{{status}}">{{milestone.title}}</span>
 			{% endifhasperm %}
+			{% if milestone.todolist %}
+				{% ifhasperm "PERMISSIONS_TODO_VIEW" user project milestone.todolist %}
+				    <span class="gray">{% trans "with ToDo list:" %} <a href="{% url todo.views.view_todo_list project.id,milestone.todolist.id %}" style="color: #000;">{{ milestone.todolist.title }}</a></span>
+				{% endifhasperm %}
+			{% endif %}
+
 		</div>
 		<div class="item_controls">
 			{% ifhasperm "PERMISSIONS_MILESTONE_EDITDELETE" user project milestone %}
