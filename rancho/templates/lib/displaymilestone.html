@@ -29,9 +29,9 @@
 				{% trans "Completed by" %}
 				{% usernamegen milestone.responsible %} {% trans "on" %} 
 				{% ifequal status "late" %}
-					<span class="red">{{ milestone.completion_date }}</span>
+					<span class="red">{% formatdate user milestone.completion_date %}</span>
 				{% else %}
-					{{ milestone.completion_date }}
+					{% formatdate user milestone.completion_date %}
 				{% endifequal %}
 			{% else %}
 				{% trans "To be done until " %} <span class="{{status}}"><strong>{% formatdate user milestone.due_date %}</strong></span> {% trans "by" %} 
