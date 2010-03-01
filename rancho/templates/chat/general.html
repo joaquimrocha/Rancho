@@ -17,11 +17,17 @@
        $("#message").val("");
 	   return false;
     }
+
+    var chat_div = "#chat";
+    var scrollHeight = $(chat_div).attr("scrollHeight"); 
     
     function get_messages() {
-       var chat_div = "#chat";
        $.get("/project/{{project.id}}/chat/get_messages/");
-       $(chat_div).attr({ scrollTop: $(chat_div).attr("scrollHeight") });
+       var newScrollHeight = $(chat_div).attr("scrollHeight");
+       if (!scrollHeight || newScrollHeight > scrollHeight) {
+           scrollHeight = newScrollHeight;
+           $(chat_div).attr({ scrollTop: $(chat_div).attr("scrollHeight") });
+       }
        return false;
     }
     
