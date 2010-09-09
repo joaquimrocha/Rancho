@@ -9,8 +9,9 @@
 {% endblock %}
     
 {% block jquerycode %}
-    function delete_file(file_version_id) {	
-	   window.location = "/project/{{project.id}}/files/delete/"+ file_version_id;           
+    function delete_file(file_version_id) {
+       url = '{% url rancho.file.views.delete project.id,111111 %}';
+       window.location = url.replace(/111111/g,file_version_id);	
        return false;
     }     
 {% endblock %}	
