@@ -11,8 +11,9 @@
 {% endblock %}
 		
 {% block jquerycode %}
-    function delete_message(message_id) {	               
-       window.location = "/project/{{project.id}}/message/delete/"+ message_id+"/?page=index";
+    function delete_message(message_id) {	
+       url = '{% url rancho.message.views.delete project.id,111111 %}?page=index';
+       window.location = url.replace(/111111/g,message_id);
 	   return false;	                  
     }
 {% endblock %}

@@ -10,8 +10,9 @@
 {% endblock %}
     
 {% block jquerycode %}
-   function delete_wiki(wiki_id) {                  
-       window.location = "/project/{{project.id}}/wikiboards/delete/"+ wiki_id+"/";
+   function delete_wiki(wiki_id) {    
+       url = '{% url rancho.wikiboard.views.delete project.id,111111 %}';
+       window.location = url.replace(/111111/g,wiki_id);                                     
        return false;                      
     }
 {% endblock %}

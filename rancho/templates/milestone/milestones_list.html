@@ -11,15 +11,18 @@
     
 {% block jquerycode %}
     function delete_milestone(milestone_id) {                
-        window.location = "/project/{{project.id}}/milestones/delete/"+ milestone_id;                       
+        url = '{% url rancho.milestone.views.delete project.id,111111 %}';
+        window.location = url.replace(/111111/g,milestone_id);                       
         return false;
     }
-	function complete_milestone(milestone_id) {                
-        window.location = "/project/{{project.id}}/milestones/complete/"+ milestone_id;
+	function complete_milestone(milestone_id) {
+	    url = '{% url rancho.milestone.views.complete project.id,111111 %}';
+        window.location = url.replace(/111111/g,milestone_id);                
         return false;
     }
 	function incomplete_milestone(milestone_id) {                
-        window.location = "/project/{{project.id}}/milestones/incomplete/"+ milestone_id;
+        url = '{% url rancho.milestone.views.incomplete project.id,111111 %}';
+        window.location = url.replace(/111111/g,milestone_id);
         return false;
     }
     

@@ -19,8 +19,8 @@ function delete_logo(){
 	$("#project_logo").fadeOut();
 	return false;
 }
-function delete_project() {                  
-   window.location = "/project/{{project.id}}/delete/";
+function delete_project() {  
+   window.location = '{% url rancho.project.views.delete_project project.id %}';
    return false;                      
 }
 
