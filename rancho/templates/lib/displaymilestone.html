@@ -17,7 +17,7 @@
 		</div>
 		<div class="item_controls">
 			{% ifhasperm "PERMISSIONS_MILESTONE_EDITDELETE" user project milestone %}
-				<a class="edit" href="{% url milestone.views.edit p_id=project.id,milestone_id=milestone.id %}">Edit</a> | <a id="delete_milestone{{milestone.id}}" class="delete" href="">Delete</a>
+				<a class="edit" href="{% url milestone.views.edit p_id=project.id,milestone_id=milestone.id %}">{% trans "Edit" %}</a> | <a id="delete_milestone{{milestone.id}}" class="delete" href="">{% trans "Delete" %}</a>
 				{% modalconfirm "delete_milestone{{milestone.id}}" _("Are you sure you want to delete this milestone?") "delete_milestone(milestone.id)" %}
 			{% endifhasperm %}
 		</div>

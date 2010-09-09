@@ -7,7 +7,7 @@
 		</div>
 		<div class="item_controls">
 			{% ifhasperm "PERMISSIONS_WIKIBOARD_EDITDELETE" user project wiki %}
-				<a class="edit" href="{% url wikiboard.views.edit p_id=project.id,entry_id=wiki.id,entry_version=wiki.last_version.id %}">Edit</a> | <a id="delete_wiki{{wiki.id}}" class="delete" href="">Delete</a>
+				<a class="edit" href="{% url wikiboard.views.edit p_id=project.id,entry_id=wiki.id,entry_version=wiki.last_version.id %}">{% trans "Edit" %}</a> | <a id="delete_wiki{{wiki.id}}" class="delete" href="">{% trans "Delete" %}</a>
 			{% endifhasperm %}
 			{% modalconfirm "delete_wiki{{wiki.id}}" _("Are you sure you want to delete this milestone?") "delete_wiki(wiki.id)" %}
 		</div>
