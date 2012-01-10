@@ -36,6 +36,7 @@
 	         {% else %}
 	           <form action="{% url django.contrib.auth.views.login %}" method="post" style="margin: 0;">
 	         {% endif %}
+                 {% csrf_token %}
 	
 				
 					<table>
