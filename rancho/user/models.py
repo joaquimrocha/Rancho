@@ -20,8 +20,6 @@ from django.contrib.auth.models import User
 from django.db import models
 from rancho import settings
 from rancho.timezones.fields import TimeZoneField
-from rancho.timezones.forms import TIMEZONE_CHOICES
-
 
 class UserProfile(models.Model):
     YES_NO_CHOICES = (('1', 'Yes'), ('0', 'No'),)
