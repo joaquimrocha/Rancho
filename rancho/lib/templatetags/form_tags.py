@@ -4,7 +4,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the 
+# published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -27,34 +27,34 @@ class RequestBoxNode(template.Node):
         self.type = type.strip('"')
         self.title = template.Variable(title)
         self.description = template.Variable(description)
-        
+
         self.nodelist = nodelist
-    
-    def render(self, context): 
+
+    def render(self, context):
         tmpc = context
-        tmpc['type'] = self.type        
-        tmpc['title'] = self.title.resolve(context)        
+        tmpc['type'] = self.type
+        tmpc['title'] = self.title.resolve(context)
         tmpc['description'] = self.description.resolve(context)
-        
-        html = render_to_string('lib/form_tags/beginrequestbox.html', tmpc)                    
+
+        html = render_to_string('lib/form_tags/beginrequestbox.html', tmpc)
         html += self.nodelist.render(context)
         html += render_to_string('lib/form_tags/endrequestbox.html', tmpc)
-                        
+
         return html
 
 def do_requestbox(parser, token):
     """
     begins a request box
     beginrequestbox type tile description
-        
+
     type can be: required | notrequired
     tile is a text, can be empty
     description is a text, can be empty
     """
-    bits = token.split_contents() 
+    bits = token.split_contents()
     if len(bits) != 4:
         raise template.TemplateSyntaxError("'%s' tag takes three arguments" % bits[0])
-     
+
     nodelist = parser.parse('endrequestbox')
     token = parser.next_token()
 
@@ -67,32 +67,32 @@ class OptionalGroupNode(template.Node):
     def __init__(self, id, visible, title, nodelist):
         self.id = id.strip('"')
         self.visible = visible.strip('"')
-        self.title = template.Variable(title)        
+        self.title = template.Variable(title)
         self.nodelist = nodelist
-    
+
     def render(self, context):
-        mycontext = {'jsid': self.id,                
+        mycontext = {'jsid': self.id,
                     'visible': self.visible,
                     'title':  self.title.resolve(context)}
-        html = render_to_string('lib/form_tags/beginoptionalgroup.html', mycontext)                    
+        html = render_to_string('lib/form_tags/beginoptionalgroup.html', mycontext)
         html += self.nodelist.render(context)
         html += render_to_string('lib/form_tags/endoptionalgroup.html', mycontext)
-                        
+
         return html
 
 def do_optionalgroup(parser, token):
     """
     begins a optional group (part of a request box)
     beginoptionalgroup visible
-        
-    id unique id for js    
+
+    id unique id for js
     visible can be: true | false
-    title 
+    title
     """
-    bits = token.split_contents() 
+    bits = token.split_contents()
     if len(bits) != 4:
         raise template.TemplateSyntaxError("'%s' tag takes three arguments" % bits[0])
-     
+
     nodelist = parser.parse('endoptionalgroup')
     token = parser.next_token()
 
@@ -106,7 +106,7 @@ def printfield(context, field, place):
     Prints a field on a given place
     field is a form field
     place can be top or side
-    """    
+    """
     return {'field': field, 'placement': place }
 register.inclusion_tag("lib/form_tags/printfield.html", takes_context=True)(printfield)
 
@@ -129,6 +129,6 @@ def printformfooter(context, submitlabel, cancellabel, url):
                 argslist.append(template.Variable(p).resolve(context))
             urln = urlresolvers.reverse(view, args = argslist)
     else:
-        urln = urlresolvers.reverse(view)    
+        urln = urlresolvers.reverse(view)
     return {'url': urln, 'submitlabel': submitlabel, 'cancellabel': cancellabel}
 register.inclusion_tag("lib/form_tags/printformfooter.html", takes_context=True)(printformfooter)

@@ -4,7 +4,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the 
+# published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -24,8 +24,8 @@ urlpatterns = patterns('rancho.wikiboard.views',
     url(r'^edit/(?P<entry_id>\d+)/(?P<entry_version>\d+)/$', 'edit', name='wikiboard_edit_old'),
     url(r'^edit/$', 'edit', name='wikiboard_edit_new'),
     url(r'^delete/(?P<entry_id>\d+)/$','delete'),
-    
-    url(r'^view_page/(?P<entry_id>\d+)/(?P<entry_version>\d+)/$','view_page'),    
+
+    url(r'^view_page/(?P<entry_id>\d+)/(?P<entry_version>\d+)/$','view_page'),
     url(r'^export_wiki/(?P<entry_id>\d+)/(?P<entry_version>\d+)/(?P<file_type>[^/]+)/$','export_wiki'),
 )
-                       
+

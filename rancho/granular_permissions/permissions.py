@@ -4,7 +4,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the 
+# published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -37,24 +37,24 @@ PERMISSIONS_FILE_CREATE = 'file_create'
 PERMISSIONS_FILE_EDITDELETE = 'file_delete'
 
 IS_ADMIN = 'admin'
-IS_ACCOUNT_OWNER = 'account_owner' 
+IS_ACCOUNT_OWNER = 'account_owner'
 
 def check_user_permission(perm, user, object):
     """
-    user can allways edit/delete own objects 
+    user can allways edit/delete own objects
     """
     if perm == PERMISSIONS_MESSAGE_EDITDELETE or \
        perm == PERMISSIONS_TODO_EDITDELETE or \
        perm ==  PERMISSIONS_MILESTONE_EDITDELETE or \
        perm == PERMISSIONS_WIKIBOARD_EDITDELETE or \
-       perm == PERMISSIONS_FILE_EDITDELETE:            
+       perm == PERMISSIONS_FILE_EDITDELETE:
         return object.creator == user
     else:
         return False
-    
+
 def check_project_permission(perm, project):
     """
-    if project is finished user's can only view data, 
+    if project is finished user's can only view data,
     not change it (including admins)
     """
     if project.status == 'F':
@@ -67,30 +67,30 @@ def check_project_permission(perm, project):
         else:
             return False
     else:
-        return True        
+        return True
 
 
 def checkperm(perm, user, project, object=None):
     """
-    checks if a user has a given permission on project 
-    or if is creator of object 
-    """     
+    checks if a user has a given permission on project
+    or if is creator of object
+    """
     if perm==None:
         return True
     if perm==IS_ADMIN:
         return user.is_superuser
-    if perm==IS_ACCOUNT_OWNER: 
+    if perm==IS_ACCOUNT_OWNER:
         return user.get_profile.is_account_owner
-    
+
     if object:
         res1 = check_user_permission(perm, user, object)
-    else: 
+    else:
         res1 = False
     if project:
         res2 = user.has_row_perm(project, perm)
     else:
         res2 = False
-    
+
     if not check_project_permission(perm, project):
         return False
     else:
@@ -105,43 +105,43 @@ def get_permission_dictionary(user, project):
         perm['message'] = 'create'
     elif user.has_row_perm(project, PERMISSIONS_MESSAGE_VIEW):
         perm['message'] = 'view'
-    else:         
+    else:
         perm['message'] = 'none'
-        
+
     if user.has_row_perm(project, PERMISSIONS_TODO_EDITDELETE):
         perm['todo'] = 'delete'
     elif user.has_row_perm(project, PERMISSIONS_TODO_CREATE):
         perm['todo'] = 'create'
     elif user.has_row_perm(project, PERMISSIONS_TODO_VIEW):
         perm['todo'] = 'view'
-    else:         
+    else:
         perm['todo'] = 'none'
-        
+
     if user.has_row_perm(project, PERMISSIONS_MILESTONE_EDITDELETE):
         perm['milestone'] = 'delete'
     elif user.has_row_perm(project, PERMISSIONS_MILESTONE_CREATE):
         perm['milestone'] = 'create'
     elif user.has_row_perm(project, PERMISSIONS_MILESTONE_VIEW):
         perm['milestone'] = 'view'
-    else:         
+    else:
         perm['milestone'] = 'none'
-        
+
     if user.has_row_perm(project, PERMISSIONS_WIKIBOARD_EDITDELETE):
         perm['wikiboard'] = 'delete'
     elif user.has_row_perm(project, PERMISSIONS_WIKIBOARD_CREATE):
         perm['wikiboard'] = 'create'
     elif user.has_row_perm(project, PERMISSIONS_WIKIBOARD_VIEW):
         perm['wikiboard'] = 'view'
-    else:         
+    else:
         perm['wikiboard'] = 'none'
-    
+
     if user.has_row_perm(project, PERMISSIONS_FILE_EDITDELETE):
         perm['file'] = 'delete'
     elif user.has_row_perm(project, PERMISSIONS_FILE_CREATE):
         perm['file'] = 'create'
     elif user.has_row_perm(project, PERMISSIONS_FILE_VIEW):
         perm['file'] = 'view'
-    else:         
+    else:
         perm['file'] = 'none'
-        
+
     return perm

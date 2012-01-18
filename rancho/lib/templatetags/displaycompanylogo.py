@@ -4,7 +4,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the 
+# published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -27,10 +27,10 @@ def displaycompanylogo(company):
     """
     Displays project logo if the image exists or its name
     """
-    
+
     if company.logo and os.path.exists(os.path.join(settings.MEDIA_URL, company.logo.path)) and company.display_logo_name:
         return mark_safe('<img src="/media/%s" alt="%s"/>' % (company.logo, company.short_name))
     else:
         return mark_safe('<p style="margin-right: 20px;">%s</p>' % company.short_name)
-    
+
 register.simple_tag(displaycompanylogo)

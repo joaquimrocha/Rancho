@@ -4,13 +4,13 @@ from django.db import models
 from rancho.message.models import *
 
 class Migration:
-    
+
     depends_on = (
         ("file", "0001_initial"),
     )
-    
+
     def forwards(self, orm):
-        
+
         # Adding model 'Message'
         db.create_table('message_message', (
             ('id', orm['message.Message:id']),
@@ -24,36 +24,36 @@ class Migration:
             ('initial_message', orm['message.Message:initial_message']),
         ))
         db.send_create_signal('message', ['Message'])
-        
+
         # Adding ManyToManyField 'Message.notify_to'
         db.create_table('message_message_notify_to', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
             ('message', models.ForeignKey(orm.Message, null=False)),
             ('user', models.ForeignKey(orm['auth.User'], null=False))
         ))
-        
+
         # Adding ManyToManyField 'Message.read_by'
         db.create_table('message_message_read_by', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
             ('message', models.ForeignKey(orm.Message, null=False)),
             ('user', models.ForeignKey(orm['auth.User'], null=False))
         ))
-        
-    
-    
+
+
+
     def backwards(self, orm):
-        
+
         # Deleting model 'Message'
         db.delete_table('message_message')
-        
+
         # Dropping ManyToManyField 'Message.notify_to'
         db.delete_table('message_message_notify_to')
-        
+
         # Dropping ManyToManyField 'Message.read_by'
         db.delete_table('message_message_read_by')
-        
-    
-    
+
+
+
     models = {
         'auth.group': {
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -147,5 +147,5 @@ class Migration:
             'users': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.User']"})
         }
     }
-    
+
     complete_apps = ['message']

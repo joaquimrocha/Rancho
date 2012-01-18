@@ -4,7 +4,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the 
+# published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -18,13 +18,13 @@
 
 from django.conf.urls.defaults import *
 
-urlpatterns = patterns('rancho.message.views',    
-    url(r'^$','list'),             
+urlpatterns = patterns('rancho.message.views',
+    url(r'^$','list'),
     url(r'^filter/(?P<tag>[\w\s]+)/$','list', name='message_list_tag'),
-    
+
     url(r'^create/$','create'),
     url(r'^edit/(?P<m_id>\d+)/','edit'),
     url(r'^delete/(?P<m_id>\d+)/','delete'),
-    
+
     url(r'^read/(?P<m_id>\d+)/','read_add_comment'),
 )

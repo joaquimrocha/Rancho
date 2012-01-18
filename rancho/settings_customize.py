@@ -73,16 +73,16 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.load_template_source',
 )
 
-MIDDLEWARE_CLASSES = (    
-    'lib.middleware.Custom403Middleware',                    
+MIDDLEWARE_CLASSES = (
+    'lib.middleware.Custom403Middleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'lib.middleware.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
-    
+
     'django.middleware.doc.XViewMiddleware',
     'pagination.middleware.PaginationMiddleware',
-    'django.middleware.transaction.TransactionMiddleware',    
+    'django.middleware.transaction.TransactionMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -115,7 +115,7 @@ INSTALLED_APPS = (
 
     'pagination',
     'tagging',
-    'notification',    
+    'notification',
     'mailer',
     'granular_permissions',
     'tinymce',
@@ -125,16 +125,16 @@ INSTALLED_APPS = (
 
     'rancho.user',
     'rancho.project',
-    'rancho.message',    
+    'rancho.message',
     'rancho.company',
     'rancho.file',
-    'rancho.milestone',    
+    'rancho.milestone',
     'rancho.lib',
-    'rancho.wikiboard',    
+    'rancho.wikiboard',
     'rancho.todo',
-    'rancho.cal',    
+    'rancho.cal',
     'rancho.chat',
-    
+
 )
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
@@ -161,7 +161,7 @@ HAYSTACK_WHOOSH_PATH = os.path.join(DIRNAME, 'rancho_index')
 
 #how to send a file back to the user (django builtin code is very bad)
 #use of the following: apache-modsendfile , django
-HOW_SEND_FILE='django' 
+HOW_SEND_FILE='django'
 
 # LANGUAGES
 LANGUAGES = (('en-us', u'English'), ('pt-pt', u'Português'), ('es-es', u'Español'),)

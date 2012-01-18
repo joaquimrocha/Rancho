@@ -4,7 +4,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the 
+# published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -17,7 +17,7 @@
 ########################################################################
 
 from django import template
-from django.utils.translation import ugettext_lazy as _ 
+from django.utils.translation import ugettext_lazy as _
 from django.utils.safestring import mark_safe
 
 
@@ -31,8 +31,8 @@ def iconformessage(message, user):
         icon = icons_folder + 'comment_red.png'
         str = _("Read")
     else:
-        icon = icons_folder + 'comment.png'        
+        icon = icons_folder + 'comment.png'
         str = _("Unread")
     return mark_safe(u'<img src="%s" alt="%s" class="textcenter" title="%s"/>' % (icon, str, str))
-    
+
 register.simple_tag(iconformessage)

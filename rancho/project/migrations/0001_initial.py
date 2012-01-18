@@ -4,9 +4,9 @@ from django.db import models
 from rancho.project.models import *
 
 class Migration:
-    
+
     def forwards(self, orm):
-        
+
         # Adding model 'Project'
         db.create_table('project_project', (
             ('id', orm['project.Project:id']),
@@ -20,7 +20,7 @@ class Migration:
             ('company', orm['project.Project:company']),
         ))
         db.send_create_signal('project', ['Project'])
-        
+
         # Adding model 'UserInProject'
         db.create_table('project_userinproject', (
             ('id', orm['project.UserInProject:id']),
@@ -30,19 +30,19 @@ class Migration:
             ('state', orm['project.UserInProject:state']),
         ))
         db.send_create_signal('project', ['UserInProject'])
-        
-    
-    
+
+
+
     def backwards(self, orm):
-        
+
         # Deleting model 'Project'
         db.delete_table('project_project')
-        
+
         # Deleting model 'UserInProject'
         db.delete_table('project_userinproject')
-        
-    
-    
+
+
+
     models = {
         'auth.group': {
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -111,5 +111,5 @@ class Migration:
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
         }
     }
-    
+
     complete_apps = ['project']

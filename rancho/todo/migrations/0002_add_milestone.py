@@ -4,21 +4,21 @@ from django.db import models
 from todo.models import *
 
 class Migration:
-    
+
     def forwards(self, orm):
-        
+
         # Adding field 'ToDoList.milestone'
         db.add_column('todo_todolist', 'milestone', orm['todo.todolist:milestone'])
-        
-    
-    
+
+
+
     def backwards(self, orm):
-        
+
         # Deleting field 'ToDoList.milestone'
         db.delete_column('todo_todolist', 'milestone_id')
-        
-    
-    
+
+
+
     models = {
         'auth.group': {
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -112,5 +112,5 @@ class Migration:
             'title': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         }
     }
-    
+
     complete_apps = ['todo']

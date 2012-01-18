@@ -4,7 +4,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the 
+# published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -23,7 +23,7 @@ urlpatterns = patterns('rancho.project.views',
     (r'^(?P<p_id>\d+)/$', 'overview'),
     (r'^(?P<p_id>\d+)/overview/$', 'overview'),
     (r'^(?P<p_id>\d+)/settings/$', 'settings'),
-    (r'^(?P<p_id>\d+)/delete_logo/$', 'delete_logo'),    
+    (r'^(?P<p_id>\d+)/delete_logo/$', 'delete_logo'),
     (r'^(?P<p_id>\d+)/message/', include('rancho.message.urls')),
     (r'^(?P<p_id>\d+)/chat/', include('rancho.chat.urls')),
     (r'^(?P<p_id>\d+)/wikiboards/', include('rancho.wikiboard.urls')),

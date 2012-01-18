@@ -4,7 +4,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the 
+# published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -42,14 +42,14 @@ class Custom403Middleware(object):
         else:
             return response
 
-#from pinax project        
+#from pinax project
 class LocaleMiddleware(object):
     """
     This is a very simple middleware that parses a request
     and decides what translation object to install in the current
     thread context depending on the user's profile. This allows pages
     to be dynamically translated to the language the user desires
-    (if the language is available, of course). 
+    (if the language is available, of course).
     """
 
     def get_language_for_user(self, request):
@@ -67,7 +67,7 @@ class LocaleMiddleware(object):
 
     def process_response(self, request, response):
         patch_vary_headers(response, ('Accept-Language',))
-        response['Content-Language'] = translation.get_language()                
+        response['Content-Language'] = translation.get_language()
         translation.deactivate()
         return response
-        
+

@@ -4,7 +4,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the 
+# published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -33,7 +33,7 @@ def displaychatline(chat_object, log = False):
                                                                             'author': chat_object.author,
                                                                             'time': time,
                                                                             'css_class': css_class}
-    content = template.loader.get_template_from_string(content).render(template.Context({'date': chat_object.date, 
+    content = template.loader.get_template_from_string(content).render(template.Context({'date': chat_object.date,
                                                                                          'message': chat_object.message}))
     return content
 

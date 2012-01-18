@@ -4,7 +4,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the 
+# published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -26,10 +26,10 @@ import datetime
 class ChatForm(forms.Form):
 
     message = forms.CharField(label = _('Message'), widget=forms.Textarea(attrs={'class':'fillx', 'rows': 2, 'id': 'message'}), error_messages={'required': _('The message cannot be blank.')})
-    
+
     def __init__(self, request = None, *args, **kwargs):
         super(ChatForm, self).__init__(request,*args, **kwargs)
-        
+
     def save(self, user, project, message = None):
         post = Post(
             date   = datetime.now(),

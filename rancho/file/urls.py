@@ -4,7 +4,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the 
+# published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -18,17 +18,17 @@
 
 from django.conf.urls.defaults import *
 
-urlpatterns = patterns('rancho.file.views',                
+urlpatterns = patterns('rancho.file.views',
     url(r'^$','list'),
     url(r'^filter/(?P<tag>[\w\s]+)/$','list', name='file_list_tag'),
-    
+
     (r'^(?P<file_id>\d+)/$', 'view_file'),
-    
+
     (r'^create/$','create'),
     (r'^edit/(?P<v_id>\d+)/','edit'),
     (r'^delete/(?P<v_id>\d+)/','delete'),
-        
-    (r'^new_upload/(?P<f_id>\d+)/','new_upload'),        
-    
+
+    (r'^new_upload/(?P<f_id>\d+)/','new_upload'),
+
     (r'^send_file/(?P<v_id>\d+)/','send_file'),
 )

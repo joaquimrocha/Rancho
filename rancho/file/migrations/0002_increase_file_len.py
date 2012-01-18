@@ -4,31 +4,31 @@ from django.db import models
 from rancho.file.models import *
 
 class Migration:
-    
+
     def forwards(self, orm):
-        
+
         # Changing field 'File.title'
         # (to signature: django.db.models.fields.CharField(max_length=500))
         db.alter_column('file_file', 'title', orm['file.file:title'])
-        
+
         # Changing field 'FileVersion.file_location'
         # (to signature: django.db.models.fields.files.FileField(max_length=500))
         db.alter_column('file_fileversion', 'file_location', orm['file.fileversion:file_location'])
-        
-    
-    
+
+
+
     def backwards(self, orm):
-        
+
         # Changing field 'File.title'
         # (to signature: django.db.models.fields.CharField(max_length=50))
         db.alter_column('file_file', 'title', orm['file.file:title'])
-        
+
         # Changing field 'FileVersion.file_location'
         # (to signature: django.db.models.fields.files.FileField(max_length=100))
         db.alter_column('file_fileversion', 'file_location', orm['file.fileversion:file_location'])
-        
-    
-    
+
+
+
     models = {
         'auth.group': {
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -109,5 +109,5 @@ class Migration:
             'users': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.User']"})
         }
     }
-    
+
     complete_apps = ['file']

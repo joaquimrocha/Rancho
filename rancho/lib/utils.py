@@ -4,7 +4,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the 
+# published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -43,7 +43,7 @@ import string
 from zipfile import ZipFile
 
 def save_image(dbclass, name, image, image_size, dbclass_image_attribute = 'picture', format = 'JPEG'):
-    
+
     image_object = Image.open(StringIO(image.read()))
     file_name = '%s.%s' % (name, format.lower())
     try:
@@ -54,7 +54,7 @@ def save_image(dbclass, name, image, image_size, dbclass_image_attribute = 'pict
     image_object.thumbnail(image_size, Image.ANTIALIAS)
     image_object.save(picturefile, format.upper())
     image_content = ContentFile(picturefile.getvalue())
-    eval('dbclass.' + dbclass_image_attribute + '.save(file_name, image_content, save = True)')    
+    eval('dbclass.' + dbclass_image_attribute + '.save(file_name, image_content, save = True)')
     picturefile.close()
 
 def format_users_for_dropdown(me, users_list):
@@ -64,7 +64,7 @@ def format_users_for_dropdown(me, users_list):
             formated_name = usernamegen(user)
         else:
             formated_name = _('Myself: %s')%usernamegen(user)
-        
+
         formated_users.append((user.id, formated_name))
     return formated_users
 
@@ -72,11 +72,11 @@ def format_users_for_dropdown(me, users_list):
 def get_site_tags(project):
     """
     gets the tags used on the site
-    """    
-    
+    """
+
     a = set([name for name in Tag.objects.usage_for_queryset( File.objects.filter(project=project) )])
     b = set([name for name in Tag.objects.usage_for_queryset( Message.objects.filter(project=project) )])
-    return a.union(b) 
+    return a.union(b)
 
 def get_object_overview_info(object):
     '''
@@ -116,43 +116,43 @@ def get_object_overview_info(object):
 def get_overview(user, project):
     """
     only get object user can view
-    """    
+    """
     if checkperm(PERMISSIONS_WIKIBOARD_VIEW, user, project ):
         wikiboards = WikiEntry.objects.filter(wiki__project = project, wiki__project__status='A').order_by('-creation_date')
         wikiboards_ids = [(wiki_object.creation_date, 'wikiboards_%s' % wiki_object.id) for wiki_object in wikiboards[:50]]
     else:
         wikiboards_ids = []
-    
+
     if checkperm(PERMISSIONS_MESSAGE_VIEW, user, project ):
         messages = Message.objects.filter(project = project, project__status='A').extra(where=['message_message.initial_message_id = message_message.id']).order_by('-creation_date')
         messages_ids = [(message_object.creation_date, 'messages_%s' % message_object.id) for message_object in messages[:50]]
     else:
         messages_ids = []
-    
+
     if checkperm(PERMISSIONS_MILESTONE_VIEW, user, project ):
         milestones = Milestone.objects.filter(project = project, project__status='A', completion_date__isnull = True).order_by('-creation_date')
         milestones_ids = [(milestone_object.creation_date, 'milestones_%s' % milestone_object.id) for milestone_object in milestones[:50]]
-        
+
         completemilestones = Milestone.objects.filter(project = project, project__status='A', completion_date__isnull = False).order_by('-completion_date')
         completemilestones_ids = [(milestone_object.completion_date, 'completemilestones_%s' % milestone_object.id) for milestone_object in completemilestones[:50]]
     else:
         milestones_ids = completemilestones_ids = []
-    
+
     if checkperm(PERMISSIONS_FILE_VIEW, user, project ):
         files = FileVersion.objects.filter(file__project = project, file__project__status='A').order_by('-creation_date')
         files_ids = [(file_object.creation_date, 'files_%s' % file_object.id) for file_object in files[:50]]
     else:
         files_ids = []
-    
+
     if checkperm(PERMISSIONS_TODO_VIEW, user, project ):
         todos = ToDo.objects.filter(todo_list__project = project, todo_list__project__status='A', completion_date__isnull = True).order_by('-creation_date')
         todos_ids = [(todo.creation_date, 'todos_%s' % todo.id) for todo in todos[:50]]
-        
+
         completetodos = ToDo.objects.filter(todo_list__project = project, todo_list__project__status='A', completion_date__isnull = False).order_by('-completion_date')
         completetodos_ids = [(todo.completion_date, 'completetodos_%s' % todo.id) for todo in completetodos[:50]]
     else:
-        todos_ids = completetodos_ids = []        
-    
+        todos_ids = completetodos_ids = []
+
     all_events = messages_ids + milestones_ids + completemilestones_ids + wikiboards_ids + files_ids + todos_ids + completetodos_ids
     all_events.sort()
     all_events.reverse()
@@ -171,46 +171,46 @@ def get_overview(user, project):
 
 
 def send_file(filepath, filename = None):
-    filename = filename or os.path.basename(filepath) 
+    filename = filename or os.path.basename(filepath)
     class FileIterWrapper(object):
         def __init__(self, flo, chunk_size = 1024**2):
             self.flo = flo
             self.chunk_size = chunk_size
-    
+
         def next(self):
             data = self.flo.read(self.chunk_size)
             if data:
                 return data
             else:
                 raise StopIteration
-    
+
         def __iter__(self):
             return self
-     
-    content_type, encoding = mimetypes.guess_type(filepath) 
+
+    content_type, encoding = mimetypes.guess_type(filepath)
     if not content_type: content_type = 'application/octet-stream'
     #should add here more ways to serve files... (ngix, lighttpd., etc)
-    if settings.HOW_SEND_FILE == 'apache-modsendfile':    
-        response = HttpResponse() 
+    if settings.HOW_SEND_FILE == 'apache-modsendfile':
+        response = HttpResponse()
         response['X-Sendfile'] =  filepath
-        response['Content-Type'] = content_type 
+        response['Content-Type'] = content_type
 #        response['Content-Length'] = file.file_size
         response['Content-Disposition'] = 'attachment; filename="%s"' % os.path.basename(filename)
         return response
     else:
         response = HttpResponse(FileIterWrapper(open( filepath )))
-        response['Content-Type'] = content_type 
+        response['Content-Type'] = content_type
         response['Content-Disposition'] = 'attachment; filename="%s"' % os.path.basename(filename)
         return response
 
 def gen_random_pass():
-    return ''.join( Random().sample(string.letters+string.digits, 12) )            
+    return ''.join( Random().sample(string.letters+string.digits, 12) )
 
 def get_users_to_notify(project, perm):
     users_with_perm = granular_permissions.get_users_with_permission(project, perm)
     superuser = User.objects.filter(is_active=True, is_superuser=True)
     return (users_with_perm | superuser ).distinct().order_by('userprofile__company')
-    
+
 def events_log(user, event, title, object):
     """
     logs a event on the correct table so admin can view what happens

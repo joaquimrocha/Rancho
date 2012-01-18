@@ -4,7 +4,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the 
+# published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -20,7 +20,7 @@ from django.conf.urls.defaults import *
 
 from rancho import settings
 
-urlpatterns = patterns('django.views.generic.simple',    
+urlpatterns = patterns('django.views.generic.simple',
     (r'^$', 'redirect_to', {'url': 'dashboard/'}),
     (r'^legal_notice/$', 'direct_to_template', {'template': 'legal_notice.html'}, 'legal_notice'),
 )
@@ -33,13 +33,13 @@ urlpatterns = urlpatterns + patterns('',
     (r'^milestones/$', 'rancho.user.views.milestones'),
     (r'^statistics/$', 'rancho.user.views.statistics'),
 
-    (r'^auth/', include('rancho.auth.urls')),    
+    (r'^auth/', include('rancho.auth.urls')),
     (r'^project/', include('rancho.project.urls')),
     (r'^company/', include('rancho.company.urls')),
     (r'^people/', include('rancho.user.urls')),
     (r'^calendar/', include('rancho.cal.urls')),
     (r'^search/', include('rancho.search.urls')),
-    
+
     (r'^tinymce/', include('tinymce.urls')),
 )
 

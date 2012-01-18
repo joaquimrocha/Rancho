@@ -4,7 +4,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the 
+# published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -38,5 +38,5 @@ def displaystatistic(context, name, trans_name, number):
         icon = 'note.png'
     icon = icons_folder + icon
     return {'icon': icon, 'name': trans_name, 'number': number}
-    
+
 register.inclusion_tag("lib/displaystatistic.html", takes_context=True)(displaystatistic)

@@ -4,7 +4,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the 
+# published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -25,18 +25,18 @@ def usernamegen(user, format = 'right'):
     """
     Formats a user name for show purposes.
     """
-    
+
     username = user.username
     first_name = user.first_name
     last_name = user.last_name
-    
+
     #we can only respect format if we have first_name and last_name
     if first_name and last_name:
-        if len(username+first_name+last_name)+3>40:        
-            if len(last_name)>30:                
-                last_name = last_name[0]+'.'                
+        if len(username+first_name+last_name)+3>40:
+            if len(last_name)>30:
+                last_name = last_name[0]+'.'
             first_name = first_name[0]+'.'
-            
+
         if format == 'right':
             name = "%s %s (%s) " % (first_name, last_name, username)
         elif format == 'top':
@@ -50,7 +50,7 @@ def usernamegen(user, format = 'right'):
             name = "<p><strong>%s</strong></p><p><strong><br/></strong></p>" % (username)
         else:
             name = username
-        
+
     return mark_safe(name)
-    
+
 register.simple_tag(usernamegen)

@@ -4,9 +4,9 @@ from django.db import models
 from rancho.milestone.models import *
 
 class Migration:
-    
+
     def forwards(self, orm):
-        
+
         # Adding model 'Milestone'
         db.create_table('milestone_milestone', (
             ('id', orm['milestone.Milestone:id']),
@@ -21,16 +21,16 @@ class Migration:
             ('sent_notification', orm['milestone.Milestone:sent_notification']),
         ))
         db.send_create_signal('milestone', ['Milestone'])
-        
-    
-    
+
+
+
     def backwards(self, orm):
-        
+
         # Deleting model 'Milestone'
         db.delete_table('milestone_milestone')
-        
-    
-    
+
+
+
     models = {
         'auth.group': {
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -104,5 +104,5 @@ class Migration:
             'users': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.User']"})
         }
     }
-    
+
     complete_apps = ['milestone']

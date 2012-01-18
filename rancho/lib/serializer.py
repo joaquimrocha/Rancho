@@ -5,7 +5,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the 
+# published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -49,8 +49,8 @@ try: #support python>=2.5
 except: #python <=2.4
     from elementtree import ElementTree as ET
 
-# Important element names to make it easier 
-# in case they need to be changed 
+# Important element names to make it easier
+# in case they need to be changed
 ROOT_ELEMENT = 'account'
 USERS_ELEMENT = 'users'
 PERMISSIONS_ELEMENT = 'permissions'
@@ -101,7 +101,7 @@ def export_account(name_prefix, components = []):
             files += serializeFiles(project_element, project)
     indent(root)
     now = datetime.now()
-    export_temp_dir = tempfile.mkdtemp(prefix = EXPORTATION_PREFIX) 
+    export_temp_dir = tempfile.mkdtemp(prefix = EXPORTATION_PREFIX)
     export_name = '%s-%s%s%s%s%s%s%s' % (name_prefix, now.year, now.month, now.day, now.hour, now.minute, now.second, now.microsecond)
     export_path = os.path.join(export_temp_dir, export_name)
     os.mkdir(export_path)
@@ -164,7 +164,7 @@ def serializeUsersInProject(element, project):
         permissions_element = ET.SubElement(user_in_project_element, 'permissions', {'type': 'list'})
         for key in permission_dict.keys():
             permission_element = ET.SubElement(permissions_element, key, {'type': 'text'})
-            permission_element.text = permission_dict[key] 
+            permission_element.text = permission_dict[key]
 
 def serializeMilestones(element, project):
     milestones = Milestone.objects.filter(project = project)
@@ -189,7 +189,7 @@ def serializeWikiboards(element, project):
         for entry in entries:
             entries_element.append(serialize(entry))
 
-def serializeToDos(element, project): 
+def serializeToDos(element, project):
     todo_lists = ToDoList.objects.filter(project = project)
     if not todo_lists:
         return
@@ -243,16 +243,16 @@ def import_account(import_file, system = None):
     # Dictionary with matches between the XML's objects' IDs
     # and the IDs newly created
     references = {}
-    synonims = {'User': ['user', 'author', 'responsible', 'creator'], 
-                'Company': ['company'], 'Project': ['project'], 
+    synonims = {'User': ['user', 'author', 'responsible', 'creator'],
+                'Company': ['company'], 'Project': ['project'],
                 'Wiki': ['wiki'], 'File': ['file'],
-                'ToDoList': ['todolist', 'todo_list'], 'ToDo': ['todo'], 
+                'ToDoList': ['todolist', 'todo_list'], 'ToDo': ['todo'],
                 'Message': ['initial_message', 'message']}
-    existence_checks = {'User': ['username'], 'Company': ['short_name'], 
-                        'UserProfile': ['user'], 'Project': ['name'], 
+    existence_checks = {'User': ['username'], 'Company': ['short_name'],
+                        'UserProfile': ['user'], 'Project': ['name'],
                         'Wiki': ['name'], 'UserInProject': ['user', 'project']}
     self_references = ['Message.initial_message']
-    
+
     if type(import_file) == str:
          import_file_path = import_file
     else:
@@ -266,7 +266,7 @@ def import_account(import_file, system = None):
     files_in_dir = os.listdir(exportation_base_dir)
     if len(files_in_dir) > 1 or not files_in_dir:
         return
-    
+
     # Check importation system
     if system == 'BASECAMP':
         exportation_file = os.path.join(exportation_base_dir, files_in_dir[0])
@@ -277,21 +277,21 @@ def import_account(import_file, system = None):
             return
         exportation_file = os.path.join(exportation_base_dir, EXPORT_XML_FILE_NAME)
     tree = ET.parse(exportation_file)
-    
+
     if system == 'BASECAMP':
         tree = convert_bc2rancho(tree)
-    
+
     def get_children(element, sub_element):
         sub_element_node = element.find(sub_element)
         if sub_element_node:
             return sub_element_node.getchildren()
         return []
-    
+
     def add_to_references(element, id):
         if not element.tag in references.keys():
             references[element.tag] = {}
         references[element.tag][element.find('id').text] = id
-    
+
     def get_object_by_reference(name, reference):
         real_name = ''
         if name in references.keys():
@@ -304,7 +304,7 @@ def import_account(import_file, system = None):
         if real_name:
             return eval('%s.objects.get(id = %s)' % (real_name, references[real_name].get(reference)))
         return
-    
+
     def elementToVar(element):
         type_name = element.attrib.get('type')
         var = element.text
@@ -359,7 +359,7 @@ def import_account(import_file, system = None):
                     list_elements.append(child)
                 elif child.tag == 'id':
                     id = element, child.text
-                else:                    
+                else:
                     object = get_object_by_reference(child.tag, child.text)
                     if object:
                         post_args[child.tag] = object
@@ -367,10 +367,10 @@ def import_account(import_file, system = None):
                         args.append(elementToVar(child))
             code = '%s(%s)' % (element.tag, ', '.join(args))
             new_object = eval(code)
-            
+
             for key, object in post_args.items():
                 setattr(new_object, key, object)
-            
+
             new_object.save()
             add_to_references(element, new_object.id)
             for (object_name, reference, value) in self_references_to_assign:
@@ -379,14 +379,14 @@ def import_account(import_file, system = None):
                 new_object.save()
         add_to_references(element, new_object.id)
         return new_object
-    
+
     def unserialize_recursive(element, ignore = []):
         unserialize(element)
         for sub_element in element.getchildren():
             if sub_element.attrib.get('type') == 'list':
                 for child in sub_element.getchildren():
                     unserialize_recursive(child)
-    
+
     def unserialize_circular_references(element_list, sub_element_list, field):
         for element in element_list.getchildren():
             reference = element.find(field)
@@ -395,7 +395,7 @@ def import_account(import_file, system = None):
             last_child = None
             for field_element in get_children(element, sub_element_list):
                 if not class_for_field:
-                    class_for_field = field_element.tag 
+                    class_for_field = field_element.tag
                 last_child = unserialize(field_element)
             if class_for_field:
                 if reference:
@@ -403,17 +403,17 @@ def import_account(import_file, system = None):
                 else:
                     setattr(new_object, field, last_child)
             new_object.save()
-    
+
     # Companies
     for company in tree.find('companies').getchildren():
         unserialize(company)
-    
+
     # Users
     for user in tree.find('users').getchildren():
         unserialize(user, ['UserProfile'])
         user_profile = user.find('UserProfile')
         unserialize(user_profile)
-    
+
     # Projects
     for project in tree.find('projects').getchildren():
         project_object = unserialize(project)
@@ -444,16 +444,16 @@ def import_account(import_file, system = None):
     return
 
 
-def convert_bc2rancho(tree): 
-    
-    def convert_date(str):        
+def convert_bc2rancho(tree):
+
+    def convert_date(str):
         from datetime import datetime
         return datetime.strptime(str, "%Y-%m-%d")
-        
-    def convert_datetime(str):        
+
+    def convert_datetime(str):
         from datetime import datetime
         return datetime.strptime(str.split(".")[0], "%Y-%m-%dT%H:%M:%SZ")
-    
+
     def process_user(person, company_id, timezone):
         def get_im_service(serv):
             if serv == 'MSN':
@@ -462,16 +462,16 @@ def convert_bc2rancho(tree):
                 return 'A'
             else:
                 return 'J'
-            
-        administrator = person.find('administrator')         
-        if hasattr(administrator, 'text') :            
-            is_superuser = administrator.text == 'true' 
+
+        administrator = person.find('administrator')
+        if hasattr(administrator, 'text') :
+            is_superuser = administrator.text == 'true'
         else:
             is_superuser = False
-            
+
         deleted = person.find('deleted').text == 'true'
         id = person.find('id').text
-        
+
         user = ET.Element('User')
         add_subelement(user, 'id', 'int', id)
         add_subelement(user, 'username', 'text', person.find('user-name').text)
@@ -481,7 +481,7 @@ def convert_bc2rancho(tree):
         add_subelement(user, 'is_superuser', 'bool', is_superuser)
         add_subelement(user, 'is_active', 'bool', not deleted)
         add_subelement(user, 'id', 'text', id)
-        
+
         user_profile = ET.Element('UserProfile')
         add_subelement(user_profile, 'id', 'int', id)
         add_subelement(user_profile, 'user', 'int', id)
@@ -494,21 +494,21 @@ def convert_bc2rancho(tree):
         add_subelement(user_profile, 'home_phone', 'text', person.find('phone-number-home').text)
         add_subelement(user_profile, 'im_name', 'text', person.find('im-handle').text)
         add_subelement(user_profile, 'im_service', 'text', get_im_service(person.find('im-service').text))
-        
+
         user.append(user_profile)
-                                
+
         return id,user
-    
+
     def add_subelement(element, name, type_name, value):
-        if value: #add only if not null            
+        if value: #add only if not null
             field_element = ET.SubElement(element, name)
             field_element.set('type', type_name)
             if type_name == 'text':
                 field_element.text = unicode(value).replace('\n', '\\n').replace('"', '\"').replace("'", "\\'")
             else:
                 field_element.text = unicode(value)
-    
-    def process_company(firm, main):  
+
+    def process_company(firm, main):
         def get_timezone(tz):
             import pytz
             for t in pytz.all_timezones:
@@ -523,18 +523,18 @@ def convert_bc2rancho(tree):
         if ad1: mailing_address = ad1
         if ad2: mailing_address += ad2
         timezone =  get_timezone(firm.find('time-zone-id').text)
-        
+
         element = ET.Element('Company')
         add_subelement(element, 'id', 'int', id)
         add_subelement(element, 'short_name', 'text', firm.find('name').text)
-        add_subelement(element, 'long_name', 'text', firm.find('name').text)        
+        add_subelement(element, 'long_name', 'text', firm.find('name').text)
         add_subelement(element, 'display_logo_name', 'bool', 'False')
         add_subelement(element, 'main_company', 'bool', main)
         add_subelement(element, 'mailing_address', 'text', mailing_address)
         add_subelement(element, 'webpage', 'text', firm.find('web-address').text)
-                
+
         return id, element, timezone
-    
+
     def process_project(project, company, creator):
         def get_project_status(st):
             if st == 'on_hold':
@@ -543,9 +543,9 @@ def convert_bc2rancho(tree):
                 return 'F'
             else:
                 return 'A'
-            
+
         id =  project.find('id').text
-        
+
         element = ET.Element('Project')
         add_subelement(element, 'id', 'int', id)
         add_subelement(element, 'name', 'text', project.find('name').text)
@@ -553,37 +553,37 @@ def convert_bc2rancho(tree):
         add_subelement(element, 'creator', 'int', creator)
         add_subelement(element, 'company', 'int', company)
         add_subelement(element, 'creation_date', 'datetime', convert_date( project.find('created-on').text ))
-        
+
         return id, element
 
-    root = ET.Element(ROOT_ELEMENT) 
+    root = ET.Element(ROOT_ELEMENT)
     users = ET.SubElement(root, USERS_ELEMENT)
     companies = ET.SubElement(root, 'companies', {'type': 'list'})
     projects = ET.SubElement(root, 'projects', {'type': 'list'})
-            
+
     firm = tree.getroot().find('firm')
     account_holder_id = tree.getroot().find('account-holder-id').text
-        
+
     mcid, mcompany, mtimezone = process_company(firm, False)
-    companies.append(mcompany)    
-    
+    companies.append(mcompany)
+
     for person in firm.find('people').findall('person'):
         id, user = process_user(person, mcid, mtimezone)
         users.append(user)
-    
+
     #now convert the clients
     for client in tree.getroot().find('clients').findall('client'):
         cid, company, timezone  = process_company(client, False)
-        companies.append(company)                    
+        companies.append(company)
         #the users in company
         for person in client.find('people').findall('person'):
             id, user = process_user(person, cid, timezone)
             users.append(user)
 
     #now process projects
-    for proj in tree.getroot().find('projects').findall('project'):        
-        pid, project = process_project(proj, mcid, account_holder_id) 
-        
+    for proj in tree.getroot().find('projects').findall('project'):
+        pid, project = process_project(proj, mcid, account_holder_id)
+
         project_users = ET.SubElement(project, 'users', {'type': 'list'})
         for person in proj.find('participants').findall('person'):
             user_in_project = ET.SubElement(project_users, 'UserInProject')
@@ -591,51 +591,51 @@ def convert_bc2rancho(tree):
             add_subelement(user_in_project, 'user', 'int', person.text)
             add_subelement(user_in_project, 'project', 'int', pid)
             add_subelement(user_in_project, 'state', 'text', 'a')
-            
+
             permissions = ET.SubElement(user_in_project, 'permissions', {'type': 'list'})
             add_subelement(permissions, 'message', 'text', 'delete')
             add_subelement(permissions, 'todo', 'text', 'delete')
             add_subelement(permissions, 'wikiboard', 'text', 'delete')
             add_subelement(permissions, 'file', 'text', 'delete')
             add_subelement(permissions, 'milestone', 'text', 'delete')
-          
-        messages = ET.SubElement(project, 'messages', {'type': 'list'})            
+
+        messages = ET.SubElement(project, 'messages', {'type': 'list'})
         for post in proj.find('posts').findall('post'):
             message = ET.SubElement(messages, 'Message')
             mid = post.find('id').text
-            
+
             add_subelement(message, 'id', 'int', mid)
             add_subelement(message, 'creator', 'int', post.find('author-id').text)
             add_subelement(message, 'project', 'int', pid)
             add_subelement(message, 'creation_date', 'datetime', convert_datetime( post.find('posted-on').text ) )
             add_subelement(message, 'title', 'text', post.find('title').text)
-            add_subelement(message, 'body', 'text', post.find('body').text)            
+            add_subelement(message, 'body', 'text', post.find('body').text)
             add_subelement(message, 'initial_message', 'int', mid)
-            
+
             comments = ET.SubElement(message, 'comments', {'type': 'list'})
             for c in post.find('comments').findall('comment'):
                 comment = ET.SubElement(comments, 'Message')
-                
+
                 add_subelement(comment, 'id', 'int', c.find('id').text)
                 add_subelement(comment, 'creator', 'int', c.find('author-id').text)
                 add_subelement(comment, 'creation_date', 'datetime', convert_datetime( c.find('created-at').text ) )
                 add_subelement(comment, 'project', 'int', pid)
                 add_subelement(comment, 'body', 'text', c.find('body').text)
                 add_subelement(comment, 'initial_message', 'int', mid)
-                                   
-        todolists = ET.SubElement(project, 'todo_lists', {'type': 'list'})  
+
+        todolists = ET.SubElement(project, 'todo_lists', {'type': 'list'})
         for tdl in proj.find('todo-lists').findall('todo-list'):
             tdlist = ET.SubElement(todolists, 'ToDoList')
             tdlid = tdl.find('id').text
             num_todos = len( tdl.find('todo-items').findall('todo-item') )
-            
+
             add_subelement(tdlist, 'id', 'int', tdlid)
             add_subelement(tdlist, 'project', 'int', pid)
-            add_subelement(tdlist, 'creator', 'int', account_holder_id) 
+            add_subelement(tdlist, 'creator', 'int', account_holder_id)
             add_subelement(tdlist, 'title', 'text', tdl.find('name').text)
             add_subelement(tdlist, 'description', 'text', tdl.find('description').text)
-            add_subelement(tdlist, 'number_of_todos', 'int', num_todos)            
-            
+            add_subelement(tdlist, 'number_of_todos', 'int', num_todos)
+
             todos = ET.SubElement(tdlist, 'todo_items', {'type': 'list'})
             for t in tdl.find('todo-items').findall('todo-item'):
                 todo = ET.SubElement(todos, 'ToDo')
@@ -649,28 +649,28 @@ def convert_bc2rancho(tree):
                 if hasattr(t.find('responsible-party-id'), 'text'):
                     add_subelement(todo, 'responsible', 'int', t.find('responsible-party-id').text)
                 add_subelement(todo, 'position', 'int', num_todos)
-                num_todos -= 1 
-                
-        milestones = ET.SubElement(project, 'milestones', {'type': 'list'})   
+                num_todos -= 1
+
+        milestones = ET.SubElement(project, 'milestones', {'type': 'list'})
         for m in proj.find('milestones').findall('milestone'):
             milestone = ET.SubElement(milestones, 'Milestone')
-            
+
             add_subelement(milestone, 'id', 'int', post.find('id').text)
             add_subelement(milestone, 'creator', 'int', m.find('creator-id').text)
             add_subelement(milestone, 'project', 'int', pid)
             add_subelement(milestone, 'title', 'text', m.find('title').text)
             add_subelement(milestone, 'creation_date', 'datetime', convert_datetime( m.find('created-on').text ) )
-            add_subelement(milestone, 'due_date', 'datetime', convert_date( m.find('deadline').text ) )            
-            add_subelement(milestone, 'send_notification_email ', 'bool', m.find('wants-notification').text == 'true')           
+            add_subelement(milestone, 'due_date', 'datetime', convert_date( m.find('deadline').text ) )
+            add_subelement(milestone, 'send_notification_email ', 'bool', m.find('wants-notification').text == 'true')
             add_subelement(milestone, 'sent_notification  ', 'bool', False)
-                             
+
             #TODO: check if responsible-party-type can be other than person
-            if hasattr(m.find('responsible-party-id'), 'text'):  
-                add_subelement(milestone, 'responsible', 'int', m.find('responsible-party-id').text)              
+            if hasattr(m.find('responsible-party-id'), 'text'):
+                add_subelement(milestone, 'responsible', 'int', m.find('responsible-party-id').text)
             if m.find('completed').text == 'true':
-                add_subelement(milestone, 'completion_date', 'datetime', convert_datetime( m.find('completed-on').text ) )                
-                
+                add_subelement(milestone, 'completion_date', 'datetime', convert_datetime( m.find('completed-on').text ) )
+
         projects.append(project)
     indent(root)
-    
+
     return root

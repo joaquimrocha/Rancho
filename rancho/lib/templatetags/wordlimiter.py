@@ -4,7 +4,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the 
+# published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -24,9 +24,9 @@ def wordlimiter(context, text='', number_of_words=25):
     """
     Displays *approximately* the amount of words described by the argument number_of_words from the text (in reading order).
     """
-    
+
     words = text.split()
-    
+
     if number_of_words<len(words):
         words = words[:number_of_words]
         number_to_limit = len(' '.join(words))

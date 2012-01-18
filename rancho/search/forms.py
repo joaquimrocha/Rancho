@@ -4,7 +4,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the 
+# published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -19,8 +19,8 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-class GeneralSearchForm(forms.Form):    
+class GeneralSearchForm(forms.Form):
     query = forms.CharField(label=_('Query'), widget=forms.TextInput(attrs={'class':'general_search_input textbottom'}))
-    
-class SearchForm(GeneralSearchForm):    
+
+class SearchForm(GeneralSearchForm):
     query = forms.CharField(label=_('Query'), widget=forms.TextInput(attrs={'class': 'main_search'}))

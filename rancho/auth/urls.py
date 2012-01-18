@@ -4,7 +4,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the 
+# published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -18,11 +18,11 @@
 
 from django.conf.urls.defaults import *
 
-urlpatterns = patterns('django.views.generic.simple',    
+urlpatterns = patterns('django.views.generic.simple',
     (r'^$', 'redirect_to', {'url': 'login/'}),
 )
 
-urlpatterns =  urlpatterns + patterns('',    
+urlpatterns =  urlpatterns + patterns('',
     (r'^login/$', 'django.contrib.auth.views.login'),
     (r'^logout/$', 'django.contrib.auth.views.logout'),
     (r'^password_reset/$', 'django.contrib.auth.views.password_reset'),

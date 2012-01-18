@@ -4,7 +4,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the 
+# published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -44,9 +44,9 @@ class NewMilestoneForm(forms.Form):
             milestone.responsible = get_object_or_404(User, id = user_id)
         milestone.title = self.cleaned_data['title']
         milestone.due_date = self.cleaned_data['due_date']
-        milestone.send_notification_email = self.cleaned_data['send_notification_email'] 
-        milestone.save()    
+        milestone.send_notification_email = self.cleaned_data['send_notification_email']
+        milestone.save()
         return milestone
-        
 
-        
+
+

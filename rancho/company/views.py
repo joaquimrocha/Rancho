@@ -4,7 +4,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the 
+# published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -37,18 +37,18 @@ from rancho.user.models import UserProfile
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def company_settings(request):
-    
-    user = request.user        
+
+    user = request.user
     projects = Project.objects.get_projects_for_user(user)
 
     company = Company.objects.get(main_company=True)
-        
+
     if request.method=='POST':
-        
+
         editCompanySettingsForm = EditCompanySettingsForm(request.POST,request.FILES)
-         
+
         if editCompanySettingsForm.is_valid():
-             
+
             company.short_name = editCompanySettingsForm.cleaned_data['short_name']
             company.long_name = editCompanySettingsForm.cleaned_data['long_name']
             company.description = editCompanySettingsForm.cleaned_data['description']
@@ -59,11 +59,11 @@ def company_settings(request):
             logo = editCompanySettingsForm.cleaned_data['logo']
             if logo:
                 utils.save_image(company, company.id, logo, settings.COMPANY_LOGO_SIZE, 'logo', 'JPEG')
-            
+
             company.save()
-            
-            request.user.message_set.create(message=_("Company settings have been successfully edited."))         
-    else :    
+
+            request.user.message_set.create(message=_("Company settings have been successfully edited."))
+    else :
         data = {'short_name':company.short_name,
                'long_name':company.long_name,
                'description':company.description,
@@ -73,36 +73,36 @@ def company_settings(request):
                'display_logo_name':company.display_logo_name,
                'logo':company.logo}
         editCompanySettingsForm = EditCompanySettingsForm(data)
-        
+
     context = {'edit_company': company,
                 'projects': projects,
                 'editCompanySettingsForm': editCompanySettingsForm,
                 'is_main_company': True
-                }        
-            
-    return render_to_response("company/settings.html", context, 
+                }
+
+    return render_to_response("company/settings.html", context,
                               context_instance = RequestContext(request))
 
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
-def delete_logo(request, c_id=None):    
+def delete_logo(request, c_id=None):
     if c_id:
         company = get_object_or_404(Company, id=c_id)
     else:
         company = Company.objects.get(main_company=True)
-    
+
     if company.logo:
         company.logo.delete(save=False)
         company.logo = None
         company.save()
-    
+
     return HttpResponse('')
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def create_company(request):
-    
+
     if request.method == 'POST':
         form = CreateCompanyForm(request.POST)
         if form.is_valid():
@@ -110,55 +110,55 @@ def create_company(request):
             new_company.short_name = form.cleaned_data['short_name']
             new_company.long_name = form.cleaned_data['long_name']
             new_company.save()
-            
+
             request.user.message_set.create(message=_("Company %s have been successfully created."%new_company.short_name))
-            return HttpResponseRedirect(urlresolvers.reverse('rancho.user.views.all_people'))            
+            return HttpResponseRedirect(urlresolvers.reverse('rancho.user.views.all_people'))
     else:
         form = CreateCompanyForm()
-    
+
     return render_to_response("company/create.html",
-                              {'form': form}, 
-                              context_instance = RequestContext(request))    
+                              {'form': form},
+                              context_instance = RequestContext(request))
 
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
-def edit_company(request, c_id):    
+def edit_company(request, c_id):
     user = request.user
     company = get_object_or_404(Company, id=c_id)
-    
+
     if company.main_company and user.get_profile().is_account_owner:
         return HttpResponseRedirect(urlresolvers.reverse('rancho.company.views.company_settings'))
     elif company.main_company:
         return HttpResponseRedirect(urlresolvers.reverse('rancho.user.views.all_people'))
-    
+
     if request.method == 'POST':
         form = CreateCompanyForm(request.POST)
         if form.is_valid():
             company.short_name = form.cleaned_data['short_name']
             company.long_name = form.cleaned_data['long_name']
             company.save()
-            
+
             request.user.message_set.create(message=_("Company %s information has been successfully updated."%company.short_name))
-            return HttpResponseRedirect(urlresolvers.reverse('rancho.user.views.all_people'))            
+            return HttpResponseRedirect(urlresolvers.reverse('rancho.user.views.all_people'))
     else:
         data = {'short_name': company.short_name,
-                'long_name': company.long_name,                
+                'long_name': company.long_name,
                 }
         form = CreateCompanyForm(data)
-    
+
     return render_to_response("company/edit.html",
                               {'form': form,
-                               'editcompany': company}, 
+                               'editcompany': company},
                               context_instance = RequestContext(request))
-    
+
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def delete_company(request):
-    
+
     if request.method == 'GET':
         company = get_object_or_404(Company, id = int(request.GET.get('c_id')))
-        
+
         if company.main_company:
             return HttpResponseRedirect(urlresolvers.reverse('rancho.user.views.all_people'))
         else:
@@ -167,37 +167,37 @@ def delete_company(request):
                 company.userprofile_set.update(company=main_company)
                 company.delete()
             else:
-                company.delete()                
+                company.delete()
             request.user.message_set.create(message=_("Company %s has been deleted."%company.short_name))
-        
+
     return HttpResponseRedirect(urlresolvers.reverse('rancho.user.views.all_people'))
 
 @login_required
 def view_company(request, company_id):
 
-    user = request.user 
+    user = request.user
     company = get_object_or_404(Company, id = company_id)
 
     if not can_see_company(user, company):
         raise Http404()
 
     return render_to_response("company/view.html",
-                              {'c': company}, 
+                              {'c': company},
                               context_instance = RequestContext(request))
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def show_logs(request):
-    
+
     ev = EventsHistory.objects.all().order_by('-date')
-        
+
     return render_to_response("company/show_logs.html",
-                              {'events': ev}, 
-                              context_instance = RequestContext(request))    
-    
+                              {'events': ev},
+                              context_instance = RequestContext(request))
+
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
-def download_logs(request):    
+def download_logs(request):
     import cStringIO
     output = cStringIO.StringIO()
     output.write('"Date";"Action";"Type";"Title";"Project";"Link"\n')
@@ -225,30 +225,30 @@ def download_logs(request):
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def export_account(request):
-    
+
     user = request.user
     company = Company.objects.get(main_company=True)
-    
+
     if request.method == 'POST':
         form = ExportAccountForm(request.POST)
         if form.is_valid():
             return serializer.export_account(user.get_profile().company.short_name, form.cleaned_data['components'])
     else:
         form = ExportAccountForm()
-    
+
     return render_to_response("company/export.html",
                               {'form': form,
-                               'company': company}, 
+                               'company': company},
                                 context_instance = RequestContext(request))
 
 @login_required
 @transaction.commit_manually
 @user_passes_test(lambda u: u.is_superuser)
 def import_account(request):
-    
+
     user = request.user
     company = Company.objects.get(main_company=True)
-    
+
     if request.method == 'POST':
         form = ImportAccountForm(request.POST, request.FILES)
         if form.is_valid():
@@ -268,10 +268,10 @@ def import_account(request):
                 return HttpResponseRedirect(urlresolvers.reverse('rancho.user.views.dashboard'))
     else:
         form = ImportAccountForm()
-    
+
     return render_to_response("company/import.html",
                               {'form': form,
-                               'company': company}, 
+                               'company': company},
                               context_instance = RequestContext(request))
 
 def can_see_company(user, company):

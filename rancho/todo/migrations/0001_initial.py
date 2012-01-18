@@ -4,9 +4,9 @@ from django.db import models
 from rancho.todo.models import *
 
 class Migration:
-    
+
     def forwards(self, orm):
-        
+
         # Adding model 'ToDo'
         db.create_table('todo_todo', (
             ('id', orm['todo.ToDo:id']),
@@ -19,7 +19,7 @@ class Migration:
             ('position', orm['todo.ToDo:position']),
         ))
         db.send_create_signal('todo', ['ToDo'])
-        
+
         # Adding model 'ToDoList'
         db.create_table('todo_todolist', (
             ('id', orm['todo.ToDoList:id']),
@@ -31,19 +31,19 @@ class Migration:
             ('number_of_todos', orm['todo.ToDoList:number_of_todos']),
         ))
         db.send_create_signal('todo', ['ToDoList'])
-        
-    
-    
+
+
+
     def backwards(self, orm):
-        
+
         # Deleting model 'ToDo'
         db.delete_table('todo_todo')
-        
+
         # Deleting model 'ToDoList'
         db.delete_table('todo_todolist')
-        
-    
-    
+
+
+
     models = {
         'auth.group': {
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -124,5 +124,5 @@ class Migration:
             'title': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         }
     }
-    
+
     complete_apps = ['todo']

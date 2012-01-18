@@ -4,7 +4,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the 
+# published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -86,7 +86,7 @@ def monthcal(user, size = 'small', year = date.today().year, month = date.today(
     today = date.today()
     next_month = first_day_of_month + datetime.timedelta(days = 31)
     previous_month = first_day_of_month - datetime.timedelta(days = 5)
-    return {'calendar': month_cal, 'headers': week_headers, 'size': size, 
+    return {'calendar': month_cal, 'headers': week_headers, 'size': size,
             'today': today, 'next_month': next_month, 'previous_month': previous_month, 'current_month': first_day_of_month}
 
 register.inclusion_tag('lib/monthcal.html')(monthcal)

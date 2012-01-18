@@ -4,7 +4,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the 
+# published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -23,28 +23,28 @@ from rancho.wikiboard.models import Wiki
 
 
 class TinyMceForm(forms.Form):
-    mceconf = {'theme':'advanced', 
+    mceconf = {'theme':'advanced',
                'theme_advanced_toolbar_location': 'top',
                'theme_advanced_toolbar_align': 'left',
                'theme_advanced_buttons1': 'fullscreen,separator,preview,separator,bold,italic,underline,strikethrough,separator,bullist,numlist,outdent,indent,separator,undo,redo,fontsizeselect,forecolor,separator,link,unlink,anchor,separator,image',
                'theme_advanced_buttons2': '',
                'theme_advanced_buttons3': '',
-               'plugins': 'fullscreen,preview',               
-               }        
+               'plugins': 'fullscreen,preview',
+               }
     content = forms.CharField(label='', widget=TinyMCE(attrs={'class': 'fillx', 'rows': 30},mce_attrs=mceconf), required=False)
 
-class NewWikiEntryForm(TinyMceForm):    
+class NewWikiEntryForm(TinyMceForm):
     wiki_name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'size':40,'class': 'big_entry'}),label=_("Wiki Name"))
-    
+
     def __init__(self, project, *args, **kwargs):
         self.project = project
         super(NewWikiEntryForm, self).__init__(*args, **kwargs)
-    
+
     def clean_wiki_name(self, *args, **kwargs):
         if Wiki.objects.filter(name=self.cleaned_data['wiki_name'], project=self.project) :
-            raise forms.ValidationError(_("Wiki name already exist, please choose other."))        
-        return self.cleaned_data['wiki_name']        
-    
-    
+            raise forms.ValidationError(_("Wiki name already exist, please choose other."))
+        return self.cleaned_data['wiki_name']
 
-    
+
+
+

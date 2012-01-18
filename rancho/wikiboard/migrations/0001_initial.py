@@ -4,9 +4,9 @@ from django.db import models
 from rancho.wikiboard.models import *
 
 class Migration:
-    
+
     def forwards(self, orm):
-        
+
         # Adding model 'Wiki'
         db.create_table('wikiboard_wiki', (
             ('id', orm['wikiboard.Wiki:id']),
@@ -16,7 +16,7 @@ class Migration:
             ('last_version', orm['wikiboard.Wiki:last_version']),
         ))
         db.send_create_signal('wikiboard', ['Wiki'])
-        
+
         # Adding model 'WikiEntry'
         db.create_table('wikiboard_wikientry', (
             ('id', orm['wikiboard.WikiEntry:id']),
@@ -26,19 +26,19 @@ class Migration:
             ('creation_date', orm['wikiboard.WikiEntry:creation_date']),
         ))
         db.send_create_signal('wikiboard', ['WikiEntry'])
-        
-    
-    
+
+
+
     def backwards(self, orm):
-        
+
         # Deleting model 'Wiki'
         db.delete_table('wikiboard_wiki')
-        
+
         # Deleting model 'WikiEntry'
         db.delete_table('wikiboard_wikientry')
-        
-    
-    
+
+
+
     models = {
         'auth.group': {
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -114,5 +114,5 @@ class Migration:
             'wiki': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['wikiboard.Wiki']"})
         }
     }
-    
+
     complete_apps = ['wikiboard']

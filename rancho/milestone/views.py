@@ -4,7 +4,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the 
+# published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -39,9 +39,9 @@ from rancho.project.models import Project
 
 @login_required
 def list(request, p_id, status = ''):
-    user = request.user    
+    user = request.user
     project = get_object_or_404(Project, id = p_id)
-    
+
     if not checkperm(PERMISSIONS_MILESTONE_VIEW, user, project ):
         return HttpResponseForbidden(_('Forbidden Access'))
     late_milestones = []
@@ -55,7 +55,7 @@ def list(request, p_id, status = ''):
         complete_milestones = Milestone.objects.get_complete_milestones(project = project)
     context = {
         'project': project,
-        'late_milestones': late_milestones, 
+        'late_milestones': late_milestones,
         'upcoming_milestones': upcoming_milestones,
         'complete_milestones': complete_milestones,
         'view_alone': bool(status)
@@ -65,7 +65,7 @@ def list(request, p_id, status = ''):
 
 @login_required
 def list_with_same_status(request, p_id, milestone_id):
-    
+
     milestone = get_object_or_404(Milestone, id = milestone_id)
 
     return list(request, p_id, milestone.get_status_name())
@@ -76,12 +76,12 @@ def create(request, p_id):
     user = request.user
     project = get_object_or_404(Project, id = p_id)
     users_in_project = project.get_users()
-    
-    if not checkperm(PERMISSIONS_MILESTONE_CREATE, user, project ):        
+
+    if not checkperm(PERMISSIONS_MILESTONE_CREATE, user, project ):
         return HttpResponseForbidden(_('Forbidden Access'))
-        
+
     users_to_notify = utils.get_users_to_notify(project, PERMISSIONS_MILESTONE_VIEW)
-    
+
     if request.method == 'POST':
         form = NewMilestoneForm(utils.format_users_for_dropdown(user, users_to_notify), request.POST)
 
@@ -92,43 +92,43 @@ def create(request, p_id):
                 #TODO: make a view milestone url to use here
                 link_url = u"http://%s%s" % ( unicode(Site.objects.get_current()), urlresolvers.reverse('rancho.milestone.views.list', args = [p_id]))
                 #link_url = u"http://%s%s" % ( unicode(Site.objects.get_current()), urlresolvers.reverse('rancho.message.views.read_add_comment', kwargs={'p_id': project.id, 'm_id':msg.id}),)
-                if mstone.responsible: #just notify one person                                
+                if mstone.responsible: #just notify one person
                     notification.send([mstone.responsible], "milestone_new", {'link_url': link_url, 'milestone': mstone })
                 else: #notify all users with perm
                     notification.send(users_to_notify, "milestone_new", {'link_url': link_url, 'milestone': mstone })
-             
-            events_log(user, 'A', mstone.title, mstone)   
+
+            events_log(user, 'A', mstone.title, mstone)
             request.user.message_set.create(message=_('Milestone "%s" successfully created.') % mstone.title)
             return HttpResponseRedirect(urlresolvers.reverse('rancho.milestone.views.list', args = [p_id]))
 
     else:
         form = NewMilestoneForm(utils.format_users_for_dropdown(user, users_in_project))
-        
-    context = { 'project': project, 
+
+    context = { 'project': project,
                'newMilestone': form,
                }
-               
+
     return render_to_response("milestone/create_milestone.html", context,
                                   context_instance=RequestContext(request))
 
-@login_required    
+@login_required
 def edit(request, p_id, milestone_id):
-    
+
     user = request.user
     project = get_object_or_404(Project, id = p_id)
     milestone = get_object_or_404(Milestone, id = milestone_id)
     users_in_project = project.get_users()
-    
-    if not checkperm(PERMISSIONS_MILESTONE_EDITDELETE, user, project, milestone) or milestone.project != project:        
+
+    if not checkperm(PERMISSIONS_MILESTONE_EDITDELETE, user, project, milestone) or milestone.project != project:
         return HttpResponseForbidden(_('Forbidden Access'))
-    
+
     users_to_notify = utils.get_users_to_notify(project, PERMISSIONS_MILESTONE_VIEW)
 
     if request.method=='POST':
         form = NewMilestoneForm(utils.format_users_for_dropdown(user, users_to_notify), request.POST)
-        
+
         if form.is_valid():
-            
+
             user_id = int(form.cleaned_data['responsible'])
             if user_id != 0:
                 milestone.responsible = get_object_or_404(User, id = user_id)
@@ -138,13 +138,13 @@ def edit(request, p_id, milestone_id):
             old_milestone_title = milestone.title
             milestone.title = form.cleaned_data['title']
             milestone.due_date = form.cleaned_data['due_date']
-            milestone.send_notification_email = form.cleaned_data['send_notification_email'] 
+            milestone.send_notification_email = form.cleaned_data['send_notification_email']
             milestone.save()
-            
+
             if milestone.send_notification_email:
                 link_url = u"http://%s%s" % ( unicode(Site.objects.get_current()), urlresolvers.reverse('rancho.milestone.views.list', args = [p_id]))
                 #link_url = u"http://%s%s" % ( unicode(Site.objects.get_current()), urlresolvers.reverse('rancho.message.views.read_add_comment', kwargs={'p_id': project.id, 'm_id':msg.id}),)
-                if milestone.responsible: #just notify one person                                
+                if milestone.responsible: #just notify one person
                     notification.send([milestone.responsible], "milestone_updated", {'link_url': link_url, 'milestone': milestone, 'old_milestone_title': old_milestone_title})
                 else: #notify entire project
                     notification.send(users_to_notify, "milestone_updated", {'link_url': link_url, 'milestone': milestone, 'old_milestone_title': old_milestone_title })
@@ -155,25 +155,25 @@ def edit(request, p_id, milestone_id):
         responsible_index = 0
         if milestone.responsible:
             responsible_index = milestone.responsible.id
-        data = {'title': milestone.title, 
+        data = {'title': milestone.title,
                 'due_date': milestone.due_date.date(),
-                'responsible': responsible_index, 
+                'responsible': responsible_index,
                 'send_notification_email': milestone.send_notification_email}
         form = NewMilestoneForm(utils.format_users_for_dropdown(user, users_in_project), data)
-    
-    context = {'project': project, 
+
+    context = {'project': project,
                'milestone': milestone,
                'newMilestone': form,
                }
     return render_to_response("milestone/edit_milestone.html", context, context_instance = RequestContext(request))
 
-        
-@login_required        
+
+@login_required
 def complete(request, p_id, milestone_id):
     user = request.user
     project = get_object_or_404(Project, id = p_id)
     milestone = get_object_or_404(Milestone, id = milestone_id)
-    if not checkperm(PERMISSIONS_MILESTONE_VIEW, user, project ):        
+    if not checkperm(PERMISSIONS_MILESTONE_VIEW, user, project ):
         return HttpResponseForbidden(_('Forbidden Access'))
     if not milestone.completion_date:
         milestone.completion_date = date.today()
@@ -187,13 +187,13 @@ def complete(request, p_id, milestone_id):
         milestone.save()
         events_log(user, 'COMP', milestone.title, milestone)
     return HttpResponseRedirect(urlresolvers.reverse('rancho.milestone.views.list', args = [p_id]))
-          
-@login_required        
+
+@login_required
 def incomplete(request, p_id, milestone_id):
-    user = request.user    
+    user = request.user
     project = get_object_or_404(Project, id = p_id)
     milestone = get_object_or_404(Milestone, id = milestone_id)
-    if not checkperm(PERMISSIONS_MILESTONE_VIEW, user, project ):        
+    if not checkperm(PERMISSIONS_MILESTONE_VIEW, user, project ):
         return HttpResponseForbidden(_('Forbidden Access'))
     if milestone.completion_date:
         milestone.completion_date = None
@@ -207,15 +207,15 @@ def incomplete(request, p_id, milestone_id):
         events_log(user, 'ICOMP', milestone.title, milestone)
     return HttpResponseRedirect(urlresolvers.reverse('rancho.milestone.views.list', args = [p_id]))
 
-@login_required    
+@login_required
 def delete(request, p_id, milestone_id):
     user = request.user
     project = get_object_or_404(Project, id = p_id)
     milestone = get_object_or_404(Milestone, id = milestone_id)
-    
-    if not checkperm(PERMISSIONS_MILESTONE_EDITDELETE, user, project, milestone) or milestone.project != project:        
+
+    if not checkperm(PERMISSIONS_MILESTONE_EDITDELETE, user, project, milestone) or milestone.project != project:
         return HttpResponseForbidden(_('Forbidden Access'))
-    
+
     request.user.message_set.create(message=_('Milestone "%s" successfully deleted.') % milestone.title)
     events_log(user, 'D', milestone.title, milestone)
     milestone.delete()

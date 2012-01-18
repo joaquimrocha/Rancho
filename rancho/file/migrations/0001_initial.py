@@ -4,9 +4,9 @@ from django.db import models
 from rancho.file.models import *
 
 class Migration:
-    
+
     def forwards(self, orm):
-        
+
         # Adding model 'File'
         db.create_table('file_file', (
             ('id', orm['file.File:id']),
@@ -17,7 +17,7 @@ class Migration:
             ('tags', orm['file.File:tags']),
         ))
         db.send_create_signal('file', ['File'])
-        
+
         # Adding model 'FileVersion'
         db.create_table('file_fileversion', (
             ('id', orm['file.FileVersion:id']),
@@ -30,29 +30,29 @@ class Migration:
             ('file_type', orm['file.FileVersion:file_type']),
         ))
         db.send_create_signal('file', ['FileVersion'])
-        
+
         # Adding ManyToManyField 'File.notify_to'
         db.create_table('file_file_notify_to', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
             ('file', models.ForeignKey(orm.File, null=False)),
             ('user', models.ForeignKey(orm['auth.User'], null=False))
         ))
-        
-    
-    
+
+
+
     def backwards(self, orm):
-        
+
         # Deleting model 'File'
         db.delete_table('file_file')
-        
+
         # Deleting model 'FileVersion'
         db.delete_table('file_fileversion')
-        
+
         # Dropping ManyToManyField 'File.notify_to'
         db.delete_table('file_file_notify_to')
-        
-    
-    
+
+
+
     models = {
         'auth.group': {
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -133,5 +133,5 @@ class Migration:
             'users': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.User']"})
         }
     }
-    
+
     complete_apps = ['file']

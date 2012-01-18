@@ -4,7 +4,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the 
+# published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -21,7 +21,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from rancho.project.models import Project
 
-class MilestoneManager(models.Manager):    
+class MilestoneManager(models.Manager):
     def get_late_milestones(self, project = None, order = '-due_date', user = None):
         milestones = Milestone.objects.filter(completion_date = None).order_by(order)
         if project:
@@ -29,7 +29,7 @@ class MilestoneManager(models.Manager):
         if user:
             milestones = milestones.filter(models.Q(responsible = user) | models.Q(responsible = None)).order_by(order)
         return [milestone for milestone in milestones if milestone.is_late()]
-    
+
     def get_upcoming_milestones(self, project = None, order = 'due_date', user = None):
         milestones = Milestone.objects.filter(completion_date = None).order_by(order)
         if project:
@@ -37,7 +37,7 @@ class MilestoneManager(models.Manager):
         if user:
             milestones = milestones.filter(models.Q(responsible = user) | models.Q(responsible = None)).order_by(order)
         return [milestone for milestone in milestones if milestone.is_upcoming()]
-    
+
     def get_complete_milestones(self, project = None, order = 'completion_date', user = None):
         milestones = Milestone.objects.all().exclude(completion_date = None).order_by(order)
         if project:
@@ -45,8 +45,8 @@ class MilestoneManager(models.Manager):
         if user:
             milestones = milestones.filter(models.Q(responsible = user) | models.Q(responsible = None)).order_by(order)
         return milestones
-    
-class Milestone(models.Model):    
+
+class Milestone(models.Model):
     creator = models.ForeignKey(User)
     project = models.ForeignKey(Project)
     #If null, all the project is responsible
@@ -59,11 +59,11 @@ class Milestone(models.Model):
     sent_notification = models.BooleanField(default=False)
 
     objects = MilestoneManager()
-    
+
     @models.permalink
     def get_absolute_url(self):
         return ('rancho.milestone.views.edit', [], {'p_id': self.project.id, 'milestone_id':self.id})
-    
+
     def is_late(self):
         return self.due_date.date() <= date.today() and \
                not self.completion_date
@@ -71,7 +71,7 @@ class Milestone(models.Model):
     def is_upcoming(self):
         return self.due_date.date() > date.today() and \
                not self.completion_date
-    
+
     def is_complete(self):
         return self.completion_date != None
 

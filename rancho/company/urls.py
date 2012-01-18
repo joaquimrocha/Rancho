@@ -4,7 +4,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the 
+# published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -27,7 +27,7 @@ urlpatterns = patterns('rancho.company.views',
     url(r'^import/$', 'import_account', name='import_account'),
     (r'^delete/$', 'delete_company'),
     (r'^delete_logo/$', 'delete_logo'),
-    
+
     (r'^show_logs/$', 'show_logs'),
     (r'^download_logs/$', 'download_logs'),
 )

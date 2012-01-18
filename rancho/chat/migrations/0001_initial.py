@@ -4,9 +4,9 @@ from django.db import models
 from rancho.chat.models import *
 
 class Migration:
-    
+
     def forwards(self, orm):
-        
+
         # Adding model 'ChatData'
         db.create_table('chat_chatdata', (
             ('id', orm['chat.ChatData:id']),
@@ -16,7 +16,7 @@ class Migration:
             ('is_connected', orm['chat.ChatData:is_connected']),
         ))
         db.send_create_signal('chat', ['ChatData'])
-        
+
         # Adding model 'Post'
         db.create_table('chat_post', (
             ('id', orm['chat.Post:id']),
@@ -26,19 +26,19 @@ class Migration:
             ('project', orm['chat.Post:project']),
         ))
         db.send_create_signal('chat', ['Post'])
-        
-    
-    
+
+
+
     def backwards(self, orm):
-        
+
         # Deleting model 'ChatData'
         db.delete_table('chat_chatdata')
-        
+
         # Deleting model 'Post'
         db.delete_table('chat_post')
-        
-    
-    
+
+
+
     models = {
         'auth.group': {
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -114,5 +114,5 @@ class Migration:
             'users': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.User']"})
         }
     }
-    
+
     complete_apps = ['chat']

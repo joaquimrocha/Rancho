@@ -4,7 +4,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the 
+# published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -31,11 +31,11 @@ def general_chat(request, p_id):
     SUMMARY_NUMBER = 15
     user = request.user
     project = get_object_or_404(Project, id=p_id)
-    
+
     project.check_user_in_project_or_404(user)
-    
+
     posts = Post.objects.filter(project = project)
-    
+
     try:
         chat_data = ChatData.objects.get(project = project, user = user)
     except ChatData.DoesNotExist:
@@ -43,23 +43,23 @@ def general_chat(request, p_id):
         chat_data.save()
     chat_data.is_connected = True;
     chat_data.save()
-    
+
     chat_form = ChatForm()
-    
+
     recent_log = list(Post.objects.filter(project = project, date__lt = datetime.now()).order_by('date'))[-SUMMARY_NUMBER:]
-    
+
     context = {'posts': posts, 'project': project, 'chat_form': chat_form, 'recent_log': recent_log}
-    
-    return render_to_response("chat/general.html", context, 
+
+    return render_to_response("chat/general.html", context,
                               context_instance = RequestContext(request))
 
 @login_required
 def send_message(request, p_id):
     user = request.user
     project = get_object_or_404(Project, id = p_id)
-    
+
     project.check_user_in_project_or_404(user)
-    
+
     if request.method == 'POST':
         message = request.POST.get('message')
         if not message:
@@ -69,7 +69,7 @@ def send_message(request, p_id):
                         project = project,
                         message = message)
         new_post.save()
-        
+
     return HttpResponse('', mimetype='text/html')
 
 
@@ -79,9 +79,9 @@ def get_and_display_messages(request, p_id):
         SUMMARY_NUMBER = 15
         user = request.user
         project = get_object_or_404(Project, id = p_id)
-        
+
         project.check_user_in_project_or_404(user)
-        
+
         try:
             chat_data = ChatData.objects.get(user = user, project = project)
         except ChatData.DoesNotExist:
@@ -92,14 +92,14 @@ def get_and_display_messages(request, p_id):
             posts = Post.objects.filter(project = project, id__gt = chat_data.last_request).order_by('date')
         else:
             posts = Post.objects.filter(project = project).order_by('-date')[-SUMMARY_NUMBER:]
-         
-        if posts:           
+
+        if posts:
             chat_data.last_request = posts[len(posts)-1].id
-                    
-        chat_data.is_connected = True 
+
+        chat_data.is_connected = True
         chat_data.save()
         return posts
-    
+
     posts = get_messages(request, p_id)
     result = ''
     for post in posts:
@@ -117,9 +117,9 @@ def get_and_display_messages(request, p_id):
 def display_online_users(request, p_id):
     user = request.user
     project = get_object_or_404(Project, id = p_id)
-    
+
     project.check_user_in_project_or_404(user)
-    
+
     chat_data_objects = ChatData.objects.filter(project = project, is_connected = True)
     result = ''
     for user_online in [chat_data.user for chat_data in chat_data_objects]:
@@ -137,9 +137,9 @@ def display_online_users(request, p_id):
 def disconnect(request, p_id):
     user = request.user
     project = get_object_or_404(Project, id = p_id)
-    
+
     project.check_user_in_project_or_404(user)
-    
+
     try:
         chat_data = ChatData.objects.get(project = project, user = user)
     except ChatData.DoesNotExist:
@@ -154,9 +154,9 @@ def disconnect(request, p_id):
 def logs(request, p_id):
     user = request.user
     project = get_object_or_404(Project, id = p_id)
-    
+
     form = LogForm()
-    
+
     from_date = None
     to_date = None
     if request.method == 'GET':
@@ -172,5 +172,5 @@ def logs(request, p_id):
         # time and the time is the minimum as only the date was set.
         posts = posts.exclude(date__gt = to_date + timedelta(1))
     context = {'project': project, 'form': form, 'logs': posts}
-    return render_to_response("chat/logs.html", context, 
+    return render_to_response("chat/logs.html", context,
                               context_instance = RequestContext(request))

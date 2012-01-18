@@ -4,13 +4,13 @@ from django.db import models
 from rancho.user.models import *
 
 class Migration:
-    
+
     depends_on = (
         ("company", "0001_initial"),
     )
-    
+
     def forwards(self, orm):
-        
+
         # Adding model 'UserProfile'
         db.create_table('user_userprofile', (
             ('id', orm['user.UserProfile:id']),
@@ -33,16 +33,16 @@ class Migration:
             ('is_account_owner', orm['user.UserProfile:is_account_owner']),
         ))
         db.send_create_signal('user', ['UserProfile'])
-        
-    
-    
+
+
+
     def backwards(self, orm):
-        
+
         # Deleting model 'UserProfile'
         db.delete_table('user_userprofile')
-        
-    
-    
+
+
+
     models = {
         'auth.group': {
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -112,5 +112,5 @@ class Migration:
             'webpage': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True'})
         }
     }
-    
+
     complete_apps = ['user']

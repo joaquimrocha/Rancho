@@ -4,7 +4,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the 
+# published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -26,12 +26,12 @@ from django.utils.translation import ugettext as _
 from django.company.models import Company
 
 class LogoNode(template.Node):
-    
+
     def __init__(self, logo_path='/company/logo.png'):
         self.logo_path = logo_path
 
     def render(self, context):
-        
+
         return '<img src="/media'+self.logo_path+'" />'
 
 

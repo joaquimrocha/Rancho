@@ -4,7 +4,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the 
+# published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -41,13 +41,13 @@ import datetime
 
 
 @login_required
-def list(request, p_id):    
+def list(request, p_id):
     user = request.user
     project = get_object_or_404(Project, id = p_id)
-    
+
     if not checkperm(PERMISSIONS_TODO_VIEW, user, project ):
         return HttpResponseForbidden(_('Forbidden Access'))
-    
+
     users_in_project = project.get_users()
     todo_list = ToDoList.objects.filter(project = project)
     context = {
@@ -57,21 +57,21 @@ def list(request, p_id):
         }
     for l in todo_list:
         context['todo_lists'].append((l, l.get_todos()))
-    
-    
+
+
     return render_to_response('todo/todos_list.html', context,
                               context_instance = RequestContext(request))
 
 @login_required
 def view_todo_list(request, p_id, todo_list_id):
-    
+
     user = request.user
     project = get_object_or_404(Project, id = p_id)
     todo_list = get_object_or_404(ToDoList, id = todo_list_id)
-    
+
     if not checkperm(PERMISSIONS_TODO_VIEW, user, project ):
         return HttpResponseForbidden(_('Forbidden Access'))
-    
+
     users_in_project = project.get_users()
     context = {
                'users_in_project': utils.format_users_for_dropdown(user, users_in_project),
@@ -85,12 +85,12 @@ def view_todo_list(request, p_id, todo_list_id):
 @login_required
 def create(request, p_id):
 
-    user = request.user    
+    user = request.user
     project = get_object_or_404(Project, id = p_id)
-    
+
     if not checkperm(PERMISSIONS_TODO_CREATE, user, project):
         return HttpResponseForbidden(_('Forbidden Access'))
-    
+
     users_in_project = project.get_users()
     context = {}
     context['users_in_project'] = users_in_project
@@ -115,14 +115,14 @@ def create(request, p_id):
 
 
 @login_required
-def add_todo(request, p_id, todo_list):    
+def add_todo(request, p_id, todo_list):
     user = request.user
     project = get_object_or_404(Project, id = p_id)
     todo_list = get_object_or_404(ToDoList, id = todo_list)
-    
+
     if not checkperm(PERMISSIONS_TODO_CREATE, user, project):
         return HttpResponseForbidden(_('Forbidden Access'))
-    
+
     if request.method == 'GET':
         try:
             todo_desc = request.GET.get('todo_desc')
@@ -148,18 +148,18 @@ def add_todo(request, p_id, todo_list):
         todo_list.save()
         todo.position = todo_list.number_of_todos + 1
         todo.save()
-        
+
         events_log(user, 'A', todo.description, todo)
-        
+
         #notify all users with perm
         link_url = u"http://%s%s" % ( unicode(Site.objects.get_current()), urlresolvers.reverse('rancho.todo.views.view_todo_list', kwargs={'p_id': project.id, 'todo_list_id': todo_list.id}),)
-        if todo.responsible: #just notify one person                                
+        if todo.responsible: #just notify one person
             notification.send([todo.responsible], "todo_new", {'link_url': link_url, 'todo': todo, 'project': project, 'todo_list': todo_list})
         else: #notify all users with perm
             users_to_notify = utils.get_users_to_notify(project, PERMISSIONS_TODO_VIEW)
             notification.send(users_to_notify, "todo_new", {'link_url': link_url, 'todo': todo, 'project': project, 'todo_list': todo_list})
 
-        
+
         result = """<taconite>
                     {% load displaytodo %}
                     <append select="#todos{{todo_list}}">
@@ -185,17 +185,17 @@ def add_todo(request, p_id, todo_list):
         result = loader.get_template_from_string(result).render(Context({'todo_list': todo_list.id, 'user': user, 'todo': todo, 'project': project}))
         return HttpResponse(result, mimetype='text/xml')
 
-@login_required        
+@login_required
 def edit_todo(request, p_id, todo_id):
-    
+
     user = request.user
     project = get_object_or_404(Project, id = p_id)
     todo = get_object_or_404(ToDo, id = todo_id)
     todo_list = todo.todo_list
-    
+
     if not checkperm(PERMISSIONS_TODO_EDITDELETE, user, project, todo) or todo_list.project != project:
         return HttpResponseForbidden(_('Forbidden Access'))
-    
+
     users_in_project = utils.format_users_for_dropdown(user, project.get_users())
     context = {'project': project, 'todo': todo, 'todo_list': todo_list}
     if request.method == 'POST':
@@ -209,7 +209,7 @@ def edit_todo(request, p_id, todo_id):
                 todo.responsible = None
             todo.description = edit_todo_form.cleaned_data['title']
             todo.save()
-            
+
             events_log(user, 'U', todo.description, todo)
             request.user.message_set.create(message=_('ToDo item successfully updated.'))
         return render_to_response('todo/edit_todo.html', context,
@@ -222,19 +222,19 @@ def edit_todo(request, p_id, todo_id):
     context['edit_todo_form'] = edit_todo_form
     return render_to_response('todo/edit_todo.html', context,
                           context_instance=RequestContext(request))
- 
-@login_required   
+
+@login_required
 def save_changes(request, p_id):
     user = request.user
     project = get_object_or_404(Project, id = p_id)
-    
+
     if request.method == 'POST':
         todo = get_object_or_404(ToDo, id = int(request.POST.get('todo')))
         todo_list = todo.todo_list
-        
+
         if not checkperm(PERMISSIONS_TODO_EDITDELETE, user, project, todo) or todo_list.project != project:
             return HttpResponseForbidden(_('Forbidden Access'))
-        
+
         responsible_id = int(request.POST.get('responsible'))
         if responsible_id:
             responsible = get_object_or_404(User, id = responsible_id)
@@ -245,9 +245,9 @@ def save_changes(request, p_id):
         if description:
             todo.description = description
         todo.save()
-        
+
         events_log(user, 'U', todo.description, todo)
-        
+
         result = loader.get_template('todo/display_todo.html').render(Context({'todo': todo}))
         return HttpResponse(result, mimetype='text/xml')
     return HttpResponseRedirect(urlresolvers.reverse('rancho.todo.views.list', args = [p_id]))
@@ -260,13 +260,13 @@ def delete_todo_list(request, p_id):
     project = get_object_or_404(Project, id = p_id)
     if request.method == 'GET':
         todo_list = get_object_or_404(ToDoList, id = int(request.GET.get('todo_list')))
-        
+
         if not checkperm(PERMISSIONS_TODO_EDITDELETE, user, project, todo_list) or todo_list.project != project:
             return HttpResponseForbidden(_('Forbidden Access'))
-        
+
         request.user.message_set.create(message=_('ToDo list "%(todo_list_name)s" deleted.') % {'todo_list_name': todo_list.title})
         todo_list.delete()
-        
+
         events_log(user, 'D', todo_list.title, todo_list)
     return HttpResponseRedirect(urlresolvers.reverse('rancho.todo.views.list', args = [p_id]))
 
@@ -279,13 +279,13 @@ def delete_todo(request, p_id):
     if request.method == 'GET':
         todo_item = get_object_or_404(ToDo, id = int(request.GET.get('todo')))
         todo_list = todo_item.todo_list
-        
+
         if not checkperm(PERMISSIONS_TODO_EDITDELETE, user, project, todo_item) or todo_list.project != project:
             return HttpResponseForbidden(_('Forbidden Access'))
-        
+
         todo_item.delete()
         events_log(user, 'D', todo_item.description, todo_item)
-        
+
         return HttpResponseRedirect(urlresolvers.reverse('rancho.todo.views.list', args = [p_id]))
     else:
         return HttpResponseRedirect(urlresolvers.reverse('rancho.todo.views.list', args = [p_id]))
@@ -297,20 +297,20 @@ def switch_todo_status(request, p_id):
     project = get_object_or_404(Project, id = p_id)
     if request.method=='GET':
         todo = get_object_or_404(ToDo, id=int(request.GET.get('todo')))
-        
+
         if not checkperm(PERMISSIONS_TODO_VIEW, user, project):
             return HttpResponseForbidden(_('Forbidden Access'))
-        
+
         if todo.completion_date != None:
             todo.completion_date = None
-            
+
             events_log(user, 'ICOMP', todo.description, todo)
         else:
             todo.completion_date = datetime.datetime.now()
             todo.responsible = user
-            
+
             events_log(user, 'COMP', todo.description, todo)
-            
+
         todo.save()
         milestone = todo.todo_list.milestone
         if milestone:
@@ -331,10 +331,10 @@ def edit_todo_list(request, p_id, todo_list_id):
     user = request.user
     project = get_object_or_404(Project, id = p_id)
     edit_todo_list = get_object_or_404(ToDoList, id = todo_list_id)
-    
+
     if not checkperm(PERMISSIONS_TODO_EDITDELETE, user, project, edit_todo_list)  or edit_todo_list.project != project:
             return HttpResponseForbidden(_('Forbidden Access'))
-    
+
     context = {'todo_list': edit_todo_list, 'project': project}
     milestones = [(milestone.id, milestone.title) for milestone \
                   in edit_todo_list.get_free_milestones()]
@@ -348,7 +348,7 @@ def edit_todo_list(request, p_id, todo_list_id):
             events_log(user, 'U', edit_todo_list.title, edit_todo_list)
             request.user.message_set.create(message=_('ToDo list successfully updated.'))
 
-        return render_to_response('todo/edit_todo_list.html', 
+        return render_to_response('todo/edit_todo_list.html',
                                   context,
                                   context_instance=RequestContext(request))
     milestone_id = 0

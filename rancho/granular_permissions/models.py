@@ -11,19 +11,19 @@ class Permission(models.Model):
     content_object = generic.GenericForeignKey('content_type', 'object_id')
     user = models.ForeignKey(User, null=True)
     group = models.ForeignKey(Group, null=True)
-    
+
     class Meta:
         verbose_name = 'permission'
         verbose_name_plural = 'permissions'
-        
-        
+
+
 class PermissionAdmin(admin.ModelAdmin):
     model = Permission
     list_display = ('content_type', 'user', 'group', 'name')
     list_filter = ('name',)
     search_fields = ['object_id', 'content_type', 'user', 'group']
     raw_id_fields = ['user', 'group']
-    
+
     def __unicode__(self):
         return u"%s | %s | %d | %s" % (self.content_type.app_label, self.content_type, self.object_id, self.name)
 

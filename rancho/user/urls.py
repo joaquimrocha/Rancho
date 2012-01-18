@@ -4,7 +4,7 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the 
+# published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -29,5 +29,5 @@ urlpatterns = patterns('rancho.user.views',
             (r'^(?P<user_id>\d+)/delete_small_photo/$', 'delete_small_photo'),
             (r'^(?P<user_id>\d+)/delete_large_photo/$', 'delete_large_photo'),
             (r'^change_language/$', 'change_language'),
-            
+
             )
