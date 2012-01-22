@@ -159,30 +159,9 @@ def add_todo(request, p_id, todo_list):
             users_to_notify = utils.get_users_to_notify(project, PERMISSIONS_TODO_VIEW)
             notification.send(users_to_notify, "todo_new", {'link_url': link_url, 'todo': todo, 'project': project, 'todo_list': todo_list})
 
-
-        result = """<taconite>
-                    {% load displaytodo %}
-                    <append select="#todos{{todo_list}}">
-                        <div id="edit_todo{{todo.id}}" {% ifequal user todo.responsible %}style="background: #EBF0FA;"{% endifequal %}>
-                        {% displaytodo todo user %}
-                        </div>
-                        <script type="text/javascript">
-                            $("#check{{todo.id}}_link").click(
-                                function(){
-                                    $.get("{% url todo.views.switch_todo_status project.id %}", {todo: {{todo.id}} });
-                                    $("img#check{{todo.id}}").attr({
-                                        src: "/media/basepage/images/check.png"
-                                        });
-                                    return false;
-                                }
-                            );
-                        </script>
-                    </append>
-                    <attr select="input#todo_desc{{ todo_list }}" name="value" value=""/>
-                    <hide select="#empty_todo_error{{ todo_list }}" />
-                    </taconite>
-                    """
-        result = loader.get_template_from_string(result).render(Context({'todo_list': todo_list.id, 'user': user, 'todo': todo, 'project': project}))
+        context = Context({'todo_list': todo_list.id, 'user': user,
+                           'todo': todo, 'project': project})
+        result = loader.get_template('todo/add_todo.html').render(context)
         return HttpResponse(result, mimetype='text/xml')
 
 @login_required
