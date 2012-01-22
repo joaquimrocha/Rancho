@@ -1,0 +1,8 @@
+{% load usernamegen %}
+<taconite>
+    <replaceContent select="#users_online">
+        {% for user in users %}
+            <p><strong>{% usernamegen user "fullname" %}</strong></p>
+        {% endfor %}
+    </replaceContent>
+</taconite>

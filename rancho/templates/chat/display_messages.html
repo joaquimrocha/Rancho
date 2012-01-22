@@ -1,0 +1,8 @@
+{% load displaychatline %}
+<taconite>
+    <append select="#chat">
+        {% for post in posts %}
+            {% displaychatline post %}
+        {% endfor %}
+    </append>
+</taconite>

@@ -101,16 +101,8 @@ def get_and_display_messages(request, p_id):
         return posts
 
     posts = get_messages(request, p_id)
-    result = ''
-    for post in posts:
-        contents = '''{% load displaychatline %}
-                      {% displaychatline chat_object %}
-                   '''
-        result += loader.get_template_from_string(contents).render(Context({'chat_object': post}))
-    result = '''<taconite>
-                    <append select="#chat">%s</append>
-                </taconite>
-             ''' % result
+    context = Context({'posts': posts})
+    result = loader.get_template('chat/display_messages.html').render(context)
     return HttpResponse(result, mimetype='text/xml')
 
 @login_required
@@ -122,15 +114,9 @@ def display_online_users(request, p_id):
 
     chat_data_objects = ChatData.objects.filter(project = project, is_connected = True)
     result = ''
-    for user_online in [chat_data.user for chat_data in chat_data_objects]:
-        contents = '''{% load usernamegen %}
-                      <p><strong>{% usernamegen user "fullname" %}</strong></p>
-                   '''
-        result += loader.get_template_from_string(contents).render(Context({'user': user_online}))
-    result = '''<taconite>
-                    <replaceContent select="#users_online">%s</replaceContent>
-                </taconite>
-             ''' % result
+    users_online = [chat_data.user for chat_data in chat_data_objects]
+    context = Context({'users': users_online})
+    result = loader.get_template('chat/display_online_users.html').render(context)
     return HttpResponse(result, mimetype='text/xml')
 
 @login_required
