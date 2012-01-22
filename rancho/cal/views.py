@@ -47,30 +47,7 @@ def get_events(request, year, month, day):
             milestone_list.append(milestone)
     if not milestone_list:
         return Http404()
-    result = '''
-<taconite>
-    {% load i18n usernamegen %}
-    <css select="#events_place" name="display" value="none" />
-    <replaceContent select="#events_place">
-        <p style="margin:20px 0 10px 0;"><span class="smallcaps_title gray_bg">{{ event_date|date:"l, d N Y" }}</span></p>
-        {% for milestone in milestone_list %}
-        <div style="overflow: hidden; margin: 0 0 5px 15px; border-bottom: 1px solid #afafaf; padding-bottom: 2px;">
-            <div style="float: left; width: 100px; background: #EBF0FA;">
-                <p><img src="/media/basepage/images/icons/clock.png" class="textcenter"/> <strong>{% trans "Milestone" %}</strong></p>
-            </div>
-            <div style="float: left; width: 450px;">
-                <div style="float: left;">
-                    <p style="margin-left: 15px;"><a href="{% url milestone.views.list p_id=milestone.project.id %}"><span {% if milestone.completion_date %}class="linethrough"{% endif %}>{{ milestone.title }}</span></a></p>
-                </div>
-                <div style="float: right;">
-                    <p><span class="gray">{% trans "Assigned to" %}</span> {% if milestone.responsible %}{% usernamegen milestone.responsible %}{% else %}Anyone{% endif %}</p>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-    </replaceContent>
-    <slideDown select="#events_place" value="1800" />
-</taconite>
-'''
-    result = loader.get_template_from_string(result).render(Context({'user': user, 'milestone_list': milestone_list, 'event_date': event_date}))
+    context = Context({'user': user, 'milestone_list': milestone_list,
+                       'event_date': event_date})
+    result = loader.get_template('cal/show_events.html').render(context)
     return HttpResponse(result, mimetype='text/xml')
