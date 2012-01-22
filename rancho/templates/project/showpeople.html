@@ -12,14 +12,14 @@
 <script type="text/javascript" src="/media/js/jquery/simplemodal.js"></script>
 {% endblock %}
 
-{% block jquerycode %}  
-    
+{% block jquerycode %}
+
     function remove_user(user_id){
         window.location = "{% url project.views.remove_user project.id%}?userid=" + user_id;
         return false;
     }
-    
-   
+
+
 {% endblock %}
 
 
@@ -27,30 +27,30 @@
     <p>{% trans "People in project" %}</p>
 {% endblock %}
 
-{% block right_content %}   
+{% block right_content %}
     <div class="add_button">
         <a href="{% url project.views.add_people_to_project project.id %}">{% trans "Add person to project" %}</a>
     </div>
     <div class="add_button_right"></div>
 {% endblock %}
 
-{% block main_content %}    
-    
+{% block main_content %}
+
 	{% displaynotification messages %}
-		
+
 	{% regroup users_in_project by company as usersbycompany %}
-	
+
 	{% for group in usersbycompany %}
 	   <p style="margin:20px 0 10px 0;"><span class="smallcaps_title blue_bg">{{group.grouper.short_name}}</span></p>
 	   <div class="display_person">
-	   		   	
+
 	        {% for person in group.list %}
 			 <div id="userInfo{{person.id}}" class="person">
-        
-	            <div class="img">               
-	                <a href="{% url user.views.view_user person.id %}">{% displayuserphoto person "small" %}</a>                
+
+	            <div class="img">
+	                <a href="{% url user.views.view_user person.id %}">{% displayuserphoto person "small" %}</a>
 	            </div>
-	            <div class="details">	            
+	            <div class="details">
 	                <p><a class="blue" href="{% url user.views.view_user person.id %}">{% usernamegen person "top" %}</a></p>
 	                <p><a style="font-size: 11px;" href="#">{{ person.email }}</a></p>
 					{% if person.get_profile.is_account_owner %}
@@ -64,16 +64,16 @@
 						   {% modalconfirm "remove{{person.id}}" _("Are you sure you want to remove this user from the project?")  "remove_user(person.id)" %}
 						   {% endif %}
 					   {% endif %}
-					{% endif %}  
-	            
+					{% endif %}
+
 	            </div>
-        
+
              </div>
-				                     
-            {% endfor %}  
-			<div style="clear: both;"></div> 
-		</div>                        
+
+            {% endfor %}
+			<div style="clear: both;"></div>
+		</div>
         {% endfor %}
-	
-        
+
+
 {% endblock %}

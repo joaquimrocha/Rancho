@@ -1,14 +1,14 @@
 {% load i18n %}
 </table>
 
-<script type="text/javascript"> 
+<script type="text/javascript">
     $(document).ready(function() {
 		{% ifequal visible "false" %}
         $("#{{jsid}}").hide();
 		{% else %}
 		  $("a#{{jsid}}_more_info").text("(Hide)");
 		{% endifequal %}
-        
+
         $("a#{{jsid}}_more_info").toggle(function() {
                 $("#{{jsid}}").show('fast');
                 $("a#{{jsid}}_more_info").text("(Hide)");

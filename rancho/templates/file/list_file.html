@@ -3,18 +3,18 @@
 {% load i18n usernamegen pagination_tags modalconfirm genmenu permissions_tags displayfile displaynotification tagging_tags%}
 
 {% block pagetitle %} {{ project.name }} | {% trans "View Files" %} {% endblock %}
-    
+
 {% block jquerypluginloader %}
 <script type="text/javascript" src="/media/js/jquery/simplemodal.js"></script>
 {% endblock %}
-    
+
 {% block jquerycode %}
     function delete_file(file_version_id) {
        url = '{% url rancho.file.views.delete project.id,111111 %}';
-       window.location = url.replace(/111111/g,file_version_id);	
+       window.location = url.replace(/111111/g,file_version_id);
        return false;
-    }     
-{% endblock %}	
+    }
+{% endblock %}
 
 {% block area_name %}
 	{% if view_alone %}
@@ -34,7 +34,7 @@
 		<a href="{% url file.views.list p_id=project.id %}">{% trans "Back to files list" %}</a>
 	{% endif %}
 {% endblock %}
-    
+
 {% block right_content %}
   {% ifhasperm "PERMISSIONS_FILE_CREATE" user project %}
     <div class="add_button">
@@ -51,11 +51,11 @@
 	</div>
 	<div class="tag-cloud">
 	{% for tag in file_tags %}
-	<span class="tag-{{tag.font_size}}"><a href="{% url message_list_tag p_id=project.id,tag=tag.name%}">{{tag.name}}</a></span> 
+	<span class="tag-{{tag.font_size}}"><a href="{% url message_list_tag p_id=project.id,tag=tag.name%}">{{tag.name}}</a></span>
 	{% endfor %}
 	</div>
 	{% endif %}
-	
+
 {% endblock %}
 
 {% block main_content %}
@@ -65,9 +65,9 @@
     {% if not files %}
         <p>{% trans "There are no files in this project yet." %}</p>
     {% else %}
-	    {% autopaginate files 5 %}           
-        {% paginate %}     
-		
+	    {% autopaginate files 5 %}
+        {% paginate %}
+
      	{% for file in files %}
 			{% displayfile file user %}
 		{% endfor %}

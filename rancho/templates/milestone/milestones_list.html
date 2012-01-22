@@ -8,24 +8,24 @@
 {% block jquerypluginloader %}
 <script type="text/javascript" src="/media/js/jquery/simplemodal.js"></script>
 {% endblock %}
-    
+
 {% block jquerycode %}
-    function delete_milestone(milestone_id) {                
+    function delete_milestone(milestone_id) {
         url = '{% url rancho.milestone.views.delete project.id,111111 %}';
-        window.location = url.replace(/111111/g,milestone_id);                       
+        window.location = url.replace(/111111/g,milestone_id);
         return false;
     }
 	function complete_milestone(milestone_id) {
 	    url = '{% url rancho.milestone.views.complete project.id,111111 %}';
-        window.location = url.replace(/111111/g,milestone_id);                
+        window.location = url.replace(/111111/g,milestone_id);
         return false;
     }
-	function incomplete_milestone(milestone_id) {                
+	function incomplete_milestone(milestone_id) {
         url = '{% url rancho.milestone.views.incomplete project.id,111111 %}';
         window.location = url.replace(/111111/g,milestone_id);
         return false;
     }
-    
+
 {% endblock %}
 
 {% block area_name %}
@@ -44,7 +44,7 @@
 {% endblock %}
 
 {% block right_content %}
-	{% ifhasperm "PERMISSIONS_MILESTONE_CREATE" user project  %}	
+	{% ifhasperm "PERMISSIONS_MILESTONE_CREATE" user project  %}
 	    <div class="add_button">
 	        <a href="{% url milestone.views.create p_id=project.id %}">{% trans "New Milestone" %}</a>
 	    </div>
@@ -53,14 +53,14 @@
 	{% endifhasperm %}
 {% endblock %}
 
-    
+
 {% block main_content %}
-	
+
 	{% displaynotification messages %}
 	{% if not late_milestones and not upcoming_milestones and not complete_milestones %}
 	    <p>{% trans "There are no milestones in this project yet." %}</p>
 	{% endif %}
-	
+
     {% if late_milestones %}
 		<p style="margin-bottom: 10px;">
 			{% if view_alone %}

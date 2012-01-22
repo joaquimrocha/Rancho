@@ -3,7 +3,7 @@
 {% load i18n usernamegen genmenu form_tags sidewidget %}
 
 {% block pagetitle %} {{ project.name }} | {% trans "Edit" %} {{entry.name}} {% endblock %}
-       
+
 {% block area_name %}
     <p>{% trans "Edit Entry" %}: {{wiki.name}}</p>
 {% endblock %}
@@ -20,14 +20,14 @@
 {% sidewidget _("Information") "information" %}
 <p>{% trans "When you save the page you will get a new version of this entry." %}</p>
 {% endblock %}
-        
-{% block main_content %}             
+
+{% block main_content %}
 	{% if wiki %}
     <form enctype="multipart/form-data" action="{% url wikiboard_edit_old p_id=project.id,entry_id=wiki.id,entry_version=wikicurentry.id %}" method="post">
     {% else %}
 	<form enctype="multipart/form-data" action="{% url wikiboard_edit_new p_id=project.id %}" method="post">
 	{% endif %}
-      {{ form.content }} 
+      {{ form.content }}
 	  {% printformfooter _("Update Wikiboard") _("Cancel") "rancho.wikiboard.views.list project.id" %}
-    </form>    
+    </form>
 {% endblock %}

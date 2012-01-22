@@ -9,24 +9,24 @@
 <script src="/media/js/jquery/jquery.ui.js" type="text/javascript" charset="utf-8"></script>
 <script src="/media/js/jquery/ui/i18n/ui.datepicker-{{LANGUAGE_CODE}}.js" type="text/javascript" charset="utf-8"></script>
 <link rel="stylesheet" href="/media/js/jquery/ui.theme.css" type="text/css" media="screen" title="core css file" charset="utf-8" />
-<link rel="stylesheet" href="/media/js/jquery/ui.datepicker.css" type="text/css" media="screen" title="core css file" charset="utf-8" />  
+<link rel="stylesheet" href="/media/js/jquery/ui.datepicker.css" type="text/css" media="screen" title="core css file" charset="utf-8" />
 {% endblock %}
-		
+
 {% block jquerycode %}
 
      function attach_datepicker(id) {
         $(id).datepicker({
         nextText: '',
         prevText: '',
-        showOn: 'both', 
-        buttonImage: '/media/basepage/images/icons/date_add.png', 
+        showOn: 'both',
+        buttonImage: '/media/basepage/images/icons/date_add.png',
         buttonImageOnly: true ,
         buttonText: 'Calendar',
         yearRange: '2008:2020',
         dateFormat: 'yy-mm-dd'});
      }
-    
-     $(document).ready(function(){        
+
+     $(document).ready(function(){
         attach_datepicker('#id_from_date');
         attach_datepicker('#id_to_date');
      });
@@ -56,7 +56,7 @@
       <input type="submit" value="{% trans "View Logs" %}"/>
     </form>
     <br/>
-    
+
     {% if logs %}
     <h4>{% trans "Chat Logs:" %}</h4>
     <div style="margin: 5px 0 0 25px;">

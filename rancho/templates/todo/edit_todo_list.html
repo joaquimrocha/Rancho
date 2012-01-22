@@ -3,7 +3,7 @@
 {% load i18n usernamegen genmenu form_tags displaynotification %}
 
 {% block pagetitle %} {{ company.short_name }} | {% trans "Add ToDo List" %} {% endblock %}
-	
+
 {% block area_name %}
     <p>{% trans "Edit ToDo List" %}</p>
 {% endblock %}
@@ -17,11 +17,11 @@
 {% endblock %}
 
 {% block main_content %}
-	
+
 	{% displaynotification messages %}
 
 	<form action="{% url todo.views.edit_todo_list p_id=project.id,todo_list_id=todo_list.id%}" method="post">
-		
+
 		{% beginrequestbox "required" _("List name") ""  %}
 			{% printfield edit_todo_list_form.todolist_name "none" %}
 		{% endrequestbox %}

@@ -9,17 +9,17 @@
 {% endblock %}
 
 
-{% block jquerycode %}      
+{% block jquerycode %}
     function disable_user(user_id){
         window.location = "{% url user.views.disable_user %}?userid=" + user_id;
         return false;
     }
-	
+
 	function enable_user(user_id){
         window.location = "{% url user.views.enable_user %}?userid=" + user_id;
         return false;
     }
-	
+
 	 function delete_company(c_id){
         window.location = "{% url company.views.delete_company %}?c_id=" + c_id;
         return false;
@@ -35,7 +35,7 @@
     <p>{% trans "All People" %}</p>
 {% endblock %}
 
-{% block right_content %}    
+{% block right_content %}
 {% if user.is_superuser %}
     <div class="add_button">
         <a href="{% url user.views.newuser %}">{% trans "New Person" %}</a>
@@ -57,9 +57,9 @@
 {% endif %}
 {% endblock %}
 
-{% block main_content %}		
+{% block main_content %}
 	{% displaynotification messages %}
-	
+
 	{% regroup allowedpeople by company as company_list %}
 	{% for company in company_list %}
 	{% with company.grouper as c %}
@@ -69,9 +69,9 @@
 	       {% if c.main_company %}
 		      <a class="edit" href="{% url rancho.company.views.company_settings %}">{% trans "Edit" %}</a>
 			  | {% trans "Main Company" %}
-		   {% else %}		       
+		   {% else %}
 	           <a class="edit" href="{% url rancho.company.views.edit_company c.id %}">{% trans "Edit" %}</a>
-			   | 
+			   |
 			   {% ifequal c.userprofile_set.count 0 %}
                     <a id="deletenouser{{c.id}}" class="delete" href="">{% trans "Delete" %}</a>
                     {% modalconfirm "deletenouser{{c.id}}" _("Are you sure you want to delete this company?")  "delete_company(c.id)" %}
@@ -79,20 +79,20 @@
                     <a id="deletewithuser{{c.id}}" class="delete" href="">{% trans "Delete" %}</a>
                     {% modalconfirm "deletewithuser{{c.id}}" _("This company has employees, to delete it they will be moved to your main company. Do you agree?")  "delete_company(c.id)" %}
                {% endifequal %}
-			   
-		   {% endif %} 
-		   
+
+		   {% endif %}
+
 	   {% endif %}
 	   </p>
-       <div class="display_person">	   
+       <div class="display_person">
             {% for userp in company.list %}
                 {% if userp.user.is_active %}
 					<div id="userInfo{{userp.user.id}}" class="person">
-					
-					<div class="img">               
-					    <a href="{% url user.views.view_user userp.user.id %}">{% displayuserphoto userp.user "small" %}</a>                
+
+					<div class="img">
+					    <a href="{% url user.views.view_user userp.user.id %}">{% displayuserphoto userp.user "small" %}</a>
 					</div>
-					<div class="details">               
+					<div class="details">
 					    <p><a class="blue" href="{% url user.views.view_user userp.user.id %}">{% usernamegen userp.user "top" %}</a></p>
 					    <p><a style="font-size: 11px;" href="#">{{ userp.user.email }}</a></p>
 					    {% if userp.is_account_owner %}
@@ -111,13 +111,13 @@
 					</div>
 					</div>
 				{% endif %}
-			 
+
             {% endfor %}
-		  <div style="clear: both;"></div> 
-        </div>                   
-	{% endwith %}     
-	{% endfor %}	
-	
+		  <div style="clear: both;"></div>
+        </div>
+	{% endwith %}
+	{% endfor %}
+
 	{% for c in emptycompanies %}
 	   <p style="margin:20px 0 10px 0;">
        <span class="smallcaps_title blue_bg">{{ c.short_name }}</span>
@@ -125,9 +125,9 @@
            {% if c.main_company %}
               <a class="edit" href="{% url rancho.company.views.company_settings %}">{% trans "Edit" %}</a>
               | {% trans "Main Company" %}
-           {% else %}              
+           {% else %}
                <a class="edit" href="{% url rancho.company.views.edit_company c.id %}">{% trans "Edit" %}</a>
-               | 
+               |
                {% ifequal c.userprofile_set.count 0 %}
                     <a id="deletenouser{{c.id}}" class="delete" href="">{% trans "Delete" %}</a>
                     {% modalconfirm "deletenouser{{c.id}}" _("Are you sure you want to delete this company?")  "delete_company(c.id)" %}
@@ -135,34 +135,34 @@
                     <a id="deletewithuser{{c.id}}" class="delete" href="">{% trans "Delete" %}</a>
                     {% modalconfirm "deletewithuser{{c.id}}" _("This company has employees, to delete it they will be moved to your main company. Do you agree?")  "delete_company(c.id)" %}
                {% endifequal %}
-               
+
            {% endif %}
        {% endif %}
 	   </p>
 	   <p>{% trans "This company has no people" %}</p>
 	{% endfor %}
-		
+
 	{% if inactivepeople %}
 	   <p style="margin:20px 0 10px 0;"><span class="smallcaps_title gray_bg">{% trans "Inactive Users" %}</span></p>
         <div class="display_person">
-    	
+
 	   {% for person in inactivepeople %}
-	         <div id="userInfo{{person.id}}" class="person">        
-                <div class="img">               
-                    <a href="{% url user.views.view_user person.id %}">{% displayuserphoto person "small" %}</a>                
+	         <div id="userInfo{{person.id}}" class="person">
+                <div class="img">
+                    <a href="{% url user.views.view_user person.id %}">{% displayuserphoto person "small" %}</a>
                 </div>
-                <div class="details">               
+                <div class="details">
                     <p><a class="blue" href="{% url user.views.view_user person.id %}">{% usernamegen person "top" %}</a></p>
                     <p><a style="font-size: 11px;" href="#">{{ person.email }}</a></p>
                     <p><a class="edit" href="{% url user.views.edituser person.id %}">{% trans "Edit" %}</a>&nbsp;<a class="delete" href="" id="enable{{person.id}}">{% trans "Enable" %}</a></p>
 					{% modalconfirm "enable{{person.id}}" _("Are you sure you want to enable this user?")  "enable_user(person.id)" %}
                 </div>
-             </div>                                     
-        {% endfor %}  
-        <div style="clear: both;"></div> 
+             </div>
+        {% endfor %}
+        <div style="clear: both;"></div>
         </div>
-	{% endif %}	
-		
-	
-		
+	{% endif %}
+
+
+
 {% endblock %}

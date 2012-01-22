@@ -4,7 +4,7 @@
 
 {% block pagetitle %} {{ company.short_name }} | {% trans "Create new project" %} {% endblock %}
 
-{% block jquerycode %}	
+{% block jquerycode %}
 	$(document).ready(function() {
 		$("#uploadfield").hide();
 		{% if newProjectForm.project_logo.errors %}
@@ -30,7 +30,7 @@
 	<p>{% trans "After creating the project you can add people to it and define their permissions." %}</p>
 {% endblock %}
 
-{% block main_content %}	
+{% block main_content %}
 	<div style="margin-left: 20px;">
 	<form enctype="multipart/form-data" action="{% url project.views.new_project %}" method="post">
 		{% beginrequestbox "required" _("Choose the name of the project") _("(for example &quot;Product Homepage&quot;)")  %}
@@ -39,9 +39,9 @@
 		{% beginrequestbox "notrequired" _("Project Logo") _("You can also set an optional project logo.")  %}
 			{% printfield  newProjectForm.project_logo "left" %}
 		{% endrequestbox %}
-		
-		{% printformfooter _("Create Project") _("Cancel") "rancho.user.views.dashboard" %}		
-	
+
+		{% printformfooter _("Create Project") _("Cancel") "rancho.user.views.dashboard" %}
+
 	</form>
 	</div>
 {% endblock %}

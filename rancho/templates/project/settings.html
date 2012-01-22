@@ -12,16 +12,16 @@
 <script type="text/javascript" src="/media/js/jquery/simplemodal.js"></script>
 <script type="text/javascript" src="/media/js/jquery/taconite.js"></script>
 {% endblock %}
-	
-{% block jquerycode %}	
-function delete_logo(){			
-    $.get("{% url project.views.delete_logo project.id %}");			
+
+{% block jquerycode %}
+function delete_logo(){
+    $.get("{% url project.views.delete_logo project.id %}");
 	$("#project_logo").fadeOut();
 	return false;
 }
-function delete_project() {  
+function delete_project() {
    window.location = '{% url rancho.project.views.delete_project project.id %}';
-   return false;                      
+   return false;
 }
 
 {% endblock %}
@@ -53,7 +53,7 @@ function delete_project() {
 
 
 {% displaynotification messages %}
-    	
+
 <form enctype="multipart/form-data" action="{% url project.views.settings project.id %}" method="post">
 	{% beginrequestbox "required" _("Project Info") ""  %}
 		{% printfield edit_project.project_name "left" %}
@@ -62,9 +62,9 @@ function delete_project() {
 	{% beginrequestbox "notrequired" _("Project Description") _("You can add an optional description that will take place on the overview page of the project.")  %}
 		{% printfield  edit_project.description "none" %}
 	{% endrequestbox %}
-	
+
 	{% beginrequestbox "notrequired" _("Project Logo") _("Upload a new logo or delete the existing one.")  %}
-      
+
       {% if project.logo %}
             <tr id="project_logo">
                 <td colspan="2">
@@ -76,12 +76,12 @@ function delete_project() {
                 </td>
             </tr>
       {% endif %}
-      
+
       {% printfield  edit_project.project_logo "left" %}
-   
+
     {% endrequestbox %}
-		
+
 	{% printformfooter _("Update Project") _("Cancel") "rancho.project.views.overview project.id" %}
-	
+
 </form>
 {% endblock %}

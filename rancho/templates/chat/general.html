@@ -9,7 +9,7 @@
 <script type="text/javascript" src="/media/js/jquery/simplemodal.js"></script>
 <script type="text/javascript" src="/media/js/jquery/taconite.js"></script>
 {% endblock %}
-		
+
 {% block jquerycode %}
     function send_message() {
        var message = $("#message").val();
@@ -20,8 +20,8 @@
     }
 
     var chat_div = "#chat";
-    var scrollHeight = $(chat_div).attr("scrollHeight"); 
-    
+    var scrollHeight = $(chat_div).attr("scrollHeight");
+
     function get_messages() {
        url = '{% url rancho.chat.views.get_and_display_messages project.id %}';
        $.get(url);
@@ -32,18 +32,18 @@
        }
        return false;
     }
-    
+
     var getMessagesRefreshId = setInterval(function()
     {
         get_messages();
     }, 1000);
-    
+
     var getUsersRefreshId = setInterval(function()
     {
         url = '{% url rancho.chat.views.display_online_users project.id %}';
         $.get(url);
     }, 15000);
-    
+
     $(document).ready(
         function () {
 		    $('#message').bind("keypress", function (event){
@@ -54,17 +54,17 @@
 		        }
 		        return true;
 		    });
-		    
+
 		    $('#message').focus();
-		    
+
 		    $(window).unload(
-		        function () { 
+		        function () {
 		        	url = '{% url rancho.chat.views.disconnect project.id %}';
                     $.get(url);
 					aler("lalal");
-                } 
+                }
             );
-			
+
 			url = '{% url rancho.chat.views.display_online_users project.id %}';
             $.get(url);
 		}
@@ -102,7 +102,7 @@
 	       {% endif %}
 	    </div>
 	</div>
-	
+
 	<form action="" method="post">
       {% beginrequestbox "required" "" "" %}
         {% printfield  chat_form.message "none" %}

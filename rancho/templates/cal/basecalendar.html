@@ -7,14 +7,14 @@
 {% endblock %}
 
 {% block jquerycode %}
-    function get_events(year, month, day) {                
+    function get_events(year, month, day) {
         $.get("/calendar/get_events/" + year + "/" + month + "/" + day);
         return false;
     }
 {% endblock %}
 
 {% block pagetitle %} {{ company.short_name }} | {% trans "Calendar" %} {% endblock %}
-    
+
 {% block area_name %}
     <p>{% trans "My Calendar" %}</p>
 {% endblock %}
@@ -22,7 +22,7 @@
 {% block menu %}
     {% genmenu "root" "calendar" %}
 {% endblock %}
- 
+
 {% block main_content %}
 	{% if year and month %}
 		{% monthcal user "large" year month %}

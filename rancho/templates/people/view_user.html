@@ -11,7 +11,7 @@
 {% block jquerypluginloader %}
 	<script type="text/javascript" src="/media/js/jquery/simplemodal.js"></script>
 {% endblock %}
-	
+
 {% block jquerycode %}
 
 {% endblock %}
@@ -37,8 +37,8 @@
 	</div>
 {% endblock %}
 
-{% block mini_menu %}    
-    
+{% block mini_menu %}
+
 {% endblock %}
 
 {% block area_name %}
@@ -50,7 +50,7 @@
 	<div style="float: left;">
 		{% displayuserphoto view_user "small" %}
 	</div>
-	<div style="float: left; margin-left: 10px;">		
+	<div style="float: left; margin-left: 10px;">
 		<p><strong>{{ view_user.get_full_name }}</strong></p>
 		{% if view_user.get_profile.title %}
 			<p>{{ view_user.get_profile.title }}</p>
@@ -144,7 +144,7 @@
 		{% endif %}
 	</table>
 	<hr/>
-	
+
 	<div class="right_button">
         <a href="{% url user.views.all_people %}" class="red">{% trans "Back" %}</a>
     </div>

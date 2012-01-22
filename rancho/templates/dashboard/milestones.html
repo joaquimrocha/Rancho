@@ -13,7 +13,7 @@
 {% endblock %}
 
 {% block outter_main_content %}
-	
+
 	{% regroup projects by project as project_list %}
 	{% if not project_list %}
 		<p>{% trans "No milestones in your projects yet." %}</p>
@@ -30,8 +30,8 @@
 		{% endfor %}
 	{% endfor %}
 {% endblock %}
-	
-{% block right_content %}	
+
+{% block right_content %}
     {% sidewidget _("Information") "information" %}
 	<p>{% blocktrans %}In here you have a general view of all milestones in all your projects.{% endblocktrans %}</p>
 {% endblock %}

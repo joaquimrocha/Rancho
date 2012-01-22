@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 
 {% load i18n usernamegen modalconfirm form_tags displaynotification genmenu sidewidget %}
- 
+
 {% block pagetitle %} {{ company.short_name }} | Dashboard {% endblock %}
 
 {% block jquerypluginloader %}
 <script type="text/javascript" src="/media/js/jquery/simplemodal.js"></script>
 <script type="text/javascript" src="/media/js/jquery/taconite.js"></script>
 {% endblock %}
-    
+
 {% block jquerycode %}
-function delete_logo(){            
+function delete_logo(){
     $.get("{% url company.views.delete_logo %}");
-	$("#company_logo").fadeOut();            
+	$("#company_logo").fadeOut();
     return false;
-}    
+}
 {% endblock %}
 
 {% block menu %}
@@ -25,11 +25,11 @@ function delete_logo(){
     <br/>
     <p><a href="{% url import_account%}">{% trans "Import" %}</a> | <a href="{% url export_account%}">{% trans "Export" %}</a></p>
 {% endblock %}
-    
+
 {% block area_name %}
     <p>{% trans "Company Settings" %}</p>
 {% endblock %}
-    
+
 {% block right_content %}
 	{% sidewidget _("Information") "information"%}
 	<p>{% blocktrans %}Here you can edit the company's settings.{% endblocktrans %}</p>
@@ -38,28 +38,28 @@ function delete_logo(){
 
 {% block main_content %}
     <form action="{% url company_settings_main %}" method="post" enctype="multipart/form-data">
-    
+
 	{% displaynotification messages %}
-	
+
 	{% beginrequestbox "required" _("Company Info") ""  %}
           {% printfield  editCompanySettingsForm.short_name "left" %}
           {% printfield  editCompanySettingsForm.long_name "left" %}
-    {% endrequestbox %} 
-	
+    {% endrequestbox %}
+
     {% beginrequestbox "notrequired" _("Company optional info") _("You can add additional information about this company.")  %}
-      {% printfield  editCompanySettingsForm.mailing_address "top" %}   
+      {% printfield  editCompanySettingsForm.mailing_address "top" %}
       {% printfield  editCompanySettingsForm.phone "left" %}
       {% printfield  editCompanySettingsForm.webpage "left" %}
-    {% endrequestbox %}  
-	
+    {% endrequestbox %}
+
 	{% if is_main_company %}
 		{% beginrequestbox "notrequired" _("Company Description") _("You can add an optional description that will take place on the dashboard page of the company.")  %}
-	      {% printfield  editCompanySettingsForm.description "none" %}   
+	      {% printfield  editCompanySettingsForm.description "none" %}
 	    {% endrequestbox %}
 	{% endif %}
-	
+
 	{% beginrequestbox "notrequired" _("Company Logo") _("Upload a new logo or delete the existing one.")  %}
-	  
+
 	  {% if edit_company.logo %}
             <tr id="company_logo">
                 <td colspan="2">
@@ -71,9 +71,9 @@ function delete_logo(){
                 </td>
             </tr>
       {% endif %}
-	  
+
 	  {% printfield  editCompanySettingsForm.logo "left" %}
-   
+
     {% endrequestbox %}
 
 	{% printformfooter _("Update Company") _("Cancel") "rancho.user.views.dashboard" %}

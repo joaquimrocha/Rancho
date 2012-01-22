@@ -8,7 +8,7 @@
     {% genmenu "root" "" %}
 {% endblock %}
 
-	
+
 {% block area_name %}
     <p>{% trans "Create User" %}</p>
 {% endblock %}
@@ -21,12 +21,12 @@
 	<p>{% blocktrans %}The new person will be able to edit the "personal info" settings after logging in.{% endblocktrans %}</p>
 {% endblock %}
 
-{% block main_content %}		
-	<form action="{% url user.views.newuser %}" method="post">		
+{% block main_content %}
+	<form action="{% url user.views.newuser %}" method="post">
 	  {% beginrequestbox "required" _("Login Info") _("Choose a username with which this person can log in later.")  %}
           {% printfield  newUserForm.username "left" %}
-          {% printfield  newUserForm.email "left" %}		  
-      {% endrequestbox %}    
+          {% printfield  newUserForm.email "left" %}
+      {% endrequestbox %}
 	  <p>&nbsp;</p>
 	  {% beginrequestbox "required" _("Member Settings") ""  %}
     	  {% printfield  newUserForm.company "left" %}
@@ -34,11 +34,11 @@
 		  {% printfield  newUserForm.timezone "left" %}
 		  {% printfield  newUserForm.role "left" %}
 	  {% endrequestbox %}
-	  
+
 	  {% beginrequestbox "notrequired" _("Personal Info") _("All fields in this section are optional. You can fill them now or the person can fill or change them later.")  %}
           {% printfield  newUserForm.first_name "left" %}
           {% printfield  newUserForm.last_name "left" %}
-		  
+
 		  {% beginoptionalgroup "company_user_info" "false" "You can fill more information about this person" %}
 		     {% printfield  newUserForm.title "left" %}
 			 {% printfield  newUserForm.office "left" %}
@@ -51,13 +51,13 @@
 			 {% printfield  newUserForm.mailing_address "top" %}
 			 {% printfield  newUserForm.webpage "left" %}
 		  {% endoptionalgroup %}
-		  
+
       {% endrequestbox  %}
-	  
+
 	  {% beginrequestbox "notrequired" _("Personal Note") _("You can send a personal note to the person you are adding in addition to the email notification. This note is optional.")  %}
 	     {% printfield  newUserForm.personal_note "top" %}
-	  {% endrequestbox  %}        
-     
-	  {% printformfooter _("Create user") _("Cancel") "rancho.user.views.all_people" %}		
-	</form>	
+	  {% endrequestbox  %}
+
+	  {% printformfooter _("Create user") _("Cancel") "rancho.user.views.all_people" %}
+	</form>
 {% endblock %}

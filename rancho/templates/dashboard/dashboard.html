@@ -3,7 +3,7 @@
 {% load i18n displayevent displaynotification %}
 
 {% block pagetitle %} {{ company.short_name }} | {% trans "Dashboard" %} {% endblock %}
-	
+
 {% block area_name %}
 	<p>{% trans "Project Overview & Activity" %}</p>
 {% endblock %}
@@ -31,9 +31,9 @@
 	  {% endif %}
 	{% endfor %}
 {% endblock %}
-    
-	
-{% block right_content %}	
+
+
+{% block right_content %}
     {% if user.is_superuser %}
 	<div class="add_button">
 		<a href="{% url project.views.new_project %}">{% trans "Add New Project" %}</a>
@@ -41,5 +41,5 @@
 	<div class="add_button_right"></div>
 	<br/>
 	{% endif %}
-	{% include "project/boxes/myprojects.html" %}	
+	{% include "project/boxes/myprojects.html" %}
 {% endblock %}

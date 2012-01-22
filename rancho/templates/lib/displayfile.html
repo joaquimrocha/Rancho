@@ -9,7 +9,7 @@
 			{% ifhasperm "PERMISSIONS_FILE_EDITDELETE" user project file %}
 				<a class="edit" href="{% url file.views.edit p_id=project.id,v_id=last_version.id %}">{% trans "Edit" %}</a> | <a id="delete_file{{last_version.id}}" class="delete" href="">{% trans "Delete" %}</a>
 				{% modalconfirm "delete_file{{last_version.id}}" _("Are you sure you want to delete this file?") "delete_file(last_version.id)" %}
-			{% endifhasperm %}			
+			{% endifhasperm %}
 		</div>
 	</div>
 	<div class="item_bottom" style="overflow: hidden; margin-top: 2px;">
@@ -43,8 +43,8 @@
 			</div>
 			{% ifhasperm "PERMISSIONS_FILE_EDITDELETE" user project version %}
 				<div style="float: right;">
-					<a class="edit" href="{% url file.views.edit p_id=project.id,v_id=version.id %}">{% trans "Edit" %}</a> 
-					| 
+					<a class="edit" href="{% url file.views.edit p_id=project.id,v_id=version.id %}">{% trans "Edit" %}</a>
+					|
 					<a id="delete_file{{ version.id }}" class="delete" href="">{% trans "Delete" %}</a>
 				</div>
 				{% modalconfirm "delete_file{{version.id}}" _("Are you sure you want to delete this revision?") "delete_file(version.id)" %}

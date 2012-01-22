@@ -13,12 +13,12 @@
         </div>
         </div>
     </div>
-    
+
     {# output visible link #}
-        
-    
-      
-    {# necessary javascript to make this work #} 
+
+
+
+    {# necessary javascript to make this work #}
     <script type="text/javascript">
         $("#{{link_id}}").click(
             function(){
@@ -26,19 +26,19 @@
                 return false;
             }
         );
-        
-        
+
+
         $("#modal_no_{{link_id}}").click(
             function() {
                 $.modal.close();
                 {% if no_function %}
                    return {{no_function}}({{no_function_args|safe}});
-                {% else %} 
+                {% else %}
                    return false;
                 {% endif %}
             }
         );
-                
+
         $("#modal_yes_{{link_id}}").click(
             function() {
                 $.modal.close();
@@ -49,4 +49,4 @@
 				{% endif %}
             }
             );
-    </script>    
+    </script>

@@ -6,12 +6,12 @@
 
 {% block menu %}
 	{% if project %}
-		{% genmenu "inproject" "overview" project.id %}	   
+		{% genmenu "inproject" "overview" project.id %}
 	{% else %}
 	   {% genmenu "root" "dashboard" %}
-	{% endif %}	
+	{% endif %}
 {% endblock %}
-	
+
 {% block area_name %}
     {% if project %}
 	   <p>{% trans "Search in " %} {{project.name}}</p>
@@ -180,5 +180,5 @@
 
 
 
-{% block static_menu%}                           
+{% block static_menu%}
 {% endblock %}

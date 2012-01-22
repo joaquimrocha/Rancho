@@ -3,7 +3,7 @@
 {% load i18n usernamegen genmenu form_tags sidewidget %}
 
 {% block pagetitle %} {{ project.name }} | {% trans "New Message" %} {% endblock %}
-		
+
 {% block area_name %}
 	<p>{% trans "Create New Message" %}</p>
 {% endblock %}
@@ -20,20 +20,20 @@
 {% endblock %}
 
 {% block main_content %}
-	<form action="{% url message.views.create p_id=project.id %}" method="post">		
+	<form action="{% url message.views.create p_id=project.id %}" method="post">
 	  {% beginrequestbox "required" _("Message") ""  %}
 	      {% printfield  form.title "left" %}
 		  {% printfield  form.message "top" %}
-	  {% endrequestbox %}			
+	  {% endrequestbox %}
 
      {% beginrequestbox "notrequired" _("Message Tags") _("Apply optional tags to your message, split multime tags with comma.")  %}
             {% printfield  form.tags "left" %}
      {% endrequestbox %}
-	 
+
 	 {% beginrequestbox "notrequired" _("People in this project") _("Optionally check the persons you want to notify about the new message you're about to send.")  %}
 		{% printfield  form.notify "none" %}
 	 {% endrequestbox %}
 
-	{% printformfooter _("Submit Message") _("Cancel") "rancho.message.views.list project.id" %}	
+	{% printformfooter _("Submit Message") _("Cancel") "rancho.message.views.list project.id" %}
 	</form>
 {% endblock %}

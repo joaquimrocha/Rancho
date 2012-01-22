@@ -4,11 +4,11 @@
 		<p>
 			{% ifnotequal project.status "F" %} {# only can do this if active project #}
                 <a id="check{{todo.id}}_link" href="">
-            {% endifnotequal %}				
+            {% endifnotequal %}
 			<img id="check{{todo.id}}" style="vertical-align: middle;" src="/media/basepage/images/{{image}}" border="0" />
   		    {% ifnotequal project.status "F" %} {# only can do this if active project #}
 	          </a>
-	      {% endifnotequal %} 
+	      {% endifnotequal %}
 		   <span {% if todo.completion_date %} style="text-decoration: line-through;" {% endif %} id="check{{todo.id}}_text">{{todo.description}}</span>
 			<span id="responsible{{todo.id}}" style="font-weight: bold;">
 				{% if todo.responsible %} - {% usernamegen todo.responsible %}{% endif %}

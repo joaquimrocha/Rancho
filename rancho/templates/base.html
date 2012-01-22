@@ -10,7 +10,7 @@
         <meta name="description" content="{% trans "Group management made simple." %}" />
         <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         <meta http-equiv="Content-Style-Type" content="text/css" />
-        
+
         <link rel="alternate" type="application/atom+xml" title="{{ company.short_name }}'s User Notification" href="/notification/feed/" />
 
         <link rel="stylesheet" type="text/css" href="/media/basepage/css/style.css" />
@@ -24,29 +24,29 @@
         <link rel="stylesheet" type="text/css" href="/media/basepage/css/form.css" />
         <link rel="stylesheet" type="text/css" href="/media/basepage/css/tagging.css" />
         <link rel="stylesheet" type="text/css" href="/media/basepage/css/todos.css" />
-        
+
         <link rel="shortcut icon" href="/media/basepage/images/favicon.ico">
-        
+
         <script type="text/javascript" src="/media/js/jquery/jquery.js"></script>
         {% block jquerypluginloader %}
         {% endblock %}
         <script type="text/javascript">
              $(document).ready(function() {
-                $("#id_query").click(function () { 
-                    $(this).val('');                     
+                $("#id_query").click(function () {
+                    $(this).val('');
                 });
-            });  
+            });
 
-        
+
             {% block jquerycode %}
             {% endblock %}
-        </script>       
+        </script>
     </head>
     <body>
-    
+
         <div id="top">
             <div id="change_place_comand">
-                
+
                 {% block top_left_actions %}
                     {% if user.is_superuser %}
                     <div id="left"></div>
@@ -55,22 +55,22 @@
                         <div id="system_logs"><a href="{% url company.views.show_logs %}">{% trans "System Logs" %}</a></div>
                     </div>
                     <div id="right"></div>
-                    {% endif %}                                     
-                    
+                    {% endif %}
+
                 {% endblock %}
-                
+
             </div>
         {% if user.is_authenticated %}
         <div id="session_settings_command">
-        
+
             <script type="text/javascript">
-                $(document).ready(function(){                    
-                    $("#langselect").change(function (){  
+                $(document).ready(function(){
+                    $("#langselect").change(function (){
                         $("#formlang").submit();
-                    });                    
+                    });
                 });
-                
-            </script>       
+
+            </script>
 
             <form action="{% url user.views.change_language %}" method="post" id="formlang">
                 <p>
@@ -95,7 +95,7 @@
                 {% block menu %}
                     {% genmenu "root" "dashboard" %}
                 {% endblock %}
-		
+
 		        <div id="menus_nav_right">
                     {% block menus_right %}
                         <img class="textcenter" src="/media/basepage/images/icons/users.png" border="0" alt=""/>&nbsp;<a href="{% url user.views.all_people %}" title="{% trans "Manage people and companies" %}">{% trans "People and Companies" %}</a>&nbsp;
@@ -103,7 +103,7 @@
 	            {% endblock %}
                 </div>
             </div>
-            
+
             <div id="bottom">
                 <div id="left"></div>
                 <div id="center"></div>
@@ -111,7 +111,7 @@
             </div>
         </div>
         <div id="main">
-        
+
             <div id="main_center_right">
                 <div id="main_center_right_top">
                     {% block static_menu%}
@@ -122,44 +122,44 @@
                         </form>
                     </div>
                     {% endblock %}
-                    
+
                     {% block project_name %}
-                    
+
                     {% endblock %}
                 </div>
-                
+
                 {% block project_logo %}
-                
+
                 {% endblock %}
-                
+
                 {% block right_content %}
-                
+
                 {% endblock %}
             </div>
-            
+
             <div id="main_center">
                 <div id="main_center_top">
                     <div id="left">
                         {% block area_name %}
                             <p></p>
-                        {% endblock %}    
+                        {% endblock %}
                     </div>
                     <div id="right">
                         {% block mini_menu %}
-                            
+
                         {% endblock %}
                     </div>
                 </div>
                 {% block outter_main_content %}
                     <div style="margin: 20px 20px 0 20px;">
                         {% block main_content %}
-                            
+
                         {% endblock %}
                     </div>
                 {% endblock %}
             </div>
-            <div id="main_center_footer"><div id="innerleft"></div></div>       
-        
+            <div id="main_center_footer"><div id="innerleft"></div></div>
+
         </div>
         <div id="main_footer">
             <div id="inside">

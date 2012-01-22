@@ -3,7 +3,7 @@
 {% load i18n usernamegen formatdate genmenu permissions_tags modalconfirm form_tags displaynotification displayuserphoto%}
 
 {% block pagetitle %} {{ project.name }} | {% trans "Overview" %} {% endblock %}
-        
+
 {% block area_name %}
     <p>{% trans "Reading message: " %}{{original_message.title}}</p>
 {% endblock %}
@@ -13,12 +13,12 @@
 <script type="text/javascript" src="/media/js/jquery/simplemodal.js"></script>
 <script type="text/javascript" src="/media/js/jquery/taconite.js"></script>
 {% endblock %}
-        
+
 {% block jquerycode %}
     function delete_message(message_id) {
        url = '{% url rancho.message.views.delete project.id,111111 %}?page=msg';
        window.location = url.replace(/111111/g,message_id);
-       return false;                      
+       return false;
     }
 {% endblock %}
 
@@ -31,13 +31,13 @@
 	<br/>
 	<a href="{% url message.views.list project.id %}">{% trans "Back to messages list" %}</a>
 {% endblock %}
-        
+
 {% block right_content %}
     <div class="widget">
     <p>People Involved</p>
 </div>
 {% for user in users_in_project %}
-    <p class="person">{% usernamegen user %}</p>    
+    <p class="person">{% usernamegen user %}</p>
     <p class="login">Last login some... days ago.</p>
 {% endfor %}
 {% endblock %}
@@ -76,7 +76,7 @@
 							<p>{% usernamegen message.creator %} {% trans "says:" %}</p>
 						</div>
 						<div class="item_controls">
-							{% ifhasperm "PERMISSIONS_MESSAGE_EDITDELETE" user project message %} 
+							{% ifhasperm "PERMISSIONS_MESSAGE_EDITDELETE" user project message %}
 				               <a class="edit" href="{% url message.views.edit p_id=project.id,m_id=message.id %}">{% trans "Edit" %}</a> | <a href="" id="delete_message{{message.id}}" class="delete">{% trans "Delete" %}</a>
 				               {% modalconfirm "delete_message{{message.id}}" _("Are you sure you want to delete this message?") "delete_message(message.id)" %}
 				            {% endifhasperm %}
@@ -86,16 +86,16 @@
 		            <p style="margin-bottom: 20px;" class="gray">{% formatdate user message.creation_date %}</p>
 				</div>
 			</div>
-        
+
     {% endfor %}
 
     {% ifhasperm "PERMISSIONS_MESSAGE_CREATE" user project message %}
         <form action="{% url message.views.read_add_comment p_id=project.id,m_id=message.id %}" method="post">
-        	
+
 		{% beginrequestbox "required" _("Post a new comment") ""  %}
 		  {% printfield  form.message "none" %}
-        {% endrequestbox %}           
-        
+        {% endrequestbox %}
+
         {% printformfooter _("Submit Comment") _("Cancel") "rancho.message.views.list project.id" %}
 
         </form>

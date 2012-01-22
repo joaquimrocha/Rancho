@@ -17,11 +17,11 @@
 {% endblock %}
 
 {% block main_content %}
-	
+
 	{% displaynotification messages %}
 
 	<form action="{% url todo.views.edit_todo p_id=project.id,todo_id=todo.id %}" method="post">
-		
+
 		{% beginrequestbox "required" _("ToDo") ""  %}
 			{% printfield edit_todo_form.title "left" %}
 			{% printfield edit_todo_form.responsible "left" %}

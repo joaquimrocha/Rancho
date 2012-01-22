@@ -3,7 +3,7 @@
 {% load i18n genmenu permissions_tags usernamegen displaynotification formatdate %}
 
 {% block pagetitle %} {{ project.name }} | {% trans "View" %} {{entry.name}} {% endblock %}
-       
+
 {% block area_name %}
     <p>{% trans "View Entry" %}: {{wiki.name|truncatewords:3}}</p>
 {% endblock %}
@@ -24,7 +24,7 @@
     </div>
     <div class="add_button_right"></div>
     <br/><br/>
-   {% endifhasperm %} 
+   {% endifhasperm %}
     <div class="widget">
         <p>{% trans "Versions" %}</p>
     </div>
@@ -48,8 +48,8 @@
     </br>
         <div style="border-top: 2px solid #4D4D4D; margin-top:10px; padding-top: 10px;">
         <div class="right_button">
-            <a href="{% url wikiboard.views.list project.id %}" class="red">Cancel</a> 
-        </div>       
+            <a href="{% url wikiboard.views.list project.id %}" class="red">Cancel</a>
+        </div>
     </form>
-    </div>         
+    </div>
 {% endblock %}

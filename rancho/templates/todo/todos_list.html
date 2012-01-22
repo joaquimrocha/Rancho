@@ -9,7 +9,7 @@
 <script type="text/javascript" src="/media/js/jquery/simplemodal.js"></script>
 {% endblock %}
 
-{% block jquerycode %}	
+{% block jquerycode %}
 
 	function delete_todo(todo_id){
 		$("#edit_todo" + todo_id).fadeOut('slow', function(){
@@ -17,7 +17,7 @@
 		});
 		return false;
 	}
-	
+
 	function delete_todo_list(todo_list_id){
 		window.location = "{% url todo.views.delete_todo_list p_id=project.id %}?todo_list=" + todo_list_id;
 		return false;
@@ -26,7 +26,7 @@
     {% ifnotequal project.status "F" %} {# only can do this if active project #}
 		$(document).ready(function() {
 			{% for todo_list, todos in todo_lists %}
-						
+
 				$("#add_an_item{{todo_list.id}}").click(
 					function(){
 						$("#add_an_item{{todo_list.id}}").hide();
@@ -34,14 +34,14 @@
 						return false;
 					}
 				);
-				
+
 				$("#submit_todo{{todo_list.id}}").click(
 					function(){
 						$("#cancel{{todo_list.id}}").text("{% trans "Done!" %}");
 						$.get("{% url todo.views.add_todo p_id=project.id,todo_list=todo_list.id %}", {todo_desc: $("#todo_desc{{todo_list.id}}").val(), todo_responsible:$("#todo_responsible{{todo_list.id}}").val()});
 					}
 				);
-				
+
 				$("#cancel{{todo_list.id}}").click(
 					function(){
 						$("#add_item_form{{todo_list.id}}").hide('fast');
@@ -50,7 +50,7 @@
 						return false;
 					}
 				);
-				
+
 				{% for todo in todos%}
 					$("#check{{todo.id}}_link").click(
 						function(){
@@ -62,9 +62,9 @@
 						}
 					);
 				{% endfor%}
-			
+
 			{% endfor %}
-			
+
 		}
 		);
 	{% endifnotequal %}
@@ -89,7 +89,7 @@
 		<a href="{% url todo.views.list project.id %}">{% trans "Back to ToDos lists" %}</a>
 	{% endif %}
 {% endblock %}
-    
+
 {% block right_content %}
 	{% ifhasperm "PERMISSIONS_TODO_CREATE" user project  %}
 	    <div class="add_button">
@@ -98,7 +98,7 @@
 		<div class="add_button_right"></div>
 		<br/><br/>
 	{% endifhasperm %}
-	
+
 	{% sidewidget _("About ToDos") "information"%}
 	<p>{% blocktrans %}ToDos are simple checklists, they can be assigned by anyone but may have information about who is supposed to check them.{% endblocktrans %}</p>
 {% endblock %}
@@ -113,5 +113,5 @@
 	{% for todo_list, todos in todo_lists%}
 	      {% include "todo/display_todo_list.html" %}
 	{% endfor %}
-	</div>	
+	</div>
 {% endblock %}

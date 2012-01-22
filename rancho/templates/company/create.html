@@ -7,11 +7,11 @@
 {% block menu %}
     {% genmenu "root" "" %}
 {% endblock %}
-    
+
 {% block area_name %}
     <p>{% trans "New Company" %}</p>
 {% endblock %}
-    
+
 {% block right_content %}
 	{% sidewidget _("Information") "information" %}
 	<p>{% blocktrans %}You can add companies to better identify who accesses your projects, for example, a client of yours.{% endblocktrans %}</p>
@@ -19,15 +19,15 @@
 {% endblock %}
 
 {% block main_content %}
-    
+
 	{% displaynotification messages %}
-    
-    <form action="{% url company.views.create_company  %}" method="post" enctype="multipart/form-data">	
+
+    <form action="{% url company.views.create_company  %}" method="post" enctype="multipart/form-data">
 	{% beginrequestbox "required" _("Company Info") ""  %}
           {% printfield  form.short_name "left" %}
           {% printfield  form.long_name "left" %}
-    {% endrequestbox %} 
-	
+    {% endrequestbox %}
+
 	{% printformfooter _("Create Company") _("Cancel") "rancho.user.views.all_people" %}
 </form>
 {% endblock %}

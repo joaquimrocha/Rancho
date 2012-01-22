@@ -12,36 +12,36 @@
 		<link rel="shortcut icon" href="/media/basepage/images/favicon.ico">
 	</head>
 	<body>
-	
+
 		<div id="top"></div>
-		
+
 		<div id="center">
 		<div id="logo" align="center">{% displaycompanylogo company %}</div>
-		
+
 		{% block main_content %}
 		      {% if form.non_field_errors %}
-			<div id="warn" class="red_msg">       
-	            <p>{{form.non_field_errors}}</p>      
+			<div id="warn" class="red_msg">
+	            <p>{{form.non_field_errors}}</p>
 	        </div>
 			{% else %}
 			<div id="warn" class="green_msg">
-	            <p>{% blocktrans with company.short_name as short_name %}Welcome to <strong>{{ short_name }}</strong>'s Rancho! Please log in.{% endblocktrans %}</p> 
+	            <p>{% blocktrans with company.short_name as short_name %}Welcome to <strong>{{ short_name }}</strong>'s Rancho! Please log in.{% endblocktrans %}</p>
 	        </div>
 			{% endif%}
-		
+
 			<div id="inputs">
-			
+
 			 {% if next %}
 	           <form action="{% url django.contrib.auth.views.login %}?next={{next}}" method="post" style="margin: 0;">
 	         {% else %}
 	           <form action="{% url django.contrib.auth.views.login %}" method="post" style="margin: 0;">
 	         {% endif %}
                  {% csrf_token %}
-	
-				
+
+
 					<table>
 						{% printfield form.username "left" %}
-						{% printfield form.password "left" %}				    
+						{% printfield form.password "left" %}
 					    <tr>
 					    	<td>
 					        	&nbsp;
@@ -61,12 +61,12 @@
 					</table>
 				</form>
 			</div>
-		
+
 		{% endblock %}
-		
+
 		</div>
 		<div id="footer"></div>
 		<div id="powered"><a href="http://www.getrancho.com" target="_blank"><img src="/media/basepage/images/powered.png" border="0"/></a></div>
-		
+
 	</body>
 </html>

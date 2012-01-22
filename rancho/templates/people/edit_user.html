@@ -11,15 +11,15 @@
 {% block jquerypluginloader %}
 <script type="text/javascript" src="/media/js/jquery/simplemodal.js"></script>
 {% endblock %}
-	
+
 {% block jquerycode %}
 function delete_smallphoto() {
     {% if edit_user %}
         $.get("/people/{{ edit_user.id }}/delete_small_photo");
     {% else %}
         $.get("/people/{{ user.id }}/delete_small_photo");
-    {% endif %}    
-    $("#small_photo").fadeOut();    
+    {% endif %}
+    $("#small_photo").fadeOut();
     return false;
 }
 
@@ -28,21 +28,21 @@ function delete_largephoto() {
         $.get("/people/{{ edit_user.id }}/delete_large_photo");
     {% else %}
         $.get("/people/{{ user.id }}/delete_large_photo");
-    {% endif %}    
+    {% endif %}
     $("#large_photo").fadeOut();
     return false;
 }
 
 {% endblock %}
 
-{% block mini_menu %}    
+{% block mini_menu %}
     {% ifequal edit_user user %}
         <br/>
         <p><a href="{% url user.views.view_user edit_user.id %}">{% trans "View" %}</a></p>
 	{% else %}
 		<br/>
         <p><a href="{% url user.views.view_user edit_user.id %}">{% trans "View user" %}</a></p>
-    {% endifequal %}    
+    {% endifequal %}
 {% endblock %}
 
 {% block area_name %}
@@ -60,18 +60,18 @@ function delete_largephoto() {
     <div class="add_button_right"></div>
 {% endblock %}
 
-{% block main_content %}	
-				
+{% block main_content %}
+
 	{% displaynotification messages %}
 
 
 	<form enctype="multipart/form-data" action="{% url user.views.edituser edit_user.id %}" method="post">
-	
-	  
+
+
     {% beginrequestbox "required" "Login Info" headermsg  %}
 	  {% printfield  editUserForm.email "left" %}
     {% endrequestbox %}
-	
+
 	<p>&nbsp;</p>
     {% beginrequestbox "required" _("Member Settings") ""  %}
           {% printfield  editUserForm.company "left" %}
@@ -81,16 +81,16 @@ function delete_largephoto() {
 		      {% printfield  editUserForm.role "left" %}
 	      {% endifnotequal %}
     {% endrequestbox %}
-	
+
 	{% beginrequestbox "notrequired" _("Change Password") _("If you want to change the password, fill the following fields.")  %}
 	  {% printfield  editUserForm.new_password1 "left" %}
       {% printfield  editUserForm.new_password2 "left" %}
     {% endrequestbox %}
-	
-	  
-	
+
+
+
 	{% beginrequestbox "notrequired" _("Other Info") _("All fields in this section are optional.")  %}
-	  {% printfield  editUserForm.first_name "left" %}	 
+	  {% printfield  editUserForm.first_name "left" %}
 	  {% printfield  editUserForm.last_name "left" %}
       {% printfield  editUserForm.title "left" %}
       {% printfield  editUserForm.office "left" %}
@@ -102,8 +102,8 @@ function delete_largephoto() {
       {% printfield  editUserForm.im_service "left" %}
       {% printfield  editUserForm.mailing_address "top" %}
       {% printfield  editUserForm.webpage "left" %}
-    {% endrequestbox %}          
-		
+    {% endrequestbox %}
+
 		<div class="blue_section">
 			<table width="100%;">
 				<tr>
@@ -204,7 +204,7 @@ function delete_largephoto() {
 					</td>
 				</tr>
 			</table>
-		</div>	
+		</div>
  	 {% printformfooter _("Update Profile") _("Cancel") "rancho.user.views.all_people" %}
 	</form>
 {% endblock %}

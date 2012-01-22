@@ -7,7 +7,7 @@
 			<a class="blue" href="{% url message.views.read_add_comment p_id=project.id,m_id=message.id %}">{{ message.title }}</a>
 		</div>
 		<div class="item_controls">
-			{% ifhasperm "PERMISSIONS_MESSAGE_EDITDELETE" user project message %} 
+			{% ifhasperm "PERMISSIONS_MESSAGE_EDITDELETE" user project message %}
 				<a class="edit" href="{% url message.views.edit p_id=project.id,m_id=message.id %}">{% trans "Edit" %}</a> | <a href="" id="delete_message{{message.id}}" class="delete">{% trans "Delete" %}</a>
 				{% modalconfirm "delete_message{{message.id}}" _("Are you sure you want to delete this message?") "delete_message(message.id)" %}
 			{% endifhasperm %}

@@ -9,12 +9,12 @@
 <script type="text/javascript" src="/media/js/jquery/simplemodal.js"></script>
 <script type="text/javascript" src="/media/js/jquery/taconite.js"></script>
 {% endblock %}
-		
+
 {% block jquerycode %}
-    function delete_message(message_id) {	
+    function delete_message(message_id) {
        url = '{% url rancho.message.views.delete project.id,111111 %}?page=index';
        window.location = url.replace(/111111/g,message_id);
-	   return false;	                  
+	   return false;
     }
 {% endblock %}
 
@@ -40,27 +40,27 @@
 	</div>
 	<div class="tag-cloud">
 	{% for tag in message_tags %}
-	<span class="tag-{{tag.font_size}}"><a href="{% url message_list_tag p_id=project.id,tag=tag.name%}">{{tag.name}}</a></span> 
+	<span class="tag-{{tag.font_size}}"><a href="{% url message_list_tag p_id=project.id,tag=tag.name%}">{{tag.name}}</a></span>
 	{% endfor %}
 	</div>
 	{% endif %}
 
 {% endblock %}
 
-{% block main_content %}	
-	{% if not messagelist %}	
+{% block main_content %}
+	{% if not messagelist %}
 	    {% trans "There are no messages in this project yet." %}
-    {% else %}	
-	    {% autopaginate messagelist 5 %}			
-		{% paginate %}	  
-		
+    {% else %}
+	    {% autopaginate messagelist 5 %}
+		{% paginate %}
+
 		{% displaynotification messages %}
- 		
+
 		<table width="100%">
 		{% for message in messagelist %}
 			{% displaymessage message user %}
 		{% endfor %}
 		</table>
-		{% paginate %}			
+		{% paginate %}
 	{% endif %}
 {% endblock %}

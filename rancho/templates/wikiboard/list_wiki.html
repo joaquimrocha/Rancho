@@ -8,12 +8,12 @@
 {% block jquerypluginloader %}
 <script type="text/javascript" src="/media/js/jquery/simplemodal.js"></script>
 {% endblock %}
-    
+
 {% block jquerycode %}
-   function delete_wiki(wiki_id) {    
+   function delete_wiki(wiki_id) {
        url = '{% url rancho.wikiboard.views.delete project.id,111111 %}';
-       window.location = url.replace(/111111/g,wiki_id);                                     
-       return false;                      
+       window.location = url.replace(/111111/g,wiki_id);
+       return false;
     }
 {% endblock %}
 
@@ -24,34 +24,34 @@
 {% block menu %}
 	{% genmenu "inproject" "wikiboards" project.id %}
 {% endblock %}
-    
+
 {% block right_content %}
 {% ifhasperm "PERMISSIONS_WIKIBOARD_CREATE" user project %}
     <div class="add_button">
     <a href="{% url wikiboard.views.create p_id=project.id %}">{% trans "New Wikiboard" %}</a>
-        
+
     </div>
     <div class="add_button_right"></div>
     <br/><br/>
 {% endifhasperm %}
 {% endblock %}
 
-	
+
 {% block main_content %}
-	
+
 	{% displaynotification messages %}
-	
-    {% if not wikis %}   
+
+    {% if not wikis %}
         {% trans "There are no Wikiboards in this project yet." %}
-    {% else %}  
-        {% autopaginate wikis 5 %}           
+    {% else %}
+        {% autopaginate wikis 5 %}
         {% paginate %}
-        
+
         {% for wiki in wikis %}
 			{% displaywikiboard wiki user %}
         {% endfor %}
-    
+
     {% paginate %}
-            
+
     {% endif %}
 {% endblock %}
