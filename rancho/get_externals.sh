@@ -20,6 +20,10 @@ cd django-haystack && git checkout v1.2.6; cd ..
 mv django-haystack/haystack .
 rm -rf django-haystack
 
+git clone https://github.com/chrisglass/xhtml2pdf.git xhtml2pdf_project
+mv xhtml2pdf_project/xhtml2pdf .
+rm -rf xhtml2pdf_project
+
 hg clone https://bitbucket.org/mchaput/whoosh whoosh.repo
 mv whoosh.repo/src/whoosh .
 rm -rf whoosh.repo
