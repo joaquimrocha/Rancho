@@ -30,7 +30,7 @@ from rancho.lib.utils import events_log
 from rancho.project.models import Project
 from rancho.wikiboard.forms import NewWikiEntryForm, TinyMceForm
 from rancho.wikiboard.models import Wiki, WikiEntry
-import ho.pisa as pisa
+import xhtml2pdf.pisa as pisa
 
 
 # Basic operations for this app
